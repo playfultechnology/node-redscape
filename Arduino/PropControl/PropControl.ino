@@ -3,6 +3,7 @@
 #define USE_WIFI
 
 // INCLUDES
+// Include the appropriate networking library
 #if defined(USE_ETHERNET)
   #include <Ethernet.h>
 #elif defined(USE_WIFI)
@@ -12,6 +13,7 @@
     #include <WiFi.h>
   #endif
 #endif
+// Include the propcontrol library
 #include "PropControl/src/PropControl.h"
 
 // CONSTANTS
@@ -30,9 +32,8 @@ char* deviceID = "clientTest";
 #elif defined(USE_WIFI)  
   WiFiClient networkClient;
 #endif
-// PropControl object
+// Create a propcontrol object based on the chosen network
 PlayfulTechnology::PropControl pc(networkClient, server, 1883, deviceID);
-
 
 void onTest() {
   Serial.println("FLiiping Heck!");
@@ -52,20 +53,48 @@ void defaultCallback(char* topic, byte* payload, unsigned int length) {
             
           }
 
+  if(strcasestr((char*)payload, "track")) {
+      Serial.println("TRACK FOUND!");
+    } 
+
+
     
   }
 
 void setup() {
-  pc.setCallback(defaultCallback);
 
+  // Specify what to do when a message is received.
+  // For simple cases, we simply look for and process any registered commands
+  pc.setCallback([](char* topic, byte* payload, unsigned int length) {
+    pc.processCommand(topic, payload, length);
+
+    // You can also create more complex rules here:
+    if(strcmp((char*)payload, "TEST") == 0) {
+      // ... call the associated handler function
+       Serial.print("OOOOOOO");
+    }
+  });
+  // There are several ways to react to messages sent over prop control network
+
+  // #1 Register a callback function
+  // Whenever the command "Test" is received, fire the function called "onTest"
+  // This function is registered with the server, so that the device and other hosts know that this
+  // device responds to that command
   pc.registerCommand("Test", onTest);
-  pc.registerCommand("Ping", [](){Serial.println("Pong!");});
+  
+  // #2 Register an anonymous function
+  // For simple actions, rather than specify a separate callback function, the response
+  // can be specified inline to the registerCommand action itself. In this case, when the command
+  // "Ping" is received, the device sends the response "Pong" to the host.
+  pc.registerCommand("Ping", [](){pc.sendToHost("Pong!");});
 
   Serial.begin(9600);
 
   Serial.print(F("Connecting to WiFi..."));
   // Start the WiFi connection
+  #if defined(ESP8266)
   WiFi.mode(WIFI_STA);
+  #endif
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
