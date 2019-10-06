@@ -158,7 +158,7 @@ namespace PlayfulTechnology
 		private:
 			// Unique name of this device, used as client ID to connect to MQTT server
 			// and also topic name for messages published to this device
-			char* _deviceID = "Cauldron";
+			char* _deviceID = "";
 			PubSubClient* _pubsubclient = nullptr;
 			// Static variables must be delcared  inside the class, but defined outside.
 			command commandList[NUM_COMMANDS];
