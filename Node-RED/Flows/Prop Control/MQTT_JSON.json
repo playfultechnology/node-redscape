@@ -1,0 +1,269 @@
+[
+    {
+        "id": "7adbe3d.3f4001c",
+        "type": "ui_template",
+        "z": "83e90125.bb885",
+        "group": "8fecb986.f05d88",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 882,
+        "y": 170,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e80d3189.9baa5",
+        "type": "mqtt in",
+        "z": "83e90125.bb885",
+        "name": "MQTT FromDevice",
+        "topic": "FromDevice/HoldHands",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "125f6c81.60151b",
+        "x": 189,
+        "y": 170,
+        "wires": [
+            [
+                "915514.20372af"
+            ]
+        ]
+    },
+    {
+        "id": "915514.20372af",
+        "type": "json",
+        "z": "83e90125.bb885",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 371,
+        "y": 170,
+        "wires": [
+            [
+                "62f94144.e90918"
+            ]
+        ]
+    },
+    {
+        "id": "62f94144.e90918",
+        "type": "function",
+        "z": "83e90125.bb885",
+        "name": "Parse JSON and update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 603,
+        "y": 170,
+        "wires": [
+            [
+                "7adbe3d.3f4001c"
+            ]
+        ]
+    },
+    {
+        "id": "bc04689.08efe98",
+        "type": "mqtt out",
+        "z": "83e90125.bb885",
+        "name": "MQTT ToDevice",
+        "topic": "ToDevice/HoldHands",
+        "qos": "",
+        "retain": "",
+        "broker": "125f6c81.60151b",
+        "x": 1097,
+        "y": 168,
+        "wires": []
+    },
+    {
+        "id": "db68b7e3.3c5d6",
+        "type": "inject",
+        "z": "83e90125.bb885",
+        "name": "Solve",
+        "topic": "",
+        "payload": "{\"state\":\"SOLVED\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 228.5,
+        "y": 276,
+        "wires": [
+            [
+                "915514.20372af"
+            ]
+        ]
+    },
+    {
+        "id": "4314365a.f92328",
+        "type": "inject",
+        "z": "83e90125.bb885",
+        "name": "Reset",
+        "topic": "",
+        "payload": "{\"state\":\"UNSOLVED\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 228,
+        "y": 237,
+        "wires": [
+            [
+                "915514.20372af"
+            ]
+        ]
+    },
+    {
+        "id": "74c44028.390398",
+        "type": "ui_button",
+        "z": "83e90125.bb885",
+        "name": "RESET",
+        "group": "8fecb986.f05d88",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 910,
+        "y": 122,
+        "wires": [
+            [
+                "bc04689.08efe98"
+            ]
+        ]
+    },
+    {
+        "id": "54b14aef.83c794",
+        "type": "change",
+        "z": "83e90125.bb885",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"HoldHands\",\"name\":\"Hold Hands\",\"description\":\"Players must form a human circuit between the two plates\",\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 226.5,
+        "y": 122,
+        "wires": [
+            [
+                "915514.20372af"
+            ]
+        ]
+    },
+    {
+        "id": "e99d60db.66ae4",
+        "type": "ui_button",
+        "z": "83e90125.bb885",
+        "name": "SOLVE",
+        "group": "8fecb986.f05d88",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 909,
+        "y": 82,
+        "wires": [
+            [
+                "bc04689.08efe98"
+            ]
+        ]
+    },
+    {
+        "id": "ef1b4421.706f08",
+        "type": "link in",
+        "z": "83e90125.bb885",
+        "name": "",
+        "links": [
+            "66d81421.4a3f14"
+        ],
+        "x": 144.5,
+        "y": 122,
+        "wires": [
+            [
+                "54b14aef.83c794"
+            ]
+        ]
+    },
+    {
+        "id": "8fecb986.f05d88",
+        "type": "ui_group",
+        "z": "",
+        "name": "Hold Hands",
+        "tab": "31696413.9a5234",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "MOSCA",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "31696413.9a5234",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
