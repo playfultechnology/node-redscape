@@ -11,8 +11,11 @@ Node-REDscape is a set of extensions and utilities for <a href="https://nodered.
 * Interface with lighting and sound systems using industry-standard communications such as DMX and MIDI, Philips Hue lighting, etc.
 
 ## Screenshots
+### Dashboard
 !["Example GM Dashboard"](https://github.com/playfultechnology/node-redscape/blob/master/Documentation/screenshots/dashboard_example.png)
-!["Example In-Room Display"](https://github.com/playfultechnology/node-redscape/blob/master/Documentation/screenshots/roomdsiplay_example.jpg)
+### In-Room Display
+!["Example In-Room Display"](https://github.com/playfultechnology/node-redscape/blob/master/Documentation/screenshots/roomdisplay_example.jpg)
+### Flow
 !["Example Flow"](https://github.com/playfultechnology/node-redscape/blob/master/Documentation/screenshots/flow_example.jpg)
 
 ## Features
