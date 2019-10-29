@@ -10,6 +10,9 @@ Node-REDscape is a set of extensions and utilities for <a href="https://nodered.
 * Define events that are triggered after a certain amount of time, with a random chance, or on completion of certain pre-requisites
 * Interface with lighting and sound systems using industry-standard communications such as DMX and MIDI, Philips Hue lighting, etc.
 
+## Screenshots
+![](https://github.com/playfultechnology/node-redscape/blob/master/Documentation/screenshots/dashboard_example.png | width=100)
+
 ## Features
 * Free and open source - Completely free to download and use. 
 * Robust - The Node-RED framework on which PropControl is built was originally developed by IBM, and now supported by the <a href="https://openjsf.org/">OpenJS Foundation</a>. It is being used by tens of thousands of users across the world, and is actively maintained and developed.  
