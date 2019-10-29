@@ -1,6 +1,6 @@
-# propcontrol
+# Node-REDscape
 ## Introduction
-PropControl is a system for controlling a network of "props" - physical, microprocessor-controlled devices (e.g. Arduino, Raspberry Pi, ESP8266), such as might be found in an escape room (or live theatrical performance, or similar). It is based upon <a href="https://nodered.org/">Node-RED</a> - a general purpose event-driven framework - and extends it by providing a set of additional node templates, workflows, and code libraries, together with "recipes" that illustrate how to provide functionality commonly used in escape room scenarios.
+Node-REDscape is designed to make it possible to control a network of "props" - physical, microprocessor-controlled devices (e.g. Arduino, Raspberry Pi, ESP8266), such as might be found in an escape room (or live theatrical performance, or similar). It is based upon <a href="https://nodered.org/">Node-RED</a> - a general purpose event-driven framework - and extends it by providing a set of additional node templates, workflows, and code libraries, together with "recipes" that illustrate how to provide functionality commonly used in escape room scenarios.
 
 ## Example Uses
 * Create a browser-based dashboard for gamesmasters that shows the status of all puzzles in the room, providing options to remotely solve or reset them
