@@ -1,13 +1,14 @@
 # Node-REDscape
 ## Introduction
-Node-REDscape is designed to make it possible to control a network of "props" - physical, microprocessor-controlled devices (e.g. Arduino, Raspberry Pi, ESP8266), such as might be found in an escape room (or live theatrical performance, or similar). It is based upon <a href="https://nodered.org/">Node-RED</a> - a general purpose event-driven framework - and extends it by providing a set of additional node templates, workflows, and code libraries, together with "recipes" that illustrate how to provide functionality commonly used in escape room scenarios.
+Node-REDscape is a set of extensions and utilities for <a href="https://nodered.org/">Node-RED</a> - a general purpose event-driven framework - that provides additional templates, workflows, code libraries, and "recipes" that illustrate how to implement functionality commonly used in escape room scenarios.
 
 ## Example Uses
+* Send messages to and from prop controllers, such as Arduino, Raspberry Pi, or ESP8266 devices
 * Create a browser-based dashboard for gamesmasters that shows the status of all puzzles in the room, providing options to remotely solve or reset them
 * Start/stop a game timer, make manual adjustments, and display time remaining on an in-room display for players that can be styled to match the theme of your room
 * Display pre-defined or custom hints on various devices - a monitor, LCD display, printer etc.
 * Define events that are triggered after a certain amount of time, with a random chance, or on completion of certain pre-requisites
-* Interface with lighting and sound systems using industry-standard communications such as DMX and MIDI
+* Interface with lighting and sound systems using industry-standard communications such as DMX and MIDI, Philips Hue lighting, etc.
 
 ## Features
 * Free and open source - Completely free to download and use. 
