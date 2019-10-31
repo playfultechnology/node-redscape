@@ -25,4 +25,5 @@ Node-REDscape is a set of extensions and utilities for <a href="https://nodered.
 * Supports a wide range of platforms - The prop control server can be run on Windows, Linux, or Raspberry Pi. Individual prop controllers can be based on Raspberry Pi, any model of Arduino, ESP32, ESP8266, Teensy, and many more. Devices may be connected via ethernet, Wi-Fi, serial connection, and messages transferred via JSON, CSV, binary, or simple text.
 
 ## To Get Started
-Check out the <a href="https://github.com/playfultechnology/propcontrol/wiki">Wiki</a>
+The <a href="https://github.com/playfultechnology/propcontrol/wiki">Wiki</a> contains a growing list of "recipes" - examples of different common functionality that you can learn from, copy, and adapt. 
+Choose a recipe from the wiki sidebar and read the notes. To create a flow using that recipe, highlight and copy the JSON file to your clipboard and paste it into the import menu of your own Node-RED instance. 
