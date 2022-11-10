@@ -1,0 +1,273 @@
+[
+    {
+        "id": "3a6dd7fc.4c7cd",
+        "type": "tab",
+        "label": "Toggle Switches",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "12fc424a.8536d6",
+        "type": "ui_template",
+        "z": "3a6dd7fc.4c7cd",
+        "group": "176fd05d.aa8588",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content style=\"overflow-y:hidden;\">\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div>\n    <ul>\n    <li style=\"display: inline;\" ng-repeat=\"input in msg.payload.inputs track by $index\">\n        <span ng-class=\"input == 1 ? 'fa fa-2x fa-arrow-circle-down' : 'fa fa-2x fa-arrow-circle-up'\">&nbsp;</span> \n    </ul>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 902,
+        "y": 154,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba1efa99.666ec",
+        "type": "mqtt in",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "MQTT FromDevice",
+        "topic": "FromDevice/ToggleSwitch",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "125f6c81.60151b",
+        "x": 197,
+        "y": 153,
+        "wires": [
+            [
+                "fb900008.f428e8"
+            ]
+        ]
+    },
+    {
+        "id": "fb900008.f428e8",
+        "type": "json",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 379,
+        "y": 153,
+        "wires": [
+            [
+                "eaa06cba.4a4fc8"
+            ]
+        ]
+    },
+    {
+        "id": "eaa06cba.4a4fc8",
+        "type": "function",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "Parse JSON and update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 623,
+        "y": 154,
+        "wires": [
+            [
+                "12fc424a.8536d6"
+            ]
+        ]
+    },
+    {
+        "id": "3b739e6.daddfe2",
+        "type": "mqtt out",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "MQTT ToDevice",
+        "topic": "ToDevice/Toggle",
+        "qos": "",
+        "retain": "",
+        "broker": "125f6c81.60151b",
+        "x": 1117,
+        "y": 152,
+        "wires": []
+    },
+    {
+        "id": "b3beadb7.c8e048",
+        "type": "inject",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "Solve",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"SOLVED\"}",
+        "payloadType": "json",
+        "x": 237.5,
+        "y": 247,
+        "wires": [
+            [
+                "fb900008.f428e8"
+            ]
+        ]
+    },
+    {
+        "id": "e3062108.ce3e4",
+        "type": "inject",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "Reset",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"UNSOLVED\"}",
+        "payloadType": "json",
+        "x": 237,
+        "y": 208,
+        "wires": [
+            [
+                "fb900008.f428e8"
+            ]
+        ]
+    },
+    {
+        "id": "d1f2e33.18a072",
+        "type": "ui_button",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "RESET",
+        "group": "176fd05d.aa8588",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 930,
+        "y": 106,
+        "wires": [
+            [
+                "3b739e6.daddfe2"
+            ]
+        ]
+    },
+    {
+        "id": "7e153167.5252a8",
+        "type": "change",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"ToggleSwitches\",\"name\":\"Toggle Switches\",\"description\":\"Players must set switches to correct pattern\",\"inputs\":[0,0,0,0,0],\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 234.5,
+        "y": 105,
+        "wires": [
+            [
+                "fb900008.f428e8"
+            ]
+        ]
+    },
+    {
+        "id": "581cde05.debe4",
+        "type": "ui_button",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "SOLVE",
+        "group": "176fd05d.aa8588",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 929,
+        "y": 66,
+        "wires": [
+            [
+                "3b739e6.daddfe2"
+            ]
+        ]
+    },
+    {
+        "id": "b382fdf1.42dfd",
+        "type": "link in",
+        "z": "3a6dd7fc.4c7cd",
+        "name": "",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 143.5,
+        "y": 105,
+        "wires": [
+            [
+                "7e153167.5252a8"
+            ]
+        ]
+    },
+    {
+        "id": "176fd05d.aa8588",
+        "type": "ui_group",
+        "name": "Toggle Switches",
+        "tab": "7d66f574.b154cc",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "name": "MQTT Server",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "7d66f574.b154cc",
+        "type": "ui_tab",
+        "name": "Puzzle Status Monitor",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

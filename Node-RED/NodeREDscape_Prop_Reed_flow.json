@@ -1,0 +1,329 @@
+[
+    {
+        "id": "4002af1a.e2087",
+        "type": "tab",
+        "label": "Reed",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c5e2b5fc.e3818",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"Reed\",\"name\":\"Reed Switch\",\"description\":\"Players must hold a magnet over the Reed switch\",\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 246,
+        "y": 190,
+        "wires": [
+            [
+                "6e0a782d.b88b68"
+            ]
+        ]
+    },
+    {
+        "id": "ad3e8727.b4f258",
+        "type": "ui_template",
+        "z": "4002af1a.e2087",
+        "group": "db28e499.24fe08",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 876.5,
+        "y": 371,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6de1935.2adda",
+        "type": "mqtt in",
+        "z": "4002af1a.e2087",
+        "name": "MQTT FromDevice",
+        "topic": "FromDevice/Reed",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "125f6c81.60151b",
+        "x": 422.5,
+        "y": 331,
+        "wires": [
+            [
+                "9ffcbfc6.9d4948"
+            ]
+        ]
+    },
+    {
+        "id": "6e0a782d.b88b68",
+        "type": "json",
+        "z": "4002af1a.e2087",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 367.5,
+        "y": 190,
+        "wires": [
+            [
+                "faf5e097.aff71"
+            ]
+        ]
+    },
+    {
+        "id": "9ffcbfc6.9d4948",
+        "type": "function",
+        "z": "4002af1a.e2087",
+        "name": "Update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nprop['state'] = msg.payload;\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:msg.payload['state']});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660.5,
+        "y": 371,
+        "wires": [
+            [
+                "ad3e8727.b4f258"
+            ]
+        ]
+    },
+    {
+        "id": "5f9f72b8.d544ec",
+        "type": "mqtt out",
+        "z": "4002af1a.e2087",
+        "name": "MQTT ToDevice",
+        "topic": "ToDevice/Reed",
+        "qos": "",
+        "retain": "",
+        "broker": "125f6c81.60151b",
+        "x": 1114.5,
+        "y": 371,
+        "wires": []
+    },
+    {
+        "id": "9f8268c4.1e8d7",
+        "type": "inject",
+        "z": "4002af1a.e2087",
+        "name": "Solve",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "SOLVED",
+        "payloadType": "str",
+        "x": 451,
+        "y": 547,
+        "wires": [
+            [
+                "9ffcbfc6.9d4948"
+            ]
+        ]
+    },
+    {
+        "id": "a4cfb1e2.efcbd",
+        "type": "inject",
+        "z": "4002af1a.e2087",
+        "name": "Reset",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "UNSOLVED",
+        "payloadType": "str",
+        "x": 450.5,
+        "y": 502,
+        "wires": [
+            [
+                "9ffcbfc6.9d4948"
+            ]
+        ]
+    },
+    {
+        "id": "6a56ff07.a37ae",
+        "type": "ui_button",
+        "z": "4002af1a.e2087",
+        "name": "RESET",
+        "group": "db28e499.24fe08",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "RESET",
+        "payloadType": "str",
+        "topic": "",
+        "x": 904.5,
+        "y": 323,
+        "wires": [
+            [
+                "5f9f72b8.d544ec"
+            ]
+        ]
+    },
+    {
+        "id": "930bee45.819cf",
+        "type": "ui_button",
+        "z": "4002af1a.e2087",
+        "name": "SOLVE",
+        "group": "db28e499.24fe08",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "SOLVE",
+        "payloadType": "str",
+        "topic": "",
+        "x": 903.5,
+        "y": 283,
+        "wires": [
+            [
+                "5f9f72b8.d544ec"
+            ]
+        ]
+    },
+    {
+        "id": "ab728aab.10a15",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "name": "",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 153,
+        "y": 190,
+        "wires": [
+            [
+                "c5e2b5fc.e3818"
+            ]
+        ]
+    },
+    {
+        "id": "faf5e097.aff71",
+        "type": "function",
+        "z": "4002af1a.e2087",
+        "name": "Parse JSON and update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 592,
+        "y": 190,
+        "wires": [
+            [
+                "ad3e8727.b4f258"
+            ]
+        ]
+    },
+    {
+        "id": "ea975896.03b058",
+        "type": "comment",
+        "z": "4002af1a.e2087",
+        "name": "Initial configuration",
+        "info": "",
+        "x": 285.5,
+        "y": 149,
+        "wires": []
+    },
+    {
+        "id": "c64aece0.c348e",
+        "type": "comment",
+        "z": "4002af1a.e2087",
+        "name": "Updates received via MQTT as plain text",
+        "info": "",
+        "x": 492,
+        "y": 288,
+        "wires": []
+    },
+    {
+        "id": "a3fd1f3.92df0e",
+        "type": "comment",
+        "z": "4002af1a.e2087",
+        "name": "This flow demonstrates a device that sends and receives status updates as plain text delivered over MQTT",
+        "info": "",
+        "x": 727.5,
+        "y": 66,
+        "wires": []
+    },
+    {
+        "id": "b09cf7b7.fe95b8",
+        "type": "comment",
+        "z": "4002af1a.e2087",
+        "name": "Simulate incoming message",
+        "info": "",
+        "x": 379,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "db28e499.24fe08",
+        "type": "ui_group",
+        "name": "Cover Up",
+        "tab": "7d66f574.b154cc",
+        "order": 5,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "name": "MQTT Server",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "7d66f574.b154cc",
+        "type": "ui_tab",
+        "name": "Puzzle Status Monitor",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

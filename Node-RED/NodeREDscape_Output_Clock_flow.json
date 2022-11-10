@@ -1,0 +1,120 @@
+[
+    {
+        "id": "1e0f02c5.fd2dc5",
+        "type": "tab",
+        "label": "Clock over HTTP",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "55080afd.72cc24",
+        "type": "http request",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "http://192.168.1.4?h={{{h}}}&m={{{m}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "904a667.6b83318"
+            ]
+        ]
+    },
+    {
+        "id": "d6341a86.458fc",
+        "type": "function",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "Get current time",
+        "func": "// Retrieve current time\nvar now = new Date();\n// Extract the hour and minute components\nvar h = now.getHours();\nvar m = now.getMinutes();\n// Add the time elements to the message object\nmsg.h = h;\nmsg.m = m;\n// And pass along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "55080afd.72cc24"
+            ]
+        ]
+    },
+    {
+        "id": "539e2c.db0c51d4",
+        "type": "inject",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "",
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 260,
+        "wires": [
+            [
+                "d6341a86.458fc"
+            ]
+        ]
+    },
+    {
+        "id": "e67c7173.0563d",
+        "type": "comment",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "Trigger every minute",
+        "info": "",
+        "x": 250,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f39bdf6f.44f6a",
+        "type": "comment",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "Retrieve hour and minute",
+        "info": "",
+        "x": 490,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4598cf28.b11e28",
+        "type": "comment",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "Pass parameters to GET request",
+        "info": "",
+        "x": 770,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "904a667.6b83318",
+        "type": "debug",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4fbbb0a7.41f16",
+        "type": "comment",
+        "z": "1e0f02c5.fd2dc5",
+        "name": "(Optional) Do something with the page returned",
+        "info": "",
+        "x": 1120,
+        "y": 220,
+        "wires": []
+    }
+]

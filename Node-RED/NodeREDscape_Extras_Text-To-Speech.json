@@ -1,0 +1,161 @@
+[
+    {
+        "id": "d9c1808b.c8e738",
+        "type": "tab",
+        "label": "TTS",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ce58896.625c2f8",
+        "type": "ui_audio",
+        "z": "d9c1808b.c8e738",
+        "name": "",
+        "group": "70e5d1d.359a23",
+        "voice": "en-GB",
+        "always": true,
+        "x": 1320,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d4d7d3a8.01bc5",
+        "type": "comment",
+        "z": "d9c1808b.c8e738",
+        "name": "Inject node repeats every x seconds",
+        "info": "",
+        "x": 200,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8fd48b86.8d9a3",
+        "type": "function",
+        "z": "d9c1808b.c8e738",
+        "name": "Calculate time remaining",
+        "func": "// Retrieve the time which this flow was started, or if this\n// the first run, get the timestamp from the previous node\nvar startTime = context.get(\"startTime\") || msg.payload;\n\n// Update the stored value\ncontext.set(\"startTime\", startTime);\n\n// Now get the current time\nvar currentTime = msg.payload;\n\n// Calculate how much time has elapsed (in seconds)\nvar elapsedTime = (currentTime - startTime) / 1000;\n\n// Calculate time remaining\nvar remainingTime = 60 - elapsedTime;\n\n// Round to the nearest 10 seconds\nvar roundedTime = Math.ceil(remainingTime / 10) * 10;\n\nmsg.roundedTime = roundedTime;\n\n// Update editor status\nnode.status({fill:\"grey\",shape:\"dot\",text:elapsedTime + \",\" + msg.roundedTime});\n\n// Stop sending messages after time runs out\nif(roundedTime >= 0) {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "e4fd1a73.08e6f8"
+            ]
+        ]
+    },
+    {
+        "id": "c3f8f439.2ee81",
+        "type": "inject",
+        "z": "d9c1808b.c8e738",
+        "d": true,
+        "name": "",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "8fd48b86.8d9a3"
+            ]
+        ]
+    },
+    {
+        "id": "e4fd1a73.08e6f8",
+        "type": "rbe",
+        "z": "d9c1808b.c8e738",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "roundedTime",
+        "x": 750,
+        "y": 320,
+        "wires": [
+            [
+                "e60e3e01.b82d88"
+            ]
+        ]
+    },
+    {
+        "id": "77a01fb.6acfbe",
+        "type": "comment",
+        "z": "d9c1808b.c8e738",
+        "name": "Trigger only when change",
+        "info": "",
+        "x": 770,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e60e3e01.b82d88",
+        "type": "function",
+        "z": "d9c1808b.c8e738",
+        "name": "Form sentence",
+        "func": "if(msg.roundedTime > 0) {\n    var r = Math.random();\n    if(r<0.33) {\n        msg.payload = \"You have \" + msg.roundedTime + \" seconds remaining\";\n    }\n    else if(r<0.66) {\n        msg.payload = \"Just \" + msg.roundedTime + \" seconds until detonation\";\n    }\n    else {\n        msg.payload = \"Quickly! There's only \" + msg.roundedTime + \" seconds left!\";\n    }\n}\nelse {\n    msg.payload = \"You have run out of time.\";\n}\n\n// Update editor status\nnode.status({fill:\"grey\",shape:\"dot\",text:msg.payload});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1040,
+        "y": 320,
+        "wires": [
+            [
+                "ce58896.625c2f8"
+            ]
+        ]
+    },
+    {
+        "id": "dd537ad7.61b3e8",
+        "type": "comment",
+        "z": "d9c1808b.c8e738",
+        "name": "Create phrase based on time remaining",
+        "info": "",
+        "x": 1070,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f738e590.e6a37",
+        "type": "comment",
+        "z": "d9c1808b.c8e738",
+        "name": "Rounded to nearest 10secs",
+        "info": "",
+        "x": 500,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "2a20d06.556bbb",
+        "type": "comment",
+        "z": "d9c1808b.c8e738",
+        "name": "Use Text-To-Speech engine",
+        "info": "",
+        "x": 1380,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "70e5d1d.359a23",
+        "type": "ui_group",
+        "name": "Game Status",
+        "tab": "bfff2c01.02fe6",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "bfff2c01.02fe6",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

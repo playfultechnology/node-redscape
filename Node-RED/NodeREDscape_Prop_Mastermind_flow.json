@@ -1,0 +1,210 @@
+[
+    {
+        "id": "ae55456b.f24e88",
+        "type": "tab",
+        "label": "Mastermind",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2d7b8980.26362e",
+        "type": "ui_template",
+        "z": "ae55456b.f24e88",
+        "group": "31fb9f8c.1b1b7",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content   style=\"overflow-y:hidden;\">\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <p>\n        Secret Code: {{msg.payload.secret}}\n    </p>    \n    <p>Last Guess: \n        <div style=\"text-align:center; font-size: 2em;\">\n            {{msg.payload.guess}}\n        </div>\n    </p>\n    <p>\n        Response:\n    </p>\n    <div style=\"text-align:center\">\n        <span ng-repeat=\"i in [].constructor(msg.payload.result[0]) track by $index\" style=\"font-size: 2em;\">⬛</span>\n        <span ng-repeat=\"i in [].constructor(msg.payload.result[1]) track by $index\" style=\"font-size: 2em;\">⬜</span>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 810,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e4817aa.79fc7",
+        "type": "json",
+        "z": "ae55456b.f24e88",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "7e069eeb.0b3588"
+            ]
+        ]
+    },
+    {
+        "id": "7e069eeb.0b3588",
+        "type": "function",
+        "z": "ae55456b.f24e88",
+        "name": "Parse JSON and update state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 180,
+        "wires": [
+            [
+                "2d7b8980.26362e",
+                "c7a3410a.89aca"
+            ]
+        ]
+    },
+    {
+        "id": "39b8a0de.e46e7",
+        "type": "change",
+        "z": "ae55456b.f24e88",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"7\",\"name\":\"Mastermind\",\"description\":\"Players must deduce the correct code\",\"turn\":0,\"secret\":[0,0,0,0],\"guess\":[1,1,1,1],\"result\":[0,0],\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "6e4817aa.79fc7"
+            ]
+        ]
+    },
+    {
+        "id": "d095ced2.d24c68",
+        "type": "ui_button",
+        "z": "ae55456b.f24e88",
+        "name": "SOLVE",
+        "group": "31fb9f8c.1b1b7",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 700,
+        "y": 340,
+        "wires": [
+            [
+                "9ccffc58.dfd8e"
+            ]
+        ]
+    },
+    {
+        "id": "84bae66b.0b1488",
+        "type": "link in",
+        "z": "ae55456b.f24e88",
+        "name": "",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 115,
+        "y": 120,
+        "wires": [
+            [
+                "39b8a0de.e46e7"
+            ]
+        ]
+    },
+    {
+        "id": "4a1bdaeb.e71fe4",
+        "type": "serial in",
+        "z": "ae55456b.f24e88",
+        "name": "",
+        "serial": "7f6727ec.9d40c8",
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "6e4817aa.79fc7"
+            ]
+        ]
+    },
+    {
+        "id": "9ccffc58.dfd8e",
+        "type": "serial out",
+        "z": "ae55456b.f24e88",
+        "name": "",
+        "serial": "7f6727ec.9d40c8",
+        "x": 850,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c7a3410a.89aca",
+        "type": "debug",
+        "z": "ae55456b.f24e88",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "31fb9f8c.1b1b7",
+        "type": "ui_group",
+        "name": "Mastermind",
+        "tab": "7d66f574.b154cc",
+        "order": 4,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7f6727ec.9d40c8",
+        "type": "serial-port",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "7d66f574.b154cc",
+        "type": "ui_tab",
+        "name": "Puzzle Status Monitor",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

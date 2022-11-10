@@ -1,0 +1,939 @@
+[
+    {
+        "id": "858e5f8e.138f",
+        "type": "tab",
+        "label": "Lighting",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "219a34d8.462bbc",
+        "type": "ui_colour_picker",
+        "z": "858e5f8e.138f",
+        "name": "Colour Wheel UI",
+        "label": "Colour",
+        "group": "d36d4324.1067f8",
+        "format": "rgb",
+        "outformat": "object",
+        "showSwatch": false,
+        "showPicker": true,
+        "showValue": false,
+        "showHue": false,
+        "showAlpha": false,
+        "showLightness": false,
+        "square": "false",
+        "dynOutput": "true",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "x": 520,
+        "y": 400,
+        "wires": [
+            [
+                "20926df8.d3fca2"
+            ]
+        ]
+    },
+    {
+        "id": "c3ea7a22.245f98",
+        "type": "serial out",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "serial": "7f6727ec.9d40c8",
+        "x": 1350,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d40b6f2.c14cd9",
+        "type": "function",
+        "z": "858e5f8e.138f",
+        "name": "Assign RGB to DMX channels 2/3/4",
+        "func": "msg.payload[\"channels\"] = [\n    {\n    \"channel\" : \"2\",\n    \"value\" : msg.payload.r\n    },\n    {\n    \"channel\" : \"3\",\n    \"value\" : msg.payload.g\n    },\n    {\n    \"channel\" : \"4\",\n    \"value\" : msg.payload.b\n    }\n];\n\n// Update the editor node\nnode.status({fill:\"grey\", shape:\"ring\", text: \"RGB(\" + msg.payload.r + \",\" + msg.payload.g + \",\" + msg.payload.b + \")\"});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1000,
+        "y": 400,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "1218614b.945e57",
+        "type": "ui_slider",
+        "z": "858e5f8e.138f",
+        "name": "Brightness Slider UI",
+        "label": "Brightness",
+        "tooltip": "",
+        "group": "d36d4324.1067f8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "",
+        "min": 0,
+        "max": "255",
+        "step": 1,
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "c64c3055.ad57b"
+            ]
+        ]
+    },
+    {
+        "id": "521be2d3.5574f4",
+        "type": "function",
+        "z": "858e5f8e.138f",
+        "name": "Assign to DMX channel 1",
+        "func": "var brightness = msg.payload;\n\nmsg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": brightness\n        }\n    ]\n}\n\n// Update the editor node\nnode.status({fill:\"grey\", shape:\"ring\", text: \"Brightness:\" + brightness});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 970,
+        "y": 280,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "2192e383.059b3c",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Assign initial brightness",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "200",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 280,
+        "wires": [
+            [
+                "1218614b.945e57"
+            ]
+        ]
+    },
+    {
+        "id": "290ac2be.83aaa6",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Set initial RGB value",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "#80808080",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "219a34d8.462bbc"
+            ]
+        ]
+    },
+    {
+        "id": "c5a8bfde.4bc3a8",
+        "type": "trigger",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "5",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "outputs": 1,
+        "x": 700,
+        "y": 520,
+        "wires": [
+            [
+                "804d0c6f.009bc"
+            ]
+        ]
+    },
+    {
+        "id": "74b3b11d.ee9978",
+        "type": "ui_button",
+        "z": "858e5f8e.138f",
+        "name": "UV Blackout",
+        "group": "d36d4324.1067f8",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "UV Blackout",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 530,
+        "y": 520,
+        "wires": [
+            [
+                "c5a8bfde.4bc3a8",
+                "f86ffa24.4668f8"
+            ]
+        ]
+    },
+    {
+        "id": "b84ed8f2.442b08",
+        "type": "inject",
+        "z": "858e5f8e.138f",
+        "name": "Delayed Startup",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "a90489fa.2ce22"
+            ]
+        ]
+    },
+    {
+        "id": "c64c3055.ad57b",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brightness",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 280,
+        "wires": [
+            [
+                "521be2d3.5574f4"
+            ]
+        ]
+    },
+    {
+        "id": "257b3e88.473c22",
+        "type": "ui_button",
+        "z": "858e5f8e.138f",
+        "name": "Save",
+        "group": "d36d4324.1067f8",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Save",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "4845afa5.eb8f88"
+            ]
+        ]
+    },
+    {
+        "id": "747ea446.5a790c",
+        "type": "ui_button",
+        "z": "858e5f8e.138f",
+        "name": "Restore",
+        "group": "d36d4324.1067f8",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Restore",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 260,
+        "y": 160,
+        "wires": [
+            [
+                "7c5da0ce.2cbab"
+            ]
+        ]
+    },
+    {
+        "id": "20926df8.d3fca2",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 400,
+        "wires": [
+            [
+                "d40b6f2.c14cd9"
+            ]
+        ]
+    },
+    {
+        "id": "4845afa5.eb8f88",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Store brightness and RGB values",
+        "rules": [
+            {
+                "t": "set",
+                "p": "savedBrightness",
+                "pt": "flow",
+                "to": "brightness",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "savedColour",
+                "pt": "flow",
+                "to": "colour",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2db8de02.3dde4a",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Restore saved brightness",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "savedBrightness",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "1218614b.945e57"
+            ]
+        ]
+    },
+    {
+        "id": "d3c0b650.f64b6",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Restore saved RGB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "savedColour",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 440,
+        "wires": [
+            [
+                "219a34d8.462bbc"
+            ]
+        ]
+    },
+    {
+        "id": "a90489fa.2ce22",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "name": "Delayed Start",
+        "links": [
+            "df94f6e3.e33cf",
+            "3c771563.4e80f2"
+        ],
+        "x": 375,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7c5da0ce.2cbab",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "name": "Restore",
+        "links": [
+            "6dbe9168.97a8c8",
+            "9ca45147.da1d58"
+        ],
+        "x": 375,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "df94f6e3.e33cf",
+        "type": "link in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "links": [
+            "a90489fa.2ce22"
+        ],
+        "x": 115,
+        "y": 400,
+        "wires": [
+            [
+                "290ac2be.83aaa6"
+            ]
+        ]
+    },
+    {
+        "id": "3c771563.4e80f2",
+        "type": "link in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "links": [
+            "a90489fa.2ce22"
+        ],
+        "x": 115,
+        "y": 280,
+        "wires": [
+            [
+                "2192e383.059b3c"
+            ]
+        ]
+    },
+    {
+        "id": "6dbe9168.97a8c8",
+        "type": "link in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "links": [
+            "7c5da0ce.2cbab"
+        ],
+        "x": 115,
+        "y": 320,
+        "wires": [
+            [
+                "2db8de02.3dde4a"
+            ]
+        ]
+    },
+    {
+        "id": "9ca45147.da1d58",
+        "type": "link in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "links": [
+            "7c5da0ce.2cbab"
+        ],
+        "x": 115,
+        "y": 440,
+        "wires": [
+            [
+                "d3c0b650.f64b6"
+            ]
+        ]
+    },
+    {
+        "id": "ba9c076b.4ecee8",
+        "type": "ui_button",
+        "z": "858e5f8e.138f",
+        "name": "Lightning Strike",
+        "group": "d36d4324.1067f8",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Lightning Strike",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 520,
+        "y": 660,
+        "wires": [
+            [
+                "5e938919.95b4a",
+                "103c19b5.1ca3a6"
+            ]
+        ]
+    },
+    {
+        "id": "804d0c6f.009bc",
+        "type": "switch",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "jsonata"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 850,
+        "y": 520,
+        "wires": [
+            [
+                "c6970ad.78d5ff8"
+            ],
+            [
+                "334012d2.343546"
+            ]
+        ]
+    },
+    {
+        "id": "c6970ad.78d5ff8",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "Turn on UV flood",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"channels\":[{\"channel\":1,\"value\":0},{\"channel\":11,\"value\":255},{\"channel\":12,\"value\":255},{\"channel\":13,\"value\":255},{\"channel\":14,\"value\":255}]}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 500,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "334012d2.343546",
+        "type": "function",
+        "z": "858e5f8e.138f",
+        "name": "Restore previous lights",
+        "func": "msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": flow.get(\"brightness\")\n        },\n        {\n            \"channel\": 8,\n            \"value\": 0\n        },\n        {\n            \"channel\": 9,\n            \"value\": 0\n        },\n        {\n            \"channel\": 11,\n            \"value\": 0\n        }\n    ]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 540,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "5e938919.95b4a",
+        "type": "file in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "filename": "C:\\Users\\alast\\Music\\SFX\\Thunder_Clap.wav",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 810,
+        "y": 700,
+        "wires": [
+            [
+                "fea65c0a.0bc908"
+            ]
+        ]
+    },
+    {
+        "id": "fea65c0a.0bc908",
+        "type": "ui_audio",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "group": "d36d4324.1067f8",
+        "voice": "",
+        "always": "",
+        "x": 1080,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "103c19b5.1ca3a6",
+        "type": "function",
+        "z": "858e5f8e.138f",
+        "name": "Send Lightning Flashes",
+        "func": "// Send a series of flashes of varying brightness as follows\nvar lightningIntensities = [32,128,164,128,96,64,128,64,32,0,255,255,192,176,164,148,128,112,96,64,56,32,24,16,8,4,2,0,0,0,0,0,0,0,0,0,0,0];\nfor(var i=0; i<lightningIntensities.length; i++){\n    msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": lightningIntensities[i]\n        },\n        {\n            \"channel\": 2,\n            \"value\": 224\n        },\n        {\n            \"channel\": 3,\n            \"value\": 224\n        },\n        {\n            \"channel\": 4,\n            \"value\": 255\n        }\n    ]};\n  node.send(msg);  \n}\n\n// Now restore the brightess and RGB value\nvar previousColour = flow.get(\"colour\");\nvar previousBrightness = flow.get(\"brightness\");\nmsg.payload = {    \n    \"channels\": [            \n        {            \n            \"channel\": 1,           \n            \"value\": previousBrightness\n        },\n        {            \n            \"channel\": 2,           \n            \"value\": previousColour.r\n        },\n        {            \n            \"channel\": 3,           \n            \"value\": previousColour.g\n        },\n        {            \n            \"channel\": 4,           \n            \"value\": previousColour.b\n        },\n    ]\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 660,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "2865380a.3f69c8",
+        "type": "ui_button",
+        "z": "858e5f8e.138f",
+        "name": "Police Siren",
+        "group": "d36d4324.1067f8",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Police Siren",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 510,
+        "y": 800,
+        "wires": [
+            [
+                "6cfc61d6.501c48",
+                "2e03b65.d267b4a"
+            ]
+        ]
+    },
+    {
+        "id": "6cfc61d6.501c48",
+        "type": "file in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "filename": "C:\\Users\\alast\\Music\\SFX\\police_siren.mp3",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 810,
+        "y": 840,
+        "wires": [
+            [
+                "49618ec8.390958"
+            ]
+        ]
+    },
+    {
+        "id": "49618ec8.390958",
+        "type": "ui_audio",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "group": "d36d4324.1067f8",
+        "voice": "",
+        "always": "",
+        "x": 1080,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "2e03b65.d267b4a",
+        "type": "function",
+        "z": "858e5f8e.138f",
+        "name": "Red/Blue Lights",
+        "func": "for(var i=0; i<16; i++){\n    msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": 255\n        },\n        {\n            \"channel\": 2,\n            \"value\": (i%2 ? 255:0)\n        },\n        {\n            \"channel\": 3,\n            \"value\": 0\n        },\n        {\n            \"channel\": 4,\n            \"value\": (i%2 ? 0:255)\n        }\n    ]};\n  node.send(msg);  \n}\n\n// Now restore the brightess and RGB value\nvar previousColour = flow.get(\"colour\");\nvar previousBrightness = flow.get(\"brightness\");\nmsg.payload = {    \n    \"channels\": [            \n        {            \n            \"channel\": 1,           \n            \"value\": previousBrightness\n        },\n        {            \n            \"channel\": 2,           \n            \"value\": previousColour.r\n        },\n        {            \n            \"channel\": 3,           \n            \"value\": previousColour.g\n        },\n        {            \n            \"channel\": 4,           \n            \"value\": previousColour.b\n        },\n    ]\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 820,
+        "y": 800,
+        "wires": [
+            [
+                "514f57d7.86d56"
+            ]
+        ]
+    },
+    {
+        "id": "514f57d7.86d56",
+        "type": "delay",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "2",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1070,
+        "y": 800,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "f86ffa24.4668f8",
+        "type": "file in",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "filename": "C:\\Users\\alast\\Music\\SFX\\uv_appear.wav",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 800,
+        "y": 580,
+        "wires": [
+            [
+                "bae3f2a7.fa72e8"
+            ]
+        ]
+    },
+    {
+        "id": "bae3f2a7.fa72e8",
+        "type": "ui_audio",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "group": "d36d4324.1067f8",
+        "voice": "",
+        "always": "",
+        "x": 1080,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "17c6a1be.eb1306",
+        "type": "ui_switch",
+        "z": "858e5f8e.138f",
+        "name": "Spotlight",
+        "label": "Spotlight",
+        "tooltip": "",
+        "group": "d36d4324.1067f8",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 520,
+        "y": 960,
+        "wires": [
+            [
+                "b7588cae.286e68"
+            ]
+        ]
+    },
+    {
+        "id": "b7588cae.286e68",
+        "type": "switch",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "jsonata"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 660,
+        "y": 960,
+        "wires": [
+            [
+                "c24d3a5f.5fba3"
+            ],
+            [
+                "ac98849b.42228"
+            ]
+        ]
+    },
+    {
+        "id": "c24d3a5f.5fba3",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"channels\":[{\"channel\":15,\"value\":255},{\"channel\":16,\"value\":0},{\"channel\":17,\"value\":0},{\"channel\":18,\"value\":0},{\"channel\":19,\"value\":32}]}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 940,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "ac98849b.42228",
+        "type": "change",
+        "z": "858e5f8e.138f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"channels\":[{\"channel\":15,\"value\":0}]}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 980,
+        "wires": [
+            [
+                "c3ea7a22.245f98"
+            ]
+        ]
+    },
+    {
+        "id": "d36d4324.1067f8",
+        "type": "ui_group",
+        "name": "Sound and Lighting",
+        "tab": "3926ef5e.187228",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7f6727ec.9d40c8",
+        "type": "serial-port",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "3926ef5e.187228",
+        "type": "ui_tab",
+        "name": "Lighting",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]

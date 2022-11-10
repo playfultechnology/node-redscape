@@ -1,0 +1,275 @@
+[
+    {
+        "id": "2afbfb83.36bbdc",
+        "type": "tab",
+        "label": "Connect The Wires",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "45fde4a5.c3e22c",
+        "type": "ui_template",
+        "z": "2afbfb83.36bbdc",
+        "group": "161a09b.036e1f6",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content style=\"overflow-y:hidden;\">\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n  <span class=\"fa fa-2x fa-arrows-h\">&nbsp;</span>\n        <div ng-repeat=\"input in msg.payload.inputs track by $index\">\n            <span style=\"font-size: 2em;\">{{input.from}}  </span>\n            <span ng-class=\"input.connected == 1 ? 'fa fa-2x fa-arrows-h' : 'fa fa-2x '\">&nbsp;</span>\n            <span style=\"font-size: 2em;\">{{input.to}} </span>\n        </div>\n \n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 871,
+        "y": 174,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6588b704.17ba7",
+        "type": "json",
+        "z": "2afbfb83.36bbdc",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 352,
+        "y": 173,
+        "wires": [
+            [
+                "ee9b16d4.546128"
+            ]
+        ]
+    },
+    {
+        "id": "ee9b16d4.546128",
+        "type": "function",
+        "z": "2afbfb83.36bbdc",
+        "name": "Parse JSON and update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 596,
+        "y": 174,
+        "wires": [
+            [
+                "45fde4a5.c3e22c",
+                "8233f288.f213f8"
+            ]
+        ]
+    },
+    {
+        "id": "8175679.1ca7e98",
+        "type": "inject",
+        "z": "2afbfb83.36bbdc",
+        "name": "Solve",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"SOLVED\"}",
+        "payloadType": "json",
+        "x": 209.5,
+        "y": 279,
+        "wires": [
+            [
+                "6588b704.17ba7"
+            ]
+        ]
+    },
+    {
+        "id": "9b977ab2.22cee8",
+        "type": "inject",
+        "z": "2afbfb83.36bbdc",
+        "name": "Reset",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"state\":\"UNSOLVED\"}",
+        "payloadType": "json",
+        "x": 209,
+        "y": 240,
+        "wires": [
+            [
+                "6588b704.17ba7"
+            ]
+        ]
+    },
+    {
+        "id": "603486e5.d3ba38",
+        "type": "ui_button",
+        "z": "2afbfb83.36bbdc",
+        "name": "RESET",
+        "group": "161a09b.036e1f6",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 903,
+        "y": 126,
+        "wires": [
+            [
+                "8caa2041.66675"
+            ]
+        ]
+    },
+    {
+        "id": "2bd83394.044f6c",
+        "type": "change",
+        "z": "2afbfb83.36bbdc",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"1\",\"name\":\"Connect The Wires\",\"description\":\"Players must plug cables into the correct sockets\",\"inputs\":[{\"from\":1,\"to\":2,\"state\":true},{\"from\":3,\"to\":0,\"state\":true},{\"from\":4,\"to\":6,\"state\":false},{\"from\":5,\"to\":7,\"state\":true}],\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200.5,
+        "y": 74,
+        "wires": [
+            [
+                "6588b704.17ba7"
+            ]
+        ]
+    },
+    {
+        "id": "408a9034.ae484",
+        "type": "ui_button",
+        "z": "2afbfb83.36bbdc",
+        "name": "SOLVE",
+        "group": "161a09b.036e1f6",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 902,
+        "y": 86,
+        "wires": [
+            [
+                "8caa2041.66675"
+            ]
+        ]
+    },
+    {
+        "id": "ce5e1241.adb708",
+        "type": "link in",
+        "z": "2afbfb83.36bbdc",
+        "name": "",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 107.5,
+        "y": 74,
+        "wires": [
+            [
+                "2bd83394.044f6c"
+            ]
+        ]
+    },
+    {
+        "id": "becef49c.bbedf",
+        "type": "serial in",
+        "z": "2afbfb83.36bbdc",
+        "name": "",
+        "serial": "95729381.aa63e",
+        "x": 200.5,
+        "y": 172,
+        "wires": [
+            [
+                "6588b704.17ba7"
+            ]
+        ]
+    },
+    {
+        "id": "8caa2041.66675",
+        "type": "serial out",
+        "z": "2afbfb83.36bbdc",
+        "name": "",
+        "serial": "95729381.aa63e",
+        "x": 1084.5,
+        "y": 176,
+        "wires": []
+    },
+    {
+        "id": "8233f288.f213f8",
+        "type": "debug",
+        "z": "2afbfb83.36bbdc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 852.2666320800781,
+        "y": 238.58334350585938,
+        "wires": []
+    },
+    {
+        "id": "161a09b.036e1f6",
+        "type": "ui_group",
+        "name": "Connect the Wires",
+        "tab": "7d66f574.b154cc",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "95729381.aa63e",
+        "type": "serial-port",
+        "serialport": "COM9",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "7d66f574.b154cc",
+        "type": "ui_tab",
+        "name": "Puzzle Status Monitor",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

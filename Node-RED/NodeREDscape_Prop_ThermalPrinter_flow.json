@@ -1,0 +1,304 @@
+[
+    {
+        "id": "79f102f.6e1e8fc",
+        "type": "tab",
+        "label": "Thermal Printer",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4b394a72.5b0514",
+        "type": "ui_dropdown",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "a8157deb.70e9b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "options": [
+            {
+                "label": "",
+                "value": "Look Under the Table",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Did you Hear a Noise?",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Check your coat pockets",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 581,
+        "y": 160,
+        "wires": [
+            [
+                "6b9276aa.81b39"
+            ]
+        ]
+    },
+    {
+        "id": "8ed6cb8a.6bda9",
+        "type": "ui_button",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "group": "a8157deb.70e9b",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Send Hint",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-question-circle",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "ToDevice/Hint",
+        "x": 439,
+        "y": 232,
+        "wires": [
+            [
+                "21dbd41c.124c7c"
+            ]
+        ]
+    },
+    {
+        "id": "6b9276aa.81b39",
+        "type": "change",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "hint",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730.5,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "22af6e3c.d96baa",
+        "type": "comment",
+        "z": "79f102f.6e1e8fc",
+        "name": "Predefined Hints",
+        "info": "",
+        "x": 392,
+        "y": 124,
+        "wires": []
+    },
+    {
+        "id": "6119aa01.7008a4",
+        "type": "inject",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 297.5,
+        "y": 232,
+        "wires": [
+            [
+                "8ed6cb8a.6bda9"
+            ]
+        ]
+    },
+    {
+        "id": "56b8022d.ecc254",
+        "type": "inject",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Look Under the Table",
+        "payloadType": "str",
+        "x": 381.5,
+        "y": 164,
+        "wires": [
+            [
+                "4b394a72.5b0514"
+            ]
+        ]
+    },
+    {
+        "id": "c14e7006.2c61a",
+        "type": "serial out",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "serial": "d22f878e.fc259",
+        "x": 840,
+        "y": 232,
+        "wires": []
+    },
+    {
+        "id": "21dbd41c.124c7c",
+        "type": "function",
+        "z": "79f102f.6e1e8fc",
+        "name": "Construct Serial Message",
+        "func": "\n// Format into hh:mm:ss\nmsg.payload = \"PRINT>\" + flow.get(\"hint\") +\"\\r\\n\" + \"FEED>4\\r\\n\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 642.5,
+        "y": 232,
+        "wires": [
+            [
+                "c14e7006.2c61a",
+                "32c6d689.47b28a"
+            ]
+        ]
+    },
+    {
+        "id": "5c6c6672.b70fa8",
+        "type": "ui_template",
+        "z": "79f102f.6e1e8fc",
+        "group": "a8157deb.70e9b",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"'fa fa-print fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n</md-card-content>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 557.5,
+        "y": 98,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c7086de.2e194a",
+        "type": "change",
+        "z": "79f102f.6e1e8fc",
+        "name": "Config",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"Printer\",\"name\":\"Thermal Printer\",\"description\":\"Predefined hints can be sent to a thermal receipt printer\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 271,
+        "y": 98,
+        "wires": [
+            [
+                "5c6c6672.b70fa8"
+            ]
+        ]
+    },
+    {
+        "id": "bca49e2.3ae506",
+        "type": "link in",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 178,
+        "y": 98,
+        "wires": [
+            [
+                "2c7086de.2e194a"
+            ]
+        ]
+    },
+    {
+        "id": "4dba52c2.3fbcdc",
+        "type": "comment",
+        "z": "79f102f.6e1e8fc",
+        "name": "Initial configuration",
+        "info": "",
+        "x": 310.5,
+        "y": 57,
+        "wires": []
+    },
+    {
+        "id": "32c6d689.47b28a",
+        "type": "debug",
+        "z": "79f102f.6e1e8fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 852.5,
+        "y": 196,
+        "wires": []
+    },
+    {
+        "id": "a8157deb.70e9b",
+        "type": "ui_group",
+        "name": "Printer",
+        "tab": "bfff2c01.02fe6",
+        "order": 4,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "d22f878e.fc259",
+        "type": "serial-port",
+        "serialport": "COM14",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "bfff2c01.02fe6",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

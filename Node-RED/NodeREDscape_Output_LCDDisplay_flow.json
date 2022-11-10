@@ -1,0 +1,100 @@
+[
+    {
+        "id": "da8a8c10.478418",
+        "type": "tab",
+        "label": "LCD Display",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "45df61eb.57c15",
+        "type": "serial out",
+        "z": "da8a8c10.478418",
+        "name": "",
+        "serial": "6b19e0ae.df542",
+        "x": 585,
+        "y": 214,
+        "wires": []
+    },
+    {
+        "id": "735a3891.df50c8",
+        "type": "inject",
+        "z": "da8a8c10.478418",
+        "name": "",
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 190,
+        "y": 213,
+        "wires": [
+            [
+                "1a0259f3.b958ae"
+            ]
+        ]
+    },
+    {
+        "id": "1a0259f3.b958ae",
+        "type": "function",
+        "z": "da8a8c10.478418",
+        "name": "Construct Serial Message",
+        "func": "// global.timeRemaining is in milliseconds\nvar t = global.get(\"timeRemaining\") / 1000;\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\n\n// Format into hh:mm:ss\nmsg.payload = \"PRINT>Remaining: \" + (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2) +\"\\r\\n\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 387.5,
+        "y": 214,
+        "wires": [
+            [
+                "45df61eb.57c15"
+            ]
+        ]
+    },
+    {
+        "id": "6fbee0be.87511",
+        "type": "comment",
+        "z": "da8a8c10.478418",
+        "name": "Serial Output to Arduino with I2C LCD display",
+        "info": "",
+        "x": 382,
+        "y": 170,
+        "wires": []
+    },
+    {
+        "id": "5a43b840.c37628",
+        "type": "inject",
+        "z": "da8a8c10.478418",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "CLEAR>\\r\\n",
+        "payloadType": "str",
+        "x": 466,
+        "y": 255,
+        "wires": [
+            [
+                "45df61eb.57c15"
+            ]
+        ]
+    },
+    {
+        "id": "6b19e0ae.df542",
+        "type": "serial-port",
+        "serialport": "COM18",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    }
+]

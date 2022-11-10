@@ -1,0 +1,438 @@
+[
+    {
+        "id": "31a7412f.61a816",
+        "type": "tab",
+        "label": "Logging",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d36489b9.a97398",
+        "type": "file",
+        "z": "31a7412f.61a816",
+        "name": "Append to Log File",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1030,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c371def0.c41d4",
+        "type": "ui_switch",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "label": "Logging",
+        "tooltip": "",
+        "group": "eed1a8a6.8d8878",
+        "order": 4,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 560,
+        "y": 100,
+        "wires": [
+            [
+                "8ab5d029.5fa83"
+            ]
+        ]
+    },
+    {
+        "id": "8ab5d029.5fa83",
+        "type": "change",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "logging",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f0ef3a2.ba712c",
+        "type": "switch",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "property": "logging",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "511b6d84.e268c4"
+            ]
+        ]
+    },
+    {
+        "id": "511b6d84.e268c4",
+        "type": "function",
+        "z": "31a7412f.61a816",
+        "name": "Create Log Entry",
+        "func": "// Define a payload object with the fields required\n// for the log entry\nvar log_entry = {\n    \"time\": new Date(),\n    \"topic\": msg.topic,\n    \"payload\": msg.payload\n};\nmsg.payload = log_entry;\n\n// Specify the log file\nmsg.filename = \"/Node-REDscape/log.txt\";\n\n// Show the log entry below the editor node\nnode.status({fill:\"green\", shape:\"dot\", text:JSON.stringify(log_entry)});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 340,
+        "wires": [
+            [
+                "d36489b9.a97398",
+                "445cf6fe.4d8078"
+            ]
+        ]
+    },
+    {
+        "id": "d1a37b5c.759ed",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Toggle Logging On/Off",
+        "info": "",
+        "x": 600,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c2f79075.e3d64",
+        "type": "ui_template",
+        "z": "31a7412f.61a816",
+        "group": "eed1a8a6.8d8878",
+        "name": "Dashboard Log",
+        "order": 3,
+        "width": "30",
+        "height": 2,
+        "format": "<div ng-repeat=\"line in msg.payload track by $index\">\n  <div ng-style=\"{'margin-bottom':'1em'}\">{{line}}</div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 1240,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "445cf6fe.4d8078",
+        "type": "function",
+        "z": "31a7412f.61a816",
+        "name": "Update Log Display",
+        "func": "// Retrieve the existing log display\nvar logDisplay = flow.get(\"logDisplay\") || [];\n\n// Add the new log entry to the top \nlogDisplay.unshift(msg.payload);\n\n// Cap maximum size of the log display\nif(logDisplay.length > 100) {\n    // Remove the last element\n    logDisplay.pop();\n}\n\n// Save the updated log of entries\nflow.set(\"logDisplay\", logDisplay);\n\n// Pass the display along the flow\nmsg.payload = logDisplay;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 280,
+        "wires": [
+            [
+                "c2f79075.e3d64"
+            ]
+        ]
+    },
+    {
+        "id": "bc471132.4c2b7",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Output Node-Red log to Dashboard (UI)",
+        "info": "See http://flows.nodered.org/flow/6dc1a137075ad93cd7c00224681afeda",
+        "x": 461.5,
+        "y": 784,
+        "wires": []
+    },
+    {
+        "id": "f64afdb2.ae6738",
+        "type": "link in",
+        "z": "31a7412f.61a816",
+        "name": "Log",
+        "links": [
+            "938c3e12.54529"
+        ],
+        "x": 255,
+        "y": 340,
+        "wires": [
+            [
+                "4f0ef3a2.ba712c"
+            ]
+        ]
+    },
+    {
+        "id": "8fbd7f33.f5c84",
+        "type": "mosca in",
+        "z": "31a7412f.61a816",
+        "mqtt_port": "1883",
+        "mqtt_ws_port": "8080",
+        "name": "MOSCA",
+        "username": "",
+        "password": "",
+        "dburl": "",
+        "x": 209,
+        "y": 699,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83d55ec9.06d6f8",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "MQTT Server Configuration",
+        "info": "",
+        "x": 278.5,
+        "y": 661,
+        "wires": []
+    },
+    {
+        "id": "5e095423.54b874",
+        "type": "ui_template",
+        "z": "31a7412f.61a816",
+        "d": true,
+        "group": "",
+        "name": "CSS-style overrides",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n\n/* These style overrides assume the \"Dark Theme\" is being used */\n\n/*\nUsed for dynamically amending menu/tab items\n:root {\n    --main-color: \"blue\";\n}\n[aria-label~=\"Your tab Name\"] {\n    background-color: var(--main-color,green);\n}\n\n[aria-label~=\"Home\"] + div > p::after {\n    content: 'woot' ;\n*/\n\nbody.nr-dashboard-theme {\n background-color: #333333;\n font-family: Calibri;\n}\nbutton, html, input, select, textarea {\n font-family: Calibri;\n}\nbody.nr-dashboard-theme md-content md-card {\n background-color: #33333300;\n color: #d0d0d0;\n}\n\nbody.nr-dashboard-theme md-toolbar {\n background-image: linear-gradient(to right, #404040, #737373);\n box-shadow: 0px 1px 20px #0000008a;\n}\n.nr-dashboard-theme ui-card-panel {\n background-image: linear-gradient(to bottom right, #404040, #737373);\n border: 1px solid #555555;\n box-shadow: 0 0 20px #00000066;\n}\n\n.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n color: #2eb82e;\n text-shadow: 0 0 2px black;\n}\n\n.nr-dashboard-theme .nr-dashboard-form-button {\n background-image: linear-gradient(to bottom right, #8a8a8a6e, #00000070);\n background-color: #00ad03;\n color: #d0d0d0;\n text-shadow: 0 0 2px #525252;\n border-radius:6px;\n}\n\n.nr-dashboard-theme .nr-dashboard-button .md-button {\n background-image: linear-gradient(to bottom right, #8a8a8a6e, #00000070);\n background-color: #00ad03;\n color: #d0d0d0;\n text-shadow: 0 0 2px #525252;\n border-radius:6px;\n}\n.nr-dashboard-theme .nr-dashboard-button .md-button:hover {\n background-color: #00de00;\n}\n\n.nr-dashboard-theme .nr-dashboard-switch md-switch .md-thumb {\n background-image: linear-gradient(to bottom right, #48b349, #115009);\n}\n.nr-dashboard-button .md-button {\n box-shadow: 0 1px 3px 0 rgba(0,0,0,.26)!important;\n width: 100%!important;\n height: 100%!important;\n margin: 0!important;\n min-width: 0!important;\n min-height: 0!important;\n}\n.nr-dashboard-theme .nr-dashboard-slider .md-thumb:after {\n background-image: linear-gradient(to bottom right, #48b349, #115009);\n border-style: none;\n}\n.nr-dashboard-theme .nr-dashboard-numeric .value {\n background-color: #33333300;\n color:#d0d0d0;\n}\n\n.nr-dashboard-numeric .value {\n font-weight: 700;\n text-align: center;\n border: 0;\n}\n\n.nr-dashboard-form {\n display: inline-block;\n width: 100%;\n overflow-y: visible;\n}\n#SETTINGS_TEATED_cards {\n min-height: 260px;\n}\n\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "global",
+        "x": 935,
+        "y": 832,
+        "wires": [
+            []
+        ],
+        "info": "CSS Style overrides to the Node-RED Dark theme.\n\nFrom the Dashboard node information panel (View->Dashboard), select\n - Site: Options -> Node-RED theme everywhere\n - Theme: Style -> Dark"
+    },
+    {
+        "id": "fe770773.fcddd8",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Dashboard Styling",
+        "info": "",
+        "x": 925,
+        "y": 793,
+        "wires": []
+    },
+    {
+        "id": "b1efbe93.6f8ea",
+        "type": "catch",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 685.5,
+        "y": 696,
+        "wires": [
+            [
+                "7ad70abc.0f24a4"
+            ]
+        ]
+    },
+    {
+        "id": "7ad70abc.0f24a4",
+        "type": "debug",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 846.5,
+        "y": 724,
+        "wires": []
+    },
+    {
+        "id": "81de3a97.ce63d8",
+        "type": "complete",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "scope": [],
+        "uncaught": false,
+        "x": 676.5,
+        "y": 736,
+        "wires": [
+            [
+                "7ad70abc.0f24a4"
+            ]
+        ]
+    },
+    {
+        "id": "a1a518ec.9afe28",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Exception Handling",
+        "info": "",
+        "x": 714,
+        "y": 652,
+        "wires": []
+    },
+    {
+        "id": "92a3d612.7206a",
+        "type": "ui_button",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "group": "eed1a8a6.8d8878",
+        "order": 1,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "label": "Clear Log",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 560,
+        "y": 220,
+        "wires": [
+            [
+                "bf085b.4d65d7a8"
+            ]
+        ]
+    },
+    {
+        "id": "bf085b.4d65d7a8",
+        "type": "change",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "logDisplay",
+                "pt": "flow",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "445cf6fe.4d8078"
+            ]
+        ]
+    },
+    {
+        "id": "75358499.0d6b64",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Clear the Log Display",
+        "info": "",
+        "x": 600,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9593409f.b9608",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Log event",
+        "info": "",
+        "x": 260,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e4d4ff91.d3441",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Only continue if logging enabled",
+        "info": "",
+        "x": 490,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "3cf3cc1a.468f24",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Specify fields to log",
+        "info": "",
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1052466c.ae07d2",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Send Log to Dashboard",
+        "info": "",
+        "x": 1050,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a9e1b02b.620a08",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Send Log to File",
+        "info": "",
+        "x": 1020,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "eed1a8a6.8d8878",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "b9a603a9.4c8c9",
+        "order": 1,
+        "disp": false,
+        "width": "30",
+        "collapse": false
+    },
+    {
+        "id": "b9a603a9.4c8c9",
+        "type": "ui_tab",
+        "name": "Logging",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

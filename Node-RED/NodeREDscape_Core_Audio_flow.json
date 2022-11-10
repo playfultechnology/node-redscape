@@ -1,0 +1,343 @@
+[
+    {
+        "id": "a1744621.5dceb",
+        "type": "tab",
+        "label": "Audio",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cc2d4094.e3c8e8",
+        "type": "ui_audio",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "group": "f7fbc697.bfeb58",
+        "voice": "",
+        "always": true,
+        "x": 766,
+        "y": 127,
+        "wires": []
+    },
+    {
+        "id": "3bbc7cf8.9f5fdc",
+        "type": "file in",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "filename": "C:\\Users\\alast\\Music\\Downfall.mp3",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 370,
+        "y": 102,
+        "wires": [
+            [
+                "cc2d4094.e3c8e8"
+            ]
+        ]
+    },
+    {
+        "id": "a7c77d0e.f04ff8",
+        "type": "change",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 551,
+        "y": 152,
+        "wires": [
+            [
+                "cc2d4094.e3c8e8"
+            ]
+        ]
+    },
+    {
+        "id": "dd9074ae.3ad73",
+        "type": "ui_button",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "group": "f7fbc697.bfeb58",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Play BGM",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-play",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 153.5,
+        "y": 102,
+        "wires": [
+            [
+                "3bbc7cf8.9f5fdc"
+            ]
+        ]
+    },
+    {
+        "id": "6df4da8d.432634",
+        "type": "Mic",
+        "z": "a1744621.5dceb",
+        "d": true,
+        "name": "",
+        "outputPayloadType": "stream",
+        "endian": "little",
+        "bitwidth": "16",
+        "encoding": "signed-integer",
+        "channels": "1",
+        "device": "plughw:1,0",
+        "rate": "22050",
+        "silenceTimeout": 0,
+        "exitOnSilence": false,
+        "debug": false,
+        "active": false,
+        "x": 1218.5,
+        "y": 293,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f50df463.39cf08",
+        "type": "ui_button",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "group": "f7fbc697.bfeb58",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Stop BGM",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-stop",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 143,
+        "y": 151,
+        "wires": [
+            [
+                "a7c77d0e.f04ff8"
+            ]
+        ]
+    },
+    {
+        "id": "76f3661d.ce70e",
+        "type": "ui_dropdown",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "f7fbc697.bfeb58",
+        "order": 4,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "options": [
+            {
+                "label": "Heavy Footsteps",
+                "value": "C:\\Users\\alast\\Music\\sfx\\heavy_footsteps.wav",
+                "type": "str"
+            },
+            {
+                "label": "Door Creak",
+                "value": "C:\\Users\\alast\\Music\\sfx\\gate_creak.mp3",
+                "type": "str"
+            },
+            {
+                "label": "Music Box",
+                "value": "C:\\Users\\alast\\Music\\sfx\\musicbox.mp3",
+                "type": "str"
+            },
+            {
+                "label": "Floorboard creak",
+                "value": "C:\\Users\\alast\\Music\\sfx\\floorboard_creak.wav",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "475792de.f78e84"
+            ]
+        ]
+    },
+    {
+        "id": "3a90371d.7a109",
+        "type": "ui_button",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "group": "f7fbc697.bfeb58",
+        "order": 5,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Play SFX",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-volume-up",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 160,
+        "y": 440,
+        "wires": [
+            [
+                "7688cb75.84e59c"
+            ]
+        ]
+    },
+    {
+        "id": "b38903b5.8467b8",
+        "type": "file in",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "filename": "",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "baae23f.9184d6"
+            ]
+        ]
+    },
+    {
+        "id": "baae23f.9184d6",
+        "type": "ui_audio",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "group": "70e5d1d.359a23",
+        "voice": "",
+        "always": false,
+        "x": 700,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7688cb75.84e59c",
+        "type": "change",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 440,
+        "wires": [
+            [
+                "b38903b5.8467b8"
+            ]
+        ]
+    },
+    {
+        "id": "475792de.f78e84",
+        "type": "change",
+        "z": "a1744621.5dceb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0cae11d.284fe8",
+        "type": "comment",
+        "z": "a1744621.5dceb",
+        "name": "Create a dashboard drop-down with list of SFX to choose from",
+        "info": "",
+        "x": 330,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "cf073f50.97a6c8",
+        "type": "comment",
+        "z": "a1744621.5dceb",
+        "name": "When button pressed, retrieve selected SFX file and send to audio out",
+        "info": "",
+        "x": 350,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f7fbc697.bfeb58",
+        "type": "ui_group",
+        "name": "Audio",
+        "tab": "bfff2c01.02fe6",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "70e5d1d.359a23",
+        "type": "ui_group",
+        "name": "Game Status",
+        "tab": "bfff2c01.02fe6",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "bfff2c01.02fe6",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
