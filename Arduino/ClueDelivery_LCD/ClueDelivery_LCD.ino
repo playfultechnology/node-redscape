@@ -1,32 +1,38 @@
+/**
+ * ClueDelivery_LCD
+ *
+ * A simple sketch that takes a character string supplied over serial connection
+ * and prints it to an LCD display, inserting line breaks to avoid splitting words
+ *
+ */
+ 
 // INCLUDES
 // Wire library required for any modules that use I2C communication
 #include <Wire.h>
-// Library for LCD displays
+// For LCD displays. See https://github.com/mathertel/LiquidCrystal_PCF8574
 #include <LiquidCrystal_PCF8574.h>
+// For processing serial commands. See https://github.com/kroimon/Arduino-SerialCommand
 #include "src/SerialCommand/SerialCommand.h"
 
-// CONSTANTS
-char str[] ="Hello World! Here is some text. I need them to split into multiple lines...";
-
 // GLOBALS
-// PCF8574 backpack typically uses I2C address of 0x27
+// PCF8574 backpack typically uses I2C address of either 0x27 (for TI chips) or  0x3F (NXP chips)
 LiquidCrystal_PCF8574 lcd(0x27);
 // SerialCommand object helps process commands received over serial connection
 SerialCommand sCmd;
 
 void setup() {
   // Serial connection required for incoming commands as well as debug output
-  Serial.begin(9600);
+  Serial.begin(115200);
+	Serial.println(__FILE__ __DATE__);
  
   // Initialise the I2C interface
   Wire.begin();  
   // Initialise the display
   lcd.begin(20,4);
-  lcd.setBacklight(2128);
+  lcd.setBacklight(255);
   lcd.clear();
 
-  // Register commmands and their associated callback functions
-
+  // Register serial commmands and their associated callback functions
   // CLEAR command is straightforward
   sCmd.addCommand("CLEAR", clearDisplay);
 
@@ -35,6 +41,7 @@ void setup() {
     char *arg;
     // Retrieve the text passed after the PRINT command
     arg = sCmd.next();
+		// Something was sent
     if(arg != NULL) { 
       printMessage(arg);
       Serial.print("Received PRINT command: ");
@@ -45,6 +52,11 @@ void setup() {
     }
   }
   );
+}
+
+void loop(){
+  // Read serial input and compare to list of registered commands
+  sCmd.readSerial();
 }
 
 /*
@@ -71,11 +83,6 @@ void printMessage(char *msg) {
 
 void clearDisplay() {
   lcd.clear();
-}
-
-void loop(){
-  // Read serial input and compare to list of registered commands
-  sCmd.readSerial();
 }
 
 // Helper function to split string avoiding word breaks

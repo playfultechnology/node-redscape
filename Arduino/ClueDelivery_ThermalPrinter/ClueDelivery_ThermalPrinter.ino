@@ -79,13 +79,13 @@
 // CONSTANTS
 #ifdef USE_WIFI
   // SSID of the network to join
-  const char* ssid = "VodafoneConnect53686628";
+  const char* ssid = "";
   // Wi-Fi password if required
-  const char* password = "8p2ty6329x2mk6v";
+  const char* password = "";
 #endif
 #if defined(USE_WIFI) || defined(USE_ETHERNET)
   // The IP address of the MQTT server
-  const IPAddress server(192,168,1,18);
+  const IPAddress server(192,168,0,18);
   // The port on which the MQTT server is running
   const int port = 1883;
   // Unique ID used to identify this device on the MQTT network
@@ -100,11 +100,11 @@ PlayfulTechnology::ThermalPrinter printer(Serial2);
 #ifdef USE_ETHERNET 
   EthernetClient networkClient;
   // Create a propcontrol object based on the chosen network
-  PubSubClient pc(server, port, networkClient);
+  PubSubClient MQTTclient(server, port, networkClient);
 #elif defined(USE_WIFI)  
   WiFiClient networkClient;
   // Create a propcontrol object based on the chosen network
-  PubSubClient pc(server, port, networkClient);
+  PubSubClient MQTTclient(server, port, networkClient);
 #elif defined(USE_SERIAL)
   // Buffer must be large enough to store the number of characters in the text message to print
   CmdBuffer<200> serialCmdBuffer;
@@ -118,11 +118,15 @@ PlayfulTechnology::ThermalPrinter printer(Serial2);
 void setup(){
   // Serial connection used to output info to Serial Monitor and, if USE_SERIAL
   // specified, to receive print commands
-  Serial.begin(9600);
+  Serial.begin(115200);
+	Serial.println(__FILE__ __DATE__);
   // Secondary serial connection used to communicate between the Arduino and the printer
   Serial2.begin(9600);
   // Initialise the printer settings
   printer.init();
+  // Set font size [S,M,L]
+  printer.setSize('S');
+	
   // Initialise the LED pin as an output
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -161,7 +165,7 @@ void setup(){
       Serial.println(Ethernet.localIP());
     #endif
     // Specify the callback that processes any messages received on an MQTT topic to which we are subscribed
-    pc.setCallback([](char* topic, byte* payload, unsigned int length) {
+    MQTTclient.setCallback([](char* topic, byte* payload, unsigned int length) {
       // Copy the payload received to a character string
       char msg[200];
       memcpy(msg, payload, length);
@@ -194,9 +198,6 @@ void setup(){
     });
   #endif
 
-  // Set font size [S,M,L]
-  printer.setSize('S');
-
   Serial.println(F("Setup Complete"));
 }
 
@@ -205,23 +206,23 @@ void loop(){
     // Check for new char on serial and call function if command was entered
     serialCmdCallback.updateCmdProcessing(&serialCmdParser, &serialCmdBuffer, &Serial);
   #else
-    // Ensure there's a connection to the MQTT server
-    while(!pc.connected()) {
-      if(pc.connect(deviceID)) {
-        // Subscribe to topics meant for this device
-        char topic[32];
-        snprintf(topic, 32, "ToDevice/%s/#", deviceID);
-        pc.subscribe(topic);
-        Serial.println(F("Connected to MQTT server"));
-      } else {
-        Serial.print(F("Could not connect to MQTT server, rc="));
-        Serial.println(pc.state());
-        // Wait 5 seconds before retrying
-        delay(5000);
-      }
+	// Ensure there's a connection to the MQTT server
+	while(!MQTTclient.connected()) {
+		if(MQTTclient.connect(deviceID)) {
+			// Subscribe to topics meant for this device
+			char topic[32];
+			snprintf(topic, 32, "ToDevice/%s/#", deviceID);
+			MQTTclient.subscribe(topic);
+			Serial.println(F("Connected to MQTT server"));
+		} else {
+			Serial.print(F("Could not connect to MQTT server, rc="));
+      Serial.println(MQTTclient.state());
+      // Wait 5 seconds before retrying
+      delay(5000);
     }
-    // Call the main MQTT loop to check for and publish messages
-    pc.loop();
+  }
+  // Call the main MQTT loop to check for and publish messages
+  MQTTclient.loop();
   #endif
 
   // Delay a moment
