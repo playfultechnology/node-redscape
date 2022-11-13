@@ -29,11 +29,11 @@
 // USE_SERIAL2
 // USE_SERIAL3
 // USE_SOFTWARESERIAL 
-#define PHYSICAL_LAYER USE_ETHERNET
+#define PHYSICAL_LAYER USE_WIFI
 
 // Define the transport/application protocol layer
 // Valid values are USE_TCP, USE_UDP, USE_SERIAL, USE_MQTT (over TCP)
-#define PROTOCOL USE_UDP
+#define PROTOCOL USE_MQTT
  
 // INCLUDES
 #include "Arduino.h"
@@ -76,7 +76,7 @@
 // CONSTANTS  
 // Unique name of this device, used as client ID to connect to MQTT server
 // and also topic name for messages published to this device
-const char* deviceID = "Keypad";
+const char* deviceID = "Button";
 #if (PHYSICAL_LAYER == USE_ETHERNET)
   // Enter a MAC address for your controller below.
   // Newer Ethernet shields have a MAC address printed on a sticker on the shield
@@ -221,10 +221,11 @@ void pc_sendUpdate(const JsonDocument& jsonDoc) {
       serializeJson(jsonDoc, networkClient);
     }
   #elif (PROTOCOL == USE_UDP)
-    UDP.beginPacket(server, port);
-    serializeJson(jsonDoc, UDP);
-    UDP.println("");
+    /*
+    UDP.beginPacket(Udp.remoteIP(), Udp.remotePort());
+    UDP.write(ReplyBuffer);
     UDP.endPacket();
+    */
 	#elif (PROTOCOL == USE_SERIAL)
 		serializeJson(jsonDoc, pcSerial);
 		Serial.println("");
@@ -243,6 +244,7 @@ void pc_receiveUpdate(const JsonDocument& jsonDoc) {
   Serial.println("");
 }
 
+
 void pc_loop(){
   #if (PROTOCOL == USE_TCP)
     // Check if there is an incoming client  
@@ -254,7 +256,7 @@ void pc_loop(){
     // If there is a client...
     if(client) {
       // As long as the client is still connected
-      while(client.connected()) {
+      while (client.connected()) {
         // And there are bytes to read from the request
         if (client.available()) {
           // Read the very first line of the request
@@ -265,8 +267,10 @@ void pc_loop(){
           if (strncmp_P(line, PSTR("POST"), strlen("POST")) == 0) {
             // If so, skip until we get to the blank line that separates the header from the body
             client.find((char*) "\r\n\r\n");
-            // And then deserialize the rest. See https://arduinojson.org/v6/assistant/ for size
-            StaticJsonDocument<128> jsonDoc;
+            // And then deserialize the rest into a 
+            // https://arduinojson.org/v6/assistant/
+            const int JsonSize = JSON_OBJECT_SIZE(2) + JSON_ARRAY_SIZE(4);
+            StaticJsonDocument<JsonSize> jsonDoc;
             // See https://arduinojson.org/v5/faq/can-i-parse-data-from-a-stream/
             deserializeJson(jsonDoc, client);
             // Act upon update received
@@ -289,12 +293,14 @@ void pc_loop(){
       }
       Serial.print(", port ");
       Serial.println(UDP.remotePort());
-  
       // read the packet into packetBufffer
       char packetBuffer[40];
       UDP.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
       Serial.println("Contents:");
       Serial.println(packetBuffer);
+
+      // Act upon update received
+      pc_receiveUpdate(jsonDoc); 
     }
   #elif (PROTOCOL == USE_SERIAL)
     if(pcSerial.available()){
@@ -317,32 +323,33 @@ void pc_loop(){
         // Print error to the "debug" serial port
         Serial.print("deserializeJson() returned ");
         Serial.println(err.c_str());
-        // Flush all bytes in the serial port buffer
+    
+        // Flush all bytes in the "link" serial port buffer
         while (pcSerial.available() > 0)
           pcSerial.read();
       }
     }
 	#elif (PROTOCOL == USE_MQTT)
     // MQTT connection must be regularly serviced to process incoming/outgoing messages
-		if(!MQTTclient.connected()) { 
+		if (!MQTTclient.connected()) { 
       // Loop until we're reconnected
-      while(!MQTTclient.connected()) {
-         Serial.print(F("Connecting to MQTT server..."));
-        if(MQTTclient.connect(deviceID)) {
-          // Subscribe to topics specifically for this device
-          snprintf(topic, 32, "ToDevice/%s", deviceID);
-          MQTTclient.subscribe(topic);
-          // Subscribe to topics intended for ALL devices on network
-          MQTTclient.subscribe("ToDevice/All");
-        }
-        else {
-          Serial.print(F("Failed to connect to MQTT, reason="));
+      while (!MQTTclient.connected()) {
+        if (MQTTclient.connect(deviceID)) {
+          // ... and resubscribe
+          // To receive messages, must have subscribed to at least one topic
+      Serial.print(F("Subscribing to topics...."));
+      snprintf(topic, 32, "ToDevice/%s", deviceID);
+      MQTTclient.subscribe(topic);
+      // Subscribe to topics intended for ALL devices on network
+      MQTTclient.subscribe("ToDevice/All");
+        } else {
+          Serial.print("failed, rc=");
           Serial.print(MQTTclient.state());
-          Serial.println(F(" . Trying again in 5 seconds");
+          Serial.println(" try again in 5 seconds");
+          // Wait 5 seconds before retrying
           delay(5000);
         }
       }
-      Serial.println(F("Connected!"));
      }
     MQTTclient.loop();
   #endif
