@@ -1,31 +1,46 @@
 /**
- * Node-Redscape Prop Control - Button
+ * Node-Redscape example - MQTT over WiFi
+ * Copyright (c)2022 Alastair Aitchison, Playful Technology
  * 
  * Example code for a simple button escape room puzzle integrated with Node-RED GM control.
- *
- * This code is designed to be run on an Arduino-type device (Uno/Nano/ESP32/ESP8266 etc.) 
- * connected, via a serial, wired ethernet, or Wi-Fi to a Node-RED server, using JSON-formatted 
- * messages delivered over Serial/MQTT/TCP/UDP. 
- * 
- * A gamesmaster can use the Node-RED dashboard to monitor all inputs the players make, 
- * reset, and override the puzzle state remotely.
- * 
- * Tested on:
- * Arduino Nano / Arduino UNO / Arduino Mega / Wemos D1 Mini / Devkit ESP32 v1 (via USB Serial)
- * Arduino UNO (via Ethernet Shield)
- * Wemos D1 Mini / Devkit ESP32 v1 (via Wi-Fi)
  */
 
 // INCLUDES
-#include <Wire.h>
-#include <LiquidCrystal_PCF8574.h>
+// Include appropriate WiFi system library depending on target platform
+#if defined(ESP8266)
+  #include <ESP8266WiFi.h>
+  // ESP32 or Arduino
+#elif defined(ESP32) || defined(__AVR__)
+  #include <WiFi.h>
+#endif
+// MQTT client, see https://github.com/knolleary/pubsubclient
+#include <PubSubClient.h>
+// JSON serialisation, see https://arduinojson.org/
 #include <ArduinoJson.h>
-#include "PropControl.h"
+// Button input, see https://github.com/LennartHennigs/Button2
 #include <Button2.h>
 
 // CONSTANTS
-// Define the characters in the matrix
+// Define the pin to which button is attached
 const byte buttonPin = D3;
+// Unique name of this device, used as client ID to connect to MQTT server
+// and also topic name for messages published to this device
+const char* deviceID = "Button";
+// SSID of the network to join
+const char* wifiSSID = "Hyrule";
+// Wi-Fi password if required
+const char* wifiPassword = "molly1869";
+// IP address of remote MQTT server
+const IPAddress remoteServer(192, 168, 0, 136);
+const int remotePort = 1883;
+// Instance of the WiFi client object
+WiFiClient networkClient;
+// MQTT client based on the chosen network
+PubSubClient mqttClient(server, port, networkClient);
+// A re-usable buffer to hold MQTT messages to be sent/have been received
+char mqttMsg[128];
+// The MQTT topic in which to publish a message
+char mqttTopic[32];
 
 // GLOBALS
 Button2 button;
@@ -57,7 +72,27 @@ void setup(){
   // Set the puzzle state
   state = State::Running;
 
-  pc_setup();
+  // Start the WiFi connection
+  Serial.print(F("Connecting to WiFi"));
+  #if defined(ESP8266)
+    WiFi.mode(WIFI_STA);
+  #endif
+  WiFi.begin(wifiSSID, wifiPassword);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println(F("done."));
+  Serial.print(F("IP Address: "));
+  Serial.println(WiFi.localIP());
+
+  mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
+    // Note best practice is NOT to have a reusable JSON document, but create a new one each time it is needed
+    // https://arduinojson.org/v6/assistant/
+    StaticJsonDocument<64> jsonDoc;      
+    deserializeJson(jsonDoc, payload, length);
+    pc_receiveUpdate(jsonDoc);
+  });
 }
 
 void click(Button2& btn) {
@@ -91,6 +126,29 @@ void doubleClick(Button2& btn) {
 void loop(){
   button.loop();
 
-  // Important - call this on every iteration of loop
-  pc_loop();
+  // MQTT connection must be regularly serviced to process incoming/outgoing messages
+  if(!mqttClient.connected()) { 
+    // Loop until we're reconnected
+    while(!mqttClient.connected()) {
+      Serial.print(F("Connecting to MQTT server..."));
+      if(mqttClient.connect(deviceID)) {
+        // Subscribe to topics specifically for this device
+        snprintf(topic, 32, "ToDevice/%s", deviceID);
+        mqttClient.subscribe(topic);
+        // Subscribe to topics intended for ALL devices on network
+        mqttClient.subscribe("ToDevice/All");
+      }
+      else {
+        char buffer[30];
+        Serial.print(F("Failed to connect to MQTT server at IP %s:port %d\n", remoteServer.toString().c_str(), remotePort);
+        Serial.print(buffer);
+        Serial.print(F(", reason="));
+        Serial.print(MQTTclient.state());
+        Serial.println(F(" . Trying again in 5 seconds");
+        delay(5000);
+      }
+    }
+    Serial.println(F("Connected!"));
+  }
+  mqttClient.loop();
 }

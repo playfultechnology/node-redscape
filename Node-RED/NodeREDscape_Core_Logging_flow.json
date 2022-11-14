@@ -16,8 +16,8 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1030,
-        "y": 400,
+        "x": 1190,
+        "y": 420,
         "wires": [
             []
         ]
@@ -115,8 +115,8 @@
         "y": 340,
         "wires": [
             [
-                "d36489b9.a97398",
-                "445cf6fe.4d8078"
+                "445cf6fe.4d8078",
+                "7831a90e10f09e75"
             ]
         ]
     },
@@ -166,22 +166,17 @@
         ]
     },
     {
-        "id": "bc471132.4c2b7",
-        "type": "comment",
-        "z": "31a7412f.61a816",
-        "name": "Output Node-Red log to Dashboard (UI)",
-        "info": "See http://flows.nodered.org/flow/6dc1a137075ad93cd7c00224681afeda",
-        "x": 461.5,
-        "y": 784,
-        "wires": []
-    },
-    {
         "id": "f64afdb2.ae6738",
         "type": "link in",
         "z": "31a7412f.61a816",
         "name": "Log",
         "links": [
-            "938c3e12.54529"
+            "171ea618.d8a322",
+            "8a4dffa5.a7935",
+            "b32763f3.44a74",
+            "c9289f5e.1fb3b8",
+            "dd31298f.6fb86",
+            "e70201fd67e55953"
         ],
         "x": 255,
         "y": 340,
@@ -192,71 +187,14 @@
         ]
     },
     {
-        "id": "8fbd7f33.f5c84",
-        "type": "mosca in",
-        "z": "31a7412f.61a816",
-        "mqtt_port": "1883",
-        "mqtt_ws_port": "8080",
-        "name": "MOSCA",
-        "username": "",
-        "password": "",
-        "dburl": "",
-        "x": 209,
-        "y": 699,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "83d55ec9.06d6f8",
-        "type": "comment",
-        "z": "31a7412f.61a816",
-        "name": "MQTT Server Configuration",
-        "info": "",
-        "x": 278.5,
-        "y": 661,
-        "wires": []
-    },
-    {
-        "id": "5e095423.54b874",
-        "type": "ui_template",
-        "z": "31a7412f.61a816",
-        "d": true,
-        "group": "",
-        "name": "CSS-style overrides",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "<style>\n\n/* These style overrides assume the \"Dark Theme\" is being used */\n\n/*\nUsed for dynamically amending menu/tab items\n:root {\n    --main-color: \"blue\";\n}\n[aria-label~=\"Your tab Name\"] {\n    background-color: var(--main-color,green);\n}\n\n[aria-label~=\"Home\"] + div > p::after {\n    content: 'woot' ;\n*/\n\nbody.nr-dashboard-theme {\n background-color: #333333;\n font-family: Calibri;\n}\nbutton, html, input, select, textarea {\n font-family: Calibri;\n}\nbody.nr-dashboard-theme md-content md-card {\n background-color: #33333300;\n color: #d0d0d0;\n}\n\nbody.nr-dashboard-theme md-toolbar {\n background-image: linear-gradient(to right, #404040, #737373);\n box-shadow: 0px 1px 20px #0000008a;\n}\n.nr-dashboard-theme ui-card-panel {\n background-image: linear-gradient(to bottom right, #404040, #737373);\n border: 1px solid #555555;\n box-shadow: 0 0 20px #00000066;\n}\n\n.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n color: #2eb82e;\n text-shadow: 0 0 2px black;\n}\n\n.nr-dashboard-theme .nr-dashboard-form-button {\n background-image: linear-gradient(to bottom right, #8a8a8a6e, #00000070);\n background-color: #00ad03;\n color: #d0d0d0;\n text-shadow: 0 0 2px #525252;\n border-radius:6px;\n}\n\n.nr-dashboard-theme .nr-dashboard-button .md-button {\n background-image: linear-gradient(to bottom right, #8a8a8a6e, #00000070);\n background-color: #00ad03;\n color: #d0d0d0;\n text-shadow: 0 0 2px #525252;\n border-radius:6px;\n}\n.nr-dashboard-theme .nr-dashboard-button .md-button:hover {\n background-color: #00de00;\n}\n\n.nr-dashboard-theme .nr-dashboard-switch md-switch .md-thumb {\n background-image: linear-gradient(to bottom right, #48b349, #115009);\n}\n.nr-dashboard-button .md-button {\n box-shadow: 0 1px 3px 0 rgba(0,0,0,.26)!important;\n width: 100%!important;\n height: 100%!important;\n margin: 0!important;\n min-width: 0!important;\n min-height: 0!important;\n}\n.nr-dashboard-theme .nr-dashboard-slider .md-thumb:after {\n background-image: linear-gradient(to bottom right, #48b349, #115009);\n border-style: none;\n}\n.nr-dashboard-theme .nr-dashboard-numeric .value {\n background-color: #33333300;\n color:#d0d0d0;\n}\n\n.nr-dashboard-numeric .value {\n font-weight: 700;\n text-align: center;\n border: 0;\n}\n\n.nr-dashboard-form {\n display: inline-block;\n width: 100%;\n overflow-y: visible;\n}\n#SETTINGS_TEATED_cards {\n min-height: 260px;\n}\n\n</style>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "templateScope": "global",
-        "x": 935,
-        "y": 832,
-        "wires": [
-            []
-        ],
-        "info": "CSS Style overrides to the Node-RED Dark theme.\n\nFrom the Dashboard node information panel (View->Dashboard), select\n - Site: Options -> Node-RED theme everywhere\n - Theme: Style -> Dark"
-    },
-    {
-        "id": "fe770773.fcddd8",
-        "type": "comment",
-        "z": "31a7412f.61a816",
-        "name": "Dashboard Styling",
-        "info": "",
-        "x": 925,
-        "y": 793,
-        "wires": []
-    },
-    {
         "id": "b1efbe93.6f8ea",
         "type": "catch",
         "z": "31a7412f.61a816",
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 685.5,
-        "y": 696,
+        "x": 640,
+        "y": 560,
         "wires": [
             [
                 "7ad70abc.0f24a4"
@@ -274,8 +212,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 846.5,
-        "y": 724,
+        "x": 810,
+        "y": 580,
         "wires": []
     },
     {
@@ -285,8 +223,8 @@
         "name": "",
         "scope": [],
         "uncaught": false,
-        "x": 676.5,
-        "y": 736,
+        "x": 630,
+        "y": 600,
         "wires": [
             [
                 "7ad70abc.0f24a4"
@@ -299,8 +237,8 @@
         "z": "31a7412f.61a816",
         "name": "Exception Handling",
         "info": "",
-        "x": 714,
-        "y": 652,
+        "x": 670,
+        "y": 520,
         "wires": []
     },
     {
@@ -412,8 +350,143 @@
         "z": "31a7412f.61a816",
         "name": "Send Log to File",
         "info": "",
-        "x": 1020,
-        "y": 360,
+        "x": 1180,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9d634736069dcc14",
+        "type": "ui_switch",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "label": "Save to Logfile",
+        "tooltip": "",
+        "group": "eed1a8a6.8d8878",
+        "order": 4,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1000,
+        "y": 100,
+        "wires": [
+            [
+                "8b08d1338508da81"
+            ]
+        ]
+    },
+    {
+        "id": "7831a90e10f09e75",
+        "type": "switch",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "property": "useLogfile",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 970,
+        "y": 440,
+        "wires": [
+            [
+                "d36489b9.a97398"
+            ]
+        ]
+    },
+    {
+        "id": "8b08d1338508da81",
+        "type": "change",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "useLogfile",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1052553f8c848d66",
+        "type": "mqtt in",
+        "z": "31a7412f.61a816",
+        "name": "",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "125f6c81.60151b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 330,
+        "y": 560,
+        "wires": [
+            [
+                "e70201fd67e55953"
+            ]
+        ]
+    },
+    {
+        "id": "e70201fd67e55953",
+        "type": "link out",
+        "z": "31a7412f.61a816",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "f64afdb2.ae6738"
+        ],
+        "x": 435,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "92140a2795cba5bb",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "MQTT traffic",
+        "info": "",
+        "x": 350,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ad8d062aaf3ea55f",
+        "type": "comment",
+        "z": "31a7412f.61a816",
+        "name": "Save log to file",
+        "info": "",
+        "x": 1000,
+        "y": 60,
         "wires": []
     },
     {
@@ -425,6 +498,29 @@
         "disp": false,
         "width": "30",
         "collapse": false
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "name": "MQTT Server",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
     },
     {
         "id": "b9a603a9.4c8c9",
