@@ -43,6 +43,7 @@ void setup(){
 	Serial.println(__FILE__ __DATE__);
 
   lcd.begin(16, 2);
+  lcd.setBacklight(128);
   lcd.print("Hello LCD");
 
   pinMode(LED_BUILTIN, OUTPUT);
