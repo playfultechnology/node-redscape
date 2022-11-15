@@ -14,13 +14,11 @@
 #include <PubSubClient.h>
 // JSON serialisation, see https://arduinojson.org/
 #include <ArduinoJson.h>
-// Button input, see https://github.com/LennartHennigs/Button2
-#include <Button2.h>
 
 // CONSTANTS
 // Unique name of this device, used as client ID to connect to MQTT server
 // and also topic name for messages published to this device
-const char* deviceID = "Button-1";
+const char* deviceID = "RFID-1";
 // SSID of the network to join
 const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
@@ -30,8 +28,6 @@ const char* remoteMQTTServer = "192.168.0.136";
 const int remoteMQTTPort = 1883;
 const char* remoteMQTTUser = "user";
 const char* remoteMQTTPass = "pass";
-// Define the pin to which button is attached
-const byte buttonPin = D3;
 
 // GLOBALS
 // Instance of the WiFi client object
@@ -48,7 +44,6 @@ byte networkState = WLAN_DOWN_MQTT_DOWN;
 // Track state of overall puzzle
 enum State {Initialising, Running, Solved};
 State state = Initialising;
-Button2 button;
 // WiFi network event handlers
 // https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/generic-examples.html
 WiFiEventHandler gotIpEventHandler, disconnectedEventHandler;
@@ -66,18 +61,6 @@ void setup(){
   // Set the puzzle state
   state = State::Running;
 
-
-  button.begin(buttonPin);
-  button.setClickHandler([](Button2& btn) {
-    // Debug
-    Serial.println("click\n");
-    // Toggle State
-    if(state != State::Solved) { state = State::Solved; }
-    else { state = State::Running; }
-    // Update Node-RED with new state
-    sendUpdate();  
-  });
-  
   mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
     // Debug
     Serial.println("TAT");
@@ -219,9 +202,7 @@ void reconnectToNetwork() {
 
 void loop(){
   // Use built-in LED as indicator of device state
-  digitalWrite(LED_BUILTIN, !(state == State::Solved));
-    
-  // Process update loops
-  button.loop();
+  digitalWrite(LED_BUILTIN, !(state == State::Solved));  
+
   reconnectToNetwork();
 }
