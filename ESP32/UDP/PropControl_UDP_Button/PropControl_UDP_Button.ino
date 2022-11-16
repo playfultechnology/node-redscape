@@ -223,7 +223,7 @@ void networkLoop() {
 
 void loop(){
   // Use built-in LED as indicator of device state
-  digitalWrite(LED_BUILTIN, !(state == State::Solved));
+  digitalWrite(LED_BUILTIN, (state == State::Solved));
     
   // Process update loops
   button.loop();
