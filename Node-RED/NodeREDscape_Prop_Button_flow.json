@@ -20,7 +20,7 @@
             "91f5a57b8686c80a",
             "fad501df9730e3cd"
         ],
-        "x": 94,
+        "x": 14,
         "y": 19,
         "w": 292,
         "h": 122
@@ -41,7 +41,7 @@
             "74647cf8af72f5f2",
             "c1ae3a0b21703c42"
         ],
-        "x": 134,
+        "x": 74,
         "y": 159,
         "w": 232,
         "h": 282
@@ -60,11 +60,14 @@
             "e7783caa4d468f89",
             "3ee03b513fbbadf7",
             "8033bc0ae52a4c01",
-            "3420a7e0ad035902"
+            "3420a7e0ad035902",
+            "7b830cddb6dc1176",
+            "4365ef5bec7a3903",
+            "18404cad9ee52512"
         ],
-        "x": 814,
-        "y": 359,
-        "w": 212,
+        "x": 724,
+        "y": 399,
+        "w": 562,
         "h": 282
     },
     {
@@ -79,8 +82,8 @@
             "717ad61c6b53591d",
             "8a055186d1dd9b0f"
         ],
-        "x": 613,
-        "y": 339,
+        "x": 433,
+        "y": 439,
         "w": 173,
         "h": 122
     },
@@ -98,7 +101,7 @@
         "fwdInMessages": false,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "x": 1050,
+        "x": 890,
         "y": 220,
         "wires": [
             []
@@ -112,7 +115,7 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 510,
+        "x": 430,
         "y": 220,
         "wires": [
             [
@@ -128,7 +131,7 @@
         "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 770,
+        "x": 650,
         "y": 220,
         "wires": [
             [
@@ -155,11 +158,11 @@
         "payload": "{\"command\":\"RESET\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 700,
-        "y": 420,
+        "x": 520,
+        "y": 520,
         "wires": [
             [
-                "9b390b713b48f7f6"
+                "46fe3fba38d8ec55"
             ]
         ]
     },
@@ -182,11 +185,11 @@
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 699,
-        "y": 380,
+        "x": 519,
+        "y": 480,
         "wires": [
             [
-                "9b390b713b48f7f6"
+                "46fe3fba38d8ec55"
             ]
         ]
     },
@@ -201,7 +204,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "flow",
-                "to": "{\"id\":\"Button\",\"name\":\"Button\",\"description\":\"Players must press a button\",\"state\":\"UNSOLVED\"}",
+                "to": "{\"id\":\"Button-1\",\"name\":\"Button\",\"description\":\"Players must press a button\",\"state\":\"UNSOLVED\",\"ip\":\"192.168.0.180\",\"port\":\"161\"}",
                 "tot": "json"
             },
             {
@@ -217,7 +220,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 280,
+        "x": 200,
         "y": 80,
         "wires": [
             [
@@ -234,7 +237,7 @@
         "links": [
             "8a4dffa5.a7935"
         ],
-        "x": 135,
+        "x": 55,
         "y": 60,
         "wires": [
             [
@@ -248,14 +251,14 @@
         "z": "a1538f107b6f4fdc",
         "g": "83ec599797030eba",
         "name": "MQTT FromDevice",
-        "topic": "FromDevice/Button",
+        "topic": "FromDevice/Button-1",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "125f6c81.60151b",
         "nl": false,
         "rap": false,
         "inputs": 0,
-        "x": 250,
+        "x": 190,
         "y": 200,
         "wires": [
             [
@@ -267,7 +270,6 @@
         "id": "e515b2cbd3fd607a",
         "type": "udp in",
         "z": "a1538f107b6f4fdc",
-        "d": true,
         "g": "83ec599797030eba",
         "name": "",
         "iface": "",
@@ -275,9 +277,9 @@
         "ipv": "udp4",
         "multicast": "false",
         "group": "",
-        "datatype": "buffer",
-        "x": 280,
-        "y": 280,
+        "datatype": "utf8",
+        "x": 220,
+        "y": 240,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -301,7 +303,7 @@
         "trim": false,
         "base64": false,
         "tls": "",
-        "x": 290,
+        "x": 230,
         "y": 320,
         "wires": [
             [
@@ -317,8 +319,8 @@
         "g": "83ec599797030eba",
         "name": "",
         "serial": "",
-        "x": 290,
-        "y": 240,
+        "x": 230,
+        "y": 280,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -334,7 +336,7 @@
         "name": "",
         "server": "4e976676.9e1538",
         "client": "",
-        "x": 270,
+        "x": 210,
         "y": 360,
         "wires": [
             [
@@ -353,7 +355,7 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 290,
+        "x": 230,
         "y": 400,
         "wires": [
             [
@@ -367,7 +369,7 @@
         "z": "a1538f107b6f4fdc",
         "g": "287cddd6953c1cbd",
         "name": "MQTT ToDevice",
-        "topic": "ToDevice/Button",
+        "topic": "ToDevice/Button-1",
         "qos": "",
         "retain": "",
         "respTopic": "",
@@ -376,8 +378,8 @@
         "correl": "",
         "expiry": "",
         "broker": "125f6c81.60151b",
-        "x": 920,
-        "y": 400,
+        "x": 1180,
+        "y": 440,
         "wires": []
     },
     {
@@ -393,8 +395,8 @@
         "base64": false,
         "end": false,
         "tls": "",
-        "x": 950,
-        "y": 520,
+        "x": 1210,
+        "y": 560,
         "wires": []
     },
     {
@@ -405,15 +407,14 @@
         "g": "287cddd6953c1cbd",
         "name": "",
         "serial": "",
-        "x": 950,
-        "y": 440,
+        "x": 1210,
+        "y": 480,
         "wires": []
     },
     {
         "id": "3ee03b513fbbadf7",
         "type": "udp out",
         "z": "a1538f107b6f4fdc",
-        "d": true,
         "g": "287cddd6953c1cbd",
         "name": "",
         "addr": "",
@@ -423,8 +424,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 950,
-        "y": 480,
+        "x": 1210,
+        "y": 520,
         "wires": []
     },
     {
@@ -436,8 +437,8 @@
         "name": "",
         "server": "4e976676.9e1538",
         "client": "",
-        "x": 930,
-        "y": 560,
+        "x": 1190,
+        "y": 600,
         "wires": []
     },
     {
@@ -458,8 +459,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 930,
-        "y": 600,
+        "x": 1190,
+        "y": 640,
         "wires": [
             []
         ]
@@ -473,7 +474,7 @@
         "links": [
             "c9289f5e.1fb3b8"
         ],
-        "x": 135,
+        "x": 55,
         "y": 100,
         "wires": [
             [
@@ -489,8 +490,8 @@
         "links": [
             "c9289f5e.1fb3b8"
         ],
-        "x": 575,
-        "y": 500,
+        "x": 385,
+        "y": 600,
         "wires": [
             [
                 "936acb30e1aa36d2"
@@ -516,13 +517,96 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 500,
+        "x": 500,
+        "y": 600,
         "wires": [
             [
+                "46fe3fba38d8ec55"
+            ]
+        ]
+    },
+    {
+        "id": "7b830cddb6dc1176",
+        "type": "json",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 1090,
+        "y": 520,
+        "wires": [
+            [
+                "3ee03b513fbbadf7"
+            ]
+        ]
+    },
+    {
+        "id": "4365ef5bec7a3903",
+        "type": "change",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "Set Device IP and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ip",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 520,
+        "wires": [
+            [
+                "7b830cddb6dc1176"
+            ]
+        ]
+    },
+    {
+        "id": "18404cad9ee52512",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "link in 1",
+        "links": [
+            "46fe3fba38d8ec55"
+        ],
+        "x": 765,
+        "y": 520,
+        "wires": [
+            [
+                "4365ef5bec7a3903",
                 "9b390b713b48f7f6"
             ]
         ]
+    },
+    {
+        "id": "46fe3fba38d8ec55",
+        "type": "link out",
+        "z": "a1538f107b6f4fdc",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512"
+        ],
+        "x": 695,
+        "y": 520,
+        "wires": []
     },
     {
         "id": "8f886ae1479c4797",
@@ -544,18 +628,23 @@
         "clientid": "",
         "autoConnect": true,
         "usetls": false,
-        "protocolVersion": 4,
+        "protocolVersion": "4",
         "keepalive": "60",
         "cleansession": true,
         "birthTopic": "",
         "birthQos": "0",
         "birthPayload": "",
+        "birthMsg": {},
         "closeTopic": "",
         "closeQos": "0",
         "closePayload": "",
+        "closeMsg": {},
         "willTopic": "",
         "willQos": "0",
-        "willPayload": ""
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
     },
     {
         "id": "4e976676.9e1538",

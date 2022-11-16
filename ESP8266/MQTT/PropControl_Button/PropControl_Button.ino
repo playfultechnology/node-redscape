@@ -70,9 +70,9 @@ void setup(){
   state = State::Running;
 
   button.begin(buttonPin);
-  button.setClickHandler([](Button2& btn) {
+  button.setPressedHandler([](Button2& btn) {
     // Debug
-    Serial.println("click\n");
+    Serial.println("Button Pressed");
     // Toggle State
     if(state != State::Solved) { state = State::Solved; }
     else { state = State::Running; }
