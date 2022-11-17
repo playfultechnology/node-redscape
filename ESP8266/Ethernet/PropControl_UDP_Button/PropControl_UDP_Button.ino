@@ -1,5 +1,5 @@
 /**
- * Node-Redscape example - Arduino UDP over Ethernet
+ * Node-Redscape example - ESP8266 UDP over Ethernet
  * Copyright (c)2022 Alastair Aitchison, Playful Technology
  * 
  * Example code for a simple RFID escape room puzzle integrated with Node-RED GM control.
@@ -7,8 +7,8 @@
 
 // DEFINES
 #ifndef LED_BUILTIN
-  // If not defined otherwise, assume LED attached to pin 13
-  #define LED_BUILTIN 13 
+  // If not defined otherwise, assume LED attached to pin 2
+  #define LED_BUILTIN 2 
 #endif
 
 // INCLUDES
@@ -24,7 +24,8 @@
 // Unique name of this device, used as client ID to connect to MQTT server
 // and also topic name for messages published to this device
 const char* deviceID = "Button-1";
-const byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+// Can't declare const with ESP8266 Ethernet library
+byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 const IPAddress localIPAddress(192, 168, 1, 177);
 // IP address of remote MQTT server
 const char* remoteUDPServer = "192.168.0.114";
@@ -149,26 +150,17 @@ void networkLoop() {
     case LAN_DOWN_UDP_DOWN:
       // Start the connection
       Serial.println("Starting LAN connection");
-      Ethernet.init(ssPin);
+      //Ethernet.init(ssPin);
       if(Ethernet.begin(mac) == 0) {
         Serial.println(F("Failed to configure Ethernet using DHCP"));
-        // Check for Ethernet hardware present
-        if(Ethernet.hardwareStatus() == EthernetNoHardware) {
-          Serial.println(F("Ethernet hardware not found"));
-        }
-        else if (Ethernet.linkStatus() == LinkOFF) {
-          Serial.println(F("Ethernet cable is not connected."));
-        }
-        else { 
-          // Try to configure using IP address instead of DHCP:
-          Ethernet.begin(mac, localIPAddress);
-          Serial.print(F("  Using IP "));
-          Serial.println(Ethernet.localIP());
-          // Set the timer
-          timeStamp = millis();
-          // And advance the state machine to the next state
-          networkState = LAN_UP_UDP_DOWN;
-        }
+        // Try to configure using IP address instead of DHCP:
+        Ethernet.begin(mac, localIPAddress);
+        Serial.print(F("  Using IP "));
+        Serial.println(Ethernet.localIP());
+        // Set the timer
+        timeStamp = millis();
+        // And advance the state machine to the next state
+        networkState = LAN_UP_UDP_DOWN;
       }
       else {
         Serial.print(F("  DHCP assigned IP "));
