@@ -39,7 +39,7 @@ const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
 const char* wifiPassword = "molly1869";
 // IP address of remote MQTT server
-const char* remoteMQTTServer = "192.168.0.136";
+const char* remoteMQTTServer = "192.168.0.114";
 const int remoteMQTTPort = 1883;
 const char* remoteMQTTUser = "user";
 const char* remoteMQTTPass = "pass";
