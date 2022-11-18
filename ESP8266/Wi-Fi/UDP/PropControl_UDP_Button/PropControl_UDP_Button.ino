@@ -1,14 +1,14 @@
 /**
- * Node-Redscape example - ESP8266 UDP over WiFi
+ * Node-Redscape example - ESP8266 UDP over Wi-Fi
  * Copyright (c)2022 Alastair Aitchison, Playful Technology
  * 
  * Example code for a simple RFID escape room puzzle integrated with Node-RED GM control.
  * This example makes use of several features
  * 
  * NOTE:
- * - If you have problems establishing a network connection, be sure to select the following option in Arduino IDE: 
+ * - If you have problems establishing a network connection on the ESP8266, 
+ *   select the following option in Arduino IDE: 
  *   Tools > Erase Flash > All Flash Contents
- * 
  * 
  */
 #ifndef ESP8266
@@ -28,14 +28,13 @@
 #include <Button2.h>
 
 // CONSTANTS
-// Unique name of this device, used as client ID to connect to MQTT server
-// and also topic name for messages published to this device
+// Unique name to identify this device on the network
 const char* deviceID = "Button-1";
 // SSID of the network to join
 const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
 const char* wifiPassword = "molly1869";
-// IP address of remote MQTT server
+// IP address of remote UDP server
 const char* remoteUDPServer = "192.168.0.136";
 const int remoteUDPPort = 161;
 const int localUDPPort = 161;
@@ -43,13 +42,13 @@ const int localUDPPort = 161;
 const byte buttonPin = D3;
 
 // GLOBALS
-// Instance of the WiFi client object
+// Instance of the Wi-Fi client object
 WiFiClient networkClient;
 // UDP client based on the chosen network
 WiFiUDP Udp;
 // A re-usable buffer to hold messages to be sent/have been received
 char udpPacket[256];
-// Keep track of connection state of both WiFi and UDP server
+// Keep track of connection state of both Wi-Fi and UDP server
 enum : byte { WLAN_DOWN_UDP_DOWN, WLAN_STARTING_UDP_DOWN, WLAN_UP_UDP_DOWN, WLAN_UP_UDP_UP } connectionState;
 byte networkState = WLAN_DOWN_UDP_DOWN;
 // Track state of overall puzzle
@@ -184,12 +183,12 @@ void networkLoop() {
 
     // If the WLAN router connection was started
     case WLAN_STARTING_UDP_DOWN:
-      // Allow 30 seconds since attempting to join the WiFi
+      // Allow 30 seconds since attempting to join the Wi-Fi
       if (millis() - timeStamp >= 30000) {
         // Otherwise, if the WLAN router connection was not established
         Serial.println("Failed to start WiFi. Restarting...");
         // Clear the connection for the next attempt
-        // WiFi stack corruption is the biggest reason for WiFi connection failures
+        // Wi-Fi stack corruption is the biggest reason for Wi-Fi connection failures
         WiFi.disconnect();
         // And reset the state machine to its initial state (restart)
         networkState = WLAN_DOWN_UDP_DOWN;

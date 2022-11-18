@@ -1,14 +1,8 @@
 /**
- * Node-Redscape example - ESP32 UDP over WiFi
+ * Node-Redscape example - ESP32 UDP over Wi-Fi
  * Copyright (c)2022 Alastair Aitchison, Playful Technology
  * 
  * Example code for a simple RFID escape room puzzle integrated with Node-RED GM control.
- * This example makes use of several features
- * 
- * NOTE:
- * - If you have problems establishing a network connection, be sure to select the following option in Arduino IDE: 
- *   Tools > Erase Flash > All Flash Contents
- *
  */
 
 // REQUIREMENT CHECKS
@@ -22,13 +16,12 @@
 #endif
 
 // INCLUDES
-// ESP32 WiFi library, see https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html
+// ESP32 WiFi library
 #include <WiFi.h>
-// https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/udp-examples.html
 #include <WiFiUdp.h>
 // JSON serialization (tested with 6.19.4), see https://github.com/knolleary/pubsubclient
 #include <ArduinoJson.h>
-// Button input, see https://github.com/LennartHennigs/Button2
+// Button input (tested with v2.1.0), see https://github.com/LennartHennigs/Button2
 #include <Button2.h>
 
 // CONSTANTS
@@ -39,7 +32,7 @@ const char* deviceID = "Button-1";
 const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
 const char* wifiPassword = "molly1869";
-// IP address of remote MQTT server
+// IP address of remote UDP server
 const char* remoteUDPServer = "192.168.0.136";
 const int remoteUDPPort = 161;
 const int localUDPPort = 161;
@@ -53,14 +46,14 @@ WiFiClient networkClient;
 WiFiUDP Udp;
 // A re-usable buffer to hold messages to be sent/have been received
 char udpPacket[256];
-// Keep track of connection state of both WiFi and UDP server
+// Keep track of connection state of both Wi-Fi and UDP server
 enum : byte { WLAN_DOWN_UDP_DOWN, WLAN_STARTING_UDP_DOWN, WLAN_UP_UDP_DOWN, WLAN_UP_UDP_UP } connectionState;
 byte networkState = WLAN_DOWN_UDP_DOWN;
 // Track state of overall puzzle
 enum State {Initialising, Running, Solved};
 State state = Initialising;
 Button2 button;
-// WiFi network event handlers, see https://github.com/espressif/arduino-esp32/blob/master/libraries/WiFi/examples/WiFiClientEvents/WiFiClientEvents.ino
+// Wi-Fi network event handlers, see https://github.com/espressif/arduino-esp32/blob/master/libraries/WiFi/examples/WiFiClientEvents/WiFiClientEvents.ino
 WiFiEventId_t gotIpEventHandler, disconnectedEventHandler;
 
 void setup(){
@@ -190,7 +183,7 @@ void networkLoop() {
 
     // If the WLAN router connection was started
     case WLAN_STARTING_UDP_DOWN:
-      // Allow 30 seconds since attempting to join the WiFi
+      // Allow 30 seconds since attempting to join the Wi-Fi
       if (millis() - timeStamp >= 30000) {
         // Otherwise, if the WLAN router connection was not established
         Serial.println("Failed to start WiFi. Restarting...");

@@ -1,0 +1,489 @@
+[
+    {
+        "id": "7daa0e0f.94fa2",
+        "type": "tab",
+        "label": "In-Game Display",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e7d9299c.bdf7f",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Convert ms into hh:mm:ss",
+        "info": "",
+        "x": 830,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4582c4d0.5f7514",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Calculate time elapsed (or time remaining)",
+        "info": "",
+        "x": 520,
+        "y": 220,
+        "wires": [],
+        "icon": "node-red/parser-html.svg"
+    },
+    {
+        "id": "ad0ff882.98e9e8",
+        "type": "inject",
+        "z": "7daa0e0f.94fa2",
+        "name": "Every 1 sec",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "7c66bf35.7453b"
+            ]
+        ]
+    },
+    {
+        "id": "c73acc96.e72f5",
+        "type": "inject",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "Here's a clue!",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Here's a clue!",
+        "payloadType": "str",
+        "x": 90,
+        "y": 420,
+        "wires": [
+            [
+                "b782529.f84303"
+            ]
+        ]
+    },
+    {
+        "id": "b87de174.0904f",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Timer",
+        "info": "",
+        "x": 270,
+        "y": 220,
+        "wires": [],
+        "icon": "node-red/parser-html.svg"
+    },
+    {
+        "id": "7c66bf35.7453b",
+        "type": "function",
+        "z": "7daa0e0f.94fa2",
+        "name": "Update Game Timer",
+        "func": "// The current timestamp is injected at the start of the flow\nvar currentTime = msg.payload;\n\n// If this is the first time the flow has run, set the start time\nif(flow.get(\"startTime\") === undefined) {\n    flow.set(\"startTime\", currentTime);\n}\nvar startTime = flow.get(\"startTime\");\n\n// Calculate the time elapsed since the flow started\nvar elapsedTime = (currentTime - startTime);\n\n// Update the msg to carry time elapsed      \nmsg.time = elapsedTime;\n// Or, time remaining\nmsg.time = 3600000 - elapsedTime;\n\n// Display value in the editor\nnode.status({fill:\"green\",shape:\"dot\",text:elapsedTime});\n\n// Pass value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "cdf5f82c.df5a6"
+            ]
+        ]
+    },
+    {
+        "id": "cdf5f82c.df5a6",
+        "type": "function",
+        "z": "7daa0e0f.94fa2",
+        "name": "Format Time As HH:MM:SS",
+        "func": "// msg.time is in milliseconds\nvar t = msg.time / 1000;\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\n\n// Format into hh:mm:ss\nmsg.timerText = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\n// Update the editor node\nnode.status({fill:\"green\", shape:\"dot\", text:msg.timerText});\n\n// Forward the message along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 820,
+        "y": 260,
+        "wires": [
+            [
+                "b92a0984.a479c"
+            ]
+        ]
+    },
+    {
+        "id": "b782529.f84303",
+        "type": "trigger",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "op1": "",
+        "op2": " ",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "10",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "outputs": 1,
+        "x": 320,
+        "y": 420,
+        "wires": [
+            [
+                "f93ed504.8ff1e8"
+            ]
+        ]
+    },
+    {
+        "id": "f93ed504.8ff1e8",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "displayText",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 633,
+        "y": 420,
+        "wires": [
+            [
+                "248e8aa4daf653fd"
+            ]
+        ]
+    },
+    {
+        "id": "b92a0984.a479c",
+        "type": "join",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "",
+        "propertyType": "full",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1093,
+        "y": 360,
+        "wires": [
+            [
+                "f4c671fc.65fa3"
+            ]
+        ]
+    },
+    {
+        "id": "be0ceb5e.052c2",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Duration to show clue before clearing",
+        "info": "",
+        "x": 340,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "924ff0db.9eedf",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Combine time + clue + video",
+        "info": "",
+        "x": 1123,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a89fc7c6.46b55",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Send clue",
+        "info": "",
+        "x": 80,
+        "y": 380,
+        "wires": [],
+        "icon": "node-red/parser-html.svg"
+    },
+    {
+        "id": "60685308.193364",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Set msg variable",
+        "info": "",
+        "x": 613,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f4c671fc.65fa3",
+        "type": "uibuilder",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "topic": "",
+        "url": "room_display",
+        "fwdInMessages": false,
+        "allowScripts": true,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "useSecurity": false,
+        "sessionLength": 432000,
+        "tokenAutoExtend": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "x": 1340,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "be92a823.2ccd2",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Send to display",
+        "info": "",
+        "x": 1347,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "45b0b78a53d79c17",
+        "type": "inject",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "/Bible - 105673.mp4",
+        "payloadType": "str",
+        "x": 250,
+        "y": 580,
+        "wires": [
+            [
+                "4cdde7a76b0193e6",
+                "5b5594959cae269d"
+            ]
+        ]
+    },
+    {
+        "id": "4cdde7a76b0193e6",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "videoOverlaySrc",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 580,
+        "wires": [
+            [
+                "b92a0984.a479c"
+            ]
+        ]
+    },
+    {
+        "id": "e010597f183d18d3",
+        "type": "trigger",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "op1": "",
+        "op2": " ",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 670,
+        "y": 640,
+        "wires": [
+            [
+                "e8e7614b0f0b087d",
+                "8a30a6b580225ff9"
+            ]
+        ]
+    },
+    {
+        "id": "5b5594959cae269d",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gameState",
+                "pt": "global",
+                "to": "stopped",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timeRemaining",
+                "pt": "msg",
+                "to": "timeRemaining",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 640,
+        "wires": [
+            [
+                "e010597f183d18d3"
+            ]
+        ]
+    },
+    {
+        "id": "e8e7614b0f0b087d",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gameState",
+                "pt": "global",
+                "to": "playing",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a30a6b580225ff9",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "videoOverlaySrc",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 580,
+        "wires": [
+            [
+                "b92a0984.a479c"
+            ]
+        ]
+    },
+    {
+        "id": "a4a9969470c26952",
+        "type": "link in",
+        "z": "7daa0e0f.94fa2",
+        "name": "In-Game Text Display",
+        "links": [
+            "248e8aa4daf653fd"
+        ],
+        "x": 875,
+        "y": 360,
+        "wires": [
+            [
+                "b92a0984.a479c"
+            ]
+        ]
+    },
+    {
+        "id": "248e8aa4daf653fd",
+        "type": "link out",
+        "z": "7daa0e0f.94fa2",
+        "name": "In-Game Text Display Out",
+        "mode": "link",
+        "links": [
+            "a4a9969470c26952"
+        ],
+        "x": 825,
+        "y": 420,
+        "wires": []
+    }
+]

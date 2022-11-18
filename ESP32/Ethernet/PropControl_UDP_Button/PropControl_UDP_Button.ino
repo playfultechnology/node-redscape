@@ -30,7 +30,7 @@
 const char* deviceID = "Button-1";
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 const IPAddress localIPAddress(192, 168, 1, 177);
-// IP address of remote MQTT server
+// IP address of remote UDP server
 const char* remoteUDPServer = "192.168.0.114";
 const int remoteUDPPort = 161;
 const int localUDPPort = 161;
@@ -44,7 +44,7 @@ const byte ssPin = 5;
 EthernetUDP Udp;
 // A re-usable buffer to hold messages to be sent/have been received
 char udpPacket[256];
-// Keep track of connection state of both WiFi and UDP server
+// Keep track of connection state of both Wi-Fi and UDP server
 enum : byte { LAN_DOWN_UDP_DOWN, LAN_UP_UDP_DOWN, LAN_UP_UDP_UP } connectionState;
 byte networkState = LAN_DOWN_UDP_DOWN;
 // Track state of overall puzzle
@@ -68,7 +68,7 @@ void setup(){
   button.begin(buttonPin);
   button.setPressedHandler([](Button2& btn) {
     // Debug
-    //Serial.println(F("Button Pressed"));
+    // Serial.println(F("Button Pressed"));
     // Toggle State
     if(state != State::Solved) { state = State::Solved; }
     else { state = State::Running; }
@@ -175,7 +175,7 @@ void networkLoop() {
       }
       break;
 
-    // If the WLAN router connection was established
+    // If the LAN connection was established
     case LAN_UP_UDP_DOWN:
       Serial.print(F("Starting UDP Server on port "));
       Serial.println(localUDPPort);
