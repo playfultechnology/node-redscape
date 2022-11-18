@@ -1,0 +1,722 @@
+[
+    {
+        "id": "a1538f107b6f4fdc",
+        "type": "tab",
+        "label": "RFID",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f6cd596f08218abf",
+        "type": "group",
+        "z": "a1538f107b6f4fdc",
+        "name": "Initial state set on system startup / reset",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "fe525b913c466898",
+            "91f5a57b8686c80a",
+            "fad501df9730e3cd"
+        ],
+        "x": 34,
+        "y": 19,
+        "w": 292,
+        "h": 122
+    },
+    {
+        "id": "83ec599797030eba",
+        "type": "group",
+        "z": "a1538f107b6f4fdc",
+        "name": "Receive updates from device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "eae1ab410ce116f7",
+            "e515b2cbd3fd607a",
+            "1c527c4b5a4abf42",
+            "9db6f797af565f6d",
+            "74647cf8af72f5f2",
+            "c1ae3a0b21703c42",
+            "01a1a7c17f18ab07"
+        ],
+        "x": 34,
+        "y": 179,
+        "w": 372,
+        "h": 282
+    },
+    {
+        "id": "287cddd6953c1cbd",
+        "type": "group",
+        "z": "a1538f107b6f4fdc",
+        "name": "Send updates to device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9b390b713b48f7f6",
+            "aab1e2292b20982c",
+            "e7783caa4d468f89",
+            "3ee03b513fbbadf7",
+            "8033bc0ae52a4c01",
+            "3420a7e0ad035902",
+            "7b830cddb6dc1176",
+            "4365ef5bec7a3903",
+            "18404cad9ee52512",
+            "a2cc70b8b2dca464"
+        ],
+        "x": 724,
+        "y": 399,
+        "w": 562,
+        "h": 282
+    },
+    {
+        "id": "217067ffa17d7c85",
+        "type": "group",
+        "z": "a1538f107b6f4fdc",
+        "name": "Dashboard overrides",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "717ad61c6b53591d",
+            "8a055186d1dd9b0f"
+        ],
+        "x": 434,
+        "y": 439,
+        "w": 172,
+        "h": 122
+    },
+    {
+        "id": "5cf9f3f76f7e865f",
+        "type": "ui_template",
+        "z": "a1538f107b6f4fdc",
+        "group": "8f886ae1479c4797",
+        "name": "RFID Panel",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1130,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d244cacd33b48c04",
+        "type": "json",
+        "z": "a1538f107b6f4fdc",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 630,
+        "y": 200,
+        "wires": [
+            [
+                "b0bbeb33dee663d4"
+            ]
+        ]
+    },
+    {
+        "id": "b0bbeb33dee663d4",
+        "type": "function",
+        "z": "a1538f107b6f4fdc",
+        "name": "Parse JSON and update global state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 200,
+        "wires": [
+            [
+                "5cf9f3f76f7e865f"
+            ]
+        ]
+    },
+    {
+        "id": "717ad61c6b53591d",
+        "type": "ui_button",
+        "z": "a1538f107b6f4fdc",
+        "g": "217067ffa17d7c85",
+        "name": "RESET",
+        "group": "8f886ae1479c4797",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "46fe3fba38d8ec55"
+            ]
+        ]
+    },
+    {
+        "id": "8a055186d1dd9b0f",
+        "type": "ui_button",
+        "z": "a1538f107b6f4fdc",
+        "g": "217067ffa17d7c85",
+        "name": "SOLVE",
+        "group": "8f886ae1479c4797",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 519,
+        "y": 480,
+        "wires": [
+            [
+                "46fe3fba38d8ec55"
+            ]
+        ]
+    },
+    {
+        "id": "fe525b913c466898",
+        "type": "change",
+        "z": "a1538f107b6f4fdc",
+        "g": "f6cd596f08218abf",
+        "name": "Configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"RFID-1\",\"name\":\"RFID\",\"description\":\"Players must scan the correct RFID tag\",\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "d244cacd33b48c04",
+                "01a1a7c17f18ab07"
+            ]
+        ]
+    },
+    {
+        "id": "91f5a57b8686c80a",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "g": "f6cd596f08218abf",
+        "name": "On Initialisation",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 75,
+        "y": 60,
+        "wires": [
+            [
+                "fe525b913c466898"
+            ]
+        ]
+    },
+    {
+        "id": "eae1ab410ce116f7",
+        "type": "mqtt in",
+        "z": "a1538f107b6f4fdc",
+        "g": "83ec599797030eba",
+        "name": "MQTT FromDevice",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "125f6c81.60151b",
+        "nl": false,
+        "rap": false,
+        "inputs": 1,
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "e515b2cbd3fd607a",
+        "type": "udp in",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "83ec599797030eba",
+        "name": "",
+        "iface": "",
+        "port": "161",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "1c527c4b5a4abf42",
+        "type": "tcp in",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "83ec599797030eba",
+        "name": "",
+        "server": "server",
+        "host": "",
+        "port": "80",
+        "datamode": "stream",
+        "datatype": "buffer",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "9db6f797af565f6d",
+        "type": "serial in",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "83ec599797030eba",
+        "name": "",
+        "serial": "",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "74647cf8af72f5f2",
+        "type": "websocket in",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "83ec599797030eba",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "c1ae3a0b21703c42",
+        "type": "http in",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "83ec599797030eba",
+        "name": "",
+        "url": "",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 420,
+        "wires": [
+            [
+                "d244cacd33b48c04"
+            ]
+        ]
+    },
+    {
+        "id": "9b390b713b48f7f6",
+        "type": "mqtt out",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "MQTT ToDevice",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "125f6c81.60151b",
+        "x": 1180,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "aab1e2292b20982c",
+        "type": "tcp out",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "host": "",
+        "port": "",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "",
+        "x": 1210,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "e7783caa4d468f89",
+        "type": "serial out",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "serial": "",
+        "x": 1210,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "3ee03b513fbbadf7",
+        "type": "udp out",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "addr": "",
+        "iface": "",
+        "port": "",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1210,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8033bc0ae52a4c01",
+        "type": "websocket out",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 1180,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "3420a7e0ad035902",
+        "type": "http request",
+        "z": "a1538f107b6f4fdc",
+        "d": true,
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1190,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fad501df9730e3cd",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "g": "f6cd596f08218abf",
+        "name": "On Reset",
+        "links": [
+            "c9289f5e.1fb3b8",
+            "4f97d4b38ed5c552"
+        ],
+        "x": 75,
+        "y": 100,
+        "wires": [
+            [
+                "fe525b913c466898"
+            ]
+        ]
+    },
+    {
+        "id": "6aa55bc0969c2645",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "name": "On Reset",
+        "links": [
+            "c9289f5e.1fb3b8",
+            "4f97d4b38ed5c552"
+        ],
+        "x": 385,
+        "y": 600,
+        "wires": [
+            [
+                "936acb30e1aa36d2"
+            ]
+        ]
+    },
+    {
+        "id": "936acb30e1aa36d2",
+        "type": "change",
+        "z": "a1538f107b6f4fdc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"command\":\"RESET\"}",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "46fe3fba38d8ec55"
+            ]
+        ]
+    },
+    {
+        "id": "7b830cddb6dc1176",
+        "type": "json",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 1090,
+        "y": 520,
+        "wires": [
+            [
+                "3ee03b513fbbadf7"
+            ]
+        ]
+    },
+    {
+        "id": "4365ef5bec7a3903",
+        "type": "change",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "Set Device IP and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ip",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 520,
+        "wires": [
+            [
+                "7b830cddb6dc1176"
+            ]
+        ]
+    },
+    {
+        "id": "18404cad9ee52512",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "link in 1",
+        "links": [
+            "46fe3fba38d8ec55"
+        ],
+        "x": 765,
+        "y": 520,
+        "wires": [
+            [
+                "4365ef5bec7a3903",
+                "a2cc70b8b2dca464"
+            ]
+        ]
+    },
+    {
+        "id": "46fe3fba38d8ec55",
+        "type": "link out",
+        "z": "a1538f107b6f4fdc",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512"
+        ],
+        "x": 695,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a2cc70b8b2dca464",
+        "type": "function",
+        "z": "a1538f107b6f4fdc",
+        "g": "287cddd6953c1cbd",
+        "name": "Set Topic",
+        "func": "msg.topic == (\"ToDevice/\" + flow.get(\"payload.id\"));\n\n// Update the dashboard editor\nnode.status({ fill: \"green\", shape: \"dot\", text: msg.topic });\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 440,
+        "wires": [
+            [
+                "9b390b713b48f7f6"
+            ]
+        ]
+    },
+    {
+        "id": "01a1a7c17f18ab07",
+        "type": "change",
+        "z": "a1538f107b6f4fdc",
+        "g": "83ec599797030eba",
+        "name": "Subscribe",
+        "rules": [
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "subscribe",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'FromDevice/' & $$.payload.id",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "eae1ab410ce116f7"
+            ]
+        ]
+    },
+    {
+        "id": "8f886ae1479c4797",
+        "type": "ui_group",
+        "name": "RFID",
+        "tab": "7d66f574.b154cc",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "name": "MQTT Server",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "4e976676.9e1538",
+        "type": "websocket-listener",
+        "path": "/ws/input",
+        "wholemsg": "false"
+    },
+    {
+        "id": "7d66f574.b154cc",
+        "type": "ui_tab",
+        "name": "Puzzle Status Monitor",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

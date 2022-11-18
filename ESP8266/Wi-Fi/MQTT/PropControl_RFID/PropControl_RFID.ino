@@ -1,5 +1,5 @@
 /**
- * Node-Redscape example - ESP8266 MQTT over Wi-Fi
+ * Node-Redscape example - ESP8266 (tested with v3.0.2) MQTT over Wi-Fi
  * Copyright (c)2022 Alastair Aitchison, Playful Technology
  * 
  * Basic escape room puzzle controller integrated with Node-RED GM control
@@ -22,13 +22,14 @@
 #include <ESP8266WiFi.h>
 // MQTT client, see https://github.com/knolleary/pubsubclient
 #include <PubSubClient.h>
-// JSON serialisation, see https://arduinojson.org/
+// JSON serialisation (tested with v6.19.4), see https://arduinojson.org/
 #include <ArduinoJson.h>
 // RFID input, see https://github.com/playfultechnology/PN5180-Library
 #include <PN5180.h>
 #include <PN5180ISO15693.h>
-// OLED display. https://github.com/lexus2k/lcdgfx
-#include "lcdgfx.h"
+// OLED display (tested with v1.1.4), see https://github.com/lexus2k/lcdgfx
+#include <SPI.h>
+#include <lcdgfx.h>
 
 // CONSTANTS
 // Unique name of this device, used as client ID to connect to MQTT server
@@ -143,7 +144,10 @@ void sendUpdate() {
   StaticJsonDocument<128> jsonDoc;
   jsonDoc["id"] = deviceID;
   jsonDoc["state"] = (state == State::Solved) ? "SOLVED" : "UNSOLVED";
-  jsonDoc["id"] = lastUid;
+  char uid[16];
+  memset(uid, 0, sizeof uid);
+  snprintf(uid, 16, "%02x%02x%02x%02x%02x%02x%02x%02x", lastUid[7], lastUid[6], lastUid[5], lastUid[4], lastUid[3], lastUid[2], lastUid[1], lastUid[0] );
+  jsonDoc["input"] = uid;
   snprintf(mqttTopic, 32, "FromDevice/%s", deviceID);
   serializeJson(jsonDoc, mqttMsg);
   mqttClient.publish(mqttTopic, mqttMsg);
@@ -183,8 +187,13 @@ void inputLoop() {
       }
     }
     else {
-      memset(lastUid, 0, sizeof lastUid);
-      display.printFixed(0,  16, "No card in range", STYLE_NORMAL);
+      // If we could previously read a RFID tag
+      if(memcmp(lastUid, currentUid, 8) != 0) { 
+        memcpy(lastUid, currentUid, 8);
+        display.printFixed(0,  16, "No card in range", STYLE_NORMAL);
+        // Send status update to Node-RED
+        sendUpdate();
+      }
     }
     lastUpdateTime = millis();
   }
