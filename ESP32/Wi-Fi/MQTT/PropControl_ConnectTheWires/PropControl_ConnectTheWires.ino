@@ -110,15 +110,15 @@ void receiveUpdate(const JsonDocument& jsonDoc) {
 
 void sendUpdate() {
   // Create JSON document reflecting current state - determine size using https://arduinojson.org/v6/assistant/
-  StaticJsonDocument<128> jsonDoc;
+  StaticJsonDocument<512> jsonDoc;
   jsonDoc["id"] = deviceID;
-  jsonDoc["state"] = (state == State::Solved) ? "SOLVED" : "UNSOLVED" ;
+  jsonDoc["state"] = (state == State::Solved) ? "S" : "U" ;
   JsonArray inputs = jsonDoc.createNestedArray("inputs");
   for(int i=0; i<numConnections; i++){
     JsonObject connection = inputs.createNestedObject();
-    connection["from"] = connections[i][0];
-    connection["to"] = connections[i][1];
-    connection["connected"] = connectionState[i];
+    connection["F"] = connections[i][0];
+    connection["T"] = connections[i][1];
+    connection["S"] = connectionState[i];
   }
   // Send to Serial
   serializeJson(jsonDoc, Serial);
