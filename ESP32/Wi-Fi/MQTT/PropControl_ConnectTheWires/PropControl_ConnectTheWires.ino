@@ -12,6 +12,8 @@
 #include <WiFi.h>
 // MQTT client, see https://github.com/knolleary/pubsubclient
 #include <PubSubClient.h>
+// For LED status display
+#include <FastLED.h>
 // JSON serialization (tested with v6.19.4), see https://arduinojson.org
 #include <ArduinoJson.h>
 
@@ -35,6 +37,8 @@ const byte socketPins[numSockets] = { 33, 25, 26, 27, 21, 19, 18, 5 };
 const byte numConnections = 4;
 // The connections that need to be made between pins, referenced by their index in the socketPins array
 const byte connections[numConnections][2] = { {0,1}, {2,5}, {3,4}, {6,7} };
+// Connected to the DIN of the programmable LED
+const byte ledPin = 13;
 
 // GLOBAL VARIABLES
 // Instance of the WiFi client object
@@ -55,9 +59,10 @@ State state = Initialising;
 bool connectionState[numConnections] = { false, false, false, false };
 // WiFi network event handlers, see https://github.com/espressif/arduino-esp32/blob/master/libraries/WiFi/examples/WiFiClientEvents/WiFiClientEvents.ino
 WiFiEventId_t gotIpEventHandler, disconnectedEventHandler;
+// Programmable LED array
+CRGB leds[1];
 
 void setup() {
-  
   // Initialise serial connection
   Serial.begin(115200);
   Serial.println("");
@@ -96,9 +101,40 @@ void setup() {
         Serial.print("Disconnected from WiFi. Reason: ");
         Serial.println(info.wifi_sta_disconnected.reason);
         networkState = WLAN_DOWN_MQTT_DOWN;
-    }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_DISCONNECTED);  
+    }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_DISCONNECTED);
+
+  // Tell FastLED about the LED strip configuration
+  FastLED.addLeds<PL9823, ledPin>(leds, 1).setCorrection(TypicalLEDStrip);
+  leds[0] = CRGB(255,0,0);
+  FastLED.show();      
 }
 
+// Set the LED colour/pattern to indicate the status of the device
+void ledLoop() {
+  uint8_t hue = 0; // colour
+  uint8_t v = 128; // brightness
+  switch (networkState) {
+    // If there is no Wi-Fi connection
+    case WLAN_DOWN_MQTT_DOWN:
+    case WLAN_STARTING_MQTT_DOWN:
+      v = beatsin8(60,0, 128);
+      break;
+    case WLAN_UP_MQTT_DOWN:
+    case WLAN_UP_MQTT_STARTED:
+      v = beatsin8(20,0, 128);
+      break;
+    case WLAN_UP_MQTT_UP:
+      v = beatsin8(10,0, 128);
+      break;
+  }
+  // Solid Green
+  if(state == State::Solved) {
+    hue = 96; 
+    v = 128;
+  }
+  leds[0] = CHSV(hue, 255, v); 
+  FastLED.show();
+}
 
 void receiveUpdate(const JsonDocument& jsonDoc) {
   // Act upon command received
@@ -217,9 +253,11 @@ void networkLoop() {
   }
 }
 
-void inputLoop() { 
+void inputLoop() {
   // Assume that the puzzle state has not changed since last reading
   bool stateChanged = false;
+    // Assume that all wires are correctly inserted
+  bool allConnectionsCorrect = true;
   // Check each connection in turn  
   for (int i=0; i<numConnections; i++){
     // Get the pin numbers that should be connected by this wire
@@ -240,8 +278,21 @@ void inputLoop() {
       stateChanged = true;
       // Update the stored connection state
       connectionState[i] = currentState;                  
-    }       
+    }
+    // If any connection is incorrect, puzzle is not solved
+    if(currentState == false) {
+      allConnectionsCorrect = false;
+    }    
   }
+  // If the puzzle has just been solved
+  if (allConnectionsCorrect && state == Running){
+    state = Solved;
+  }
+  // If the previous solved puzzle has just been unsolved
+  else if (!allConnectionsCorrect && state == Solved){
+    state = Running;
+  }
+  
   // If a connection has been made/broken since last time we checked
   if(stateChanged) {
     sendUpdate();
@@ -252,4 +303,5 @@ void loop() {
   // Process update loops
   inputLoop();
   networkLoop();
+  ledLoop();
 }

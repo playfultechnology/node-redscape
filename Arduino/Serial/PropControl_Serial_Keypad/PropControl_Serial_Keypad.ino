@@ -11,6 +11,8 @@
 #include <ArduinoJson.h>
 // 4-Digit LED display, download from https://github.com/avishorp/TM1637
 #include <TM1637.h>
+// For LED status display
+#include <FastLED.h>
 // Software UART for communication with Node-RED
 #include <SoftwareSerial.h>
 
@@ -24,6 +26,7 @@ const char keys[4][3] = {
   {'7','8','9'},
   {'*','0','#'}
 };
+// Be careful of pinout order! Some 3x4 keypads are mental. https://learn.adafruit.com/matrix-keypad/pinouts
 byte rowPins[4] = {7, 2, 3, 5}; // Row pinouts of the keypad
 byte colPins[3] = {6, 8, 4}; // Column pinouts of the keypad
 char solutionCode[5] = "1234";
@@ -32,6 +35,8 @@ const byte displayClockPin = A5;
 // Data pin for the display
 const byte displayDataPin = A4;
 const byte displayNumDigits = 4;
+// Connected to the DIN of the programmable LED
+const byte ledPin = A0;
 
 // GLOBALS
 // Create a new keypad based on the paremeters defined above
@@ -42,6 +47,7 @@ char inputCode[] = "    ";
 byte sequenceNum = 0;
 // Create a display object, specifying pin parameters (Clock pin, Data pin)
 TM1637 display;
+CRGB leds[1];
 // Track state of overall puzzle
 enum State {Initialising, Running, Solved};
 State state = Initialising;
@@ -57,6 +63,31 @@ void setup(){
 
   // Set brightness
   display.begin(displayClockPin, displayDataPin, displayNumDigits);
+
+  // Tell FastLED about the LED strip configuration
+  FastLED.addLeds<PL9823, ledPin>(leds, 1).setCorrection(TypicalLEDStrip);
+  leds[0] = CRGB(255,0,0);
+  FastLED.show();  
+}
+
+// Set the LED colour/pattern to indicate the status of the device
+void ledLoop() {
+  uint8_t hue = 0; // colour
+  uint8_t v = 128; // brightness
+  if(state == Initialising) {
+    hue = 0;
+    v = beatsin8(10,0, 128);
+  }
+  else if(state == Solved) {
+    hue = 96; 
+    v =128;
+  }
+  else {
+    hue = 160;
+    v = beatsin8(10,0, 128);
+  }
+  leds[0] = CHSV(hue, 255, v); 
+  FastLED.show();
 }
 
 // Updates the display to show the current code entered by the user
@@ -158,4 +189,5 @@ void inputLoop() {
 void loop(){
   inputLoop();
   networkLoop();
+  ledLoop();
 }
