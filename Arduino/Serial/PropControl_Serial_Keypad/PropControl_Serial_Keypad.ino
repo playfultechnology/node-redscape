@@ -6,12 +6,13 @@
  */
 
 // INCLUDES
+// Keypad input (tested with v3.1.1), see https://github.com/Chris--A/Keypad
 #include <Keypad.h>
 // JSON serialization (tested with v6.19.4), see https://arduinojson.org
 #include <ArduinoJson.h>
-// 4-Digit LED display, download from https://github.com/avishorp/TM1637
+// 4-Digit LED display (tested with v0.3.4), see https://github.com/RobTillaart/TM1637_RT
 #include <TM1637.h>
-// For LED status display
+// Programmable LED display (tested with v3.5), see https://github.com/FastLED/FastLED
 #include <FastLED.h>
 // Software UART for communication with Node-RED
 #include <SoftwareSerial.h>
@@ -126,15 +127,21 @@ void flashDisplay(){
 }
 
 void receiveUpdate(const JsonDocument& jsonDoc) {
-  if(jsonDoc["command"] == "SOLVE") { state = Solved; }
-  else if(jsonDoc["command"] == "RESET") { state = Running; }
+  if(jsonDoc["command"] == "SOLVE") { deviceState = DeviceState::Solved; }
+  else if(jsonDoc["command"] == "RESET") { 
+    deviceState = DeviceState::Running; 
+    memset(inputCode, 0, sizeof(inputCode));
+    sequenceNum = 0;
+    // Update the display
+    updateDisplay();    
+  }
   // Now send refreshed values back
-  sendUpdate(); 
+  sendUpdate();
 }
 
 void sendUpdate() {
   // Create JSON document - determine size using https://arduinojson.org/v6/assistant/
-  StaticJsonDocument<64> jsonDoc;
+  StaticJsonDocument<128> jsonDoc;
   jsonDoc["id"] = deviceID;
   jsonDoc["state"] = (deviceState == DeviceState::Solved) ? "SOLVED" : "UNSOLVED";
   jsonDoc["input"] = inputCode;
@@ -145,7 +152,7 @@ void sendUpdate() {
 void networkLoop() {
   if(Serial.available()) {
     // This one must be bigger than the sender's because it must store the strings
-    StaticJsonDocument<128> jsonDoc;
+    StaticJsonDocument<512> jsonDoc;
     // Read the JSON document from the "link" serial port
     DeserializationError err = deserializeJson(jsonDoc, Serial);
     if (err == DeserializationError::Ok) {
@@ -167,22 +174,26 @@ void inputLoop() {
     sequenceNum++;
     // Update the display
     updateDisplay();    
-    // If the player has entered all 4 digits of a code
+    // If the player has entered the correct 4 digits of a code
+    if(strcmp(inputCode, solutionCode) == 0) {
+      deviceState = DeviceState::Solved;
+    }
+    else {
+      deviceState = DeviceState::Running;
+    }
+    // Update Node-RED
+    sendUpdate();
+    
+    // If the player has entered incorrect 4 digit code
     if(sequenceNum == 4) {
-      if(strcmp(inputCode, solutionCode) == 0){
-        deviceState = DeviceState::Solved;
-      }
-      else{
+      if(strcmp(inputCode, solutionCode) != 0) {
         // Flash the display
         flashDisplay();
-        deviceState = DeviceState::Running;
       }
       // Reset
       memset(inputCode, 0, sizeof(inputCode));
       sequenceNum = 0;  
     }
-    // Update Node-RED
-    sendUpdate();
   }
 }
 

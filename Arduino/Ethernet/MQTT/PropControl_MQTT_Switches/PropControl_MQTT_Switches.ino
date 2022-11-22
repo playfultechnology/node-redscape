@@ -14,6 +14,8 @@
 #include <ArduinoJson.h>
 // Debouncing switch input (tested with v2.71.0), see https://github.com/thomasfredericks/Bounce2
 #include <Bounce2.h>
+// Programmable LED display (tested with v3.5), see https://github.com/FastLED/FastLED
+#include <FastLED.h>
 
 // CONSTANTS
 // Unique name of this device, used as client ID to connect to MQTT server
@@ -35,6 +37,8 @@ const byte numSwitches = 5;
 const byte switchPins[numSwitches] = {A4, A3, A2, A1, A0};
 // The desired solution state
 const bool solution[numSwitches] = {true, false, true, false, true};
+// Connected to the DIN of the programmable LED
+const byte ledPin = 2;
 
 // GLOBALS
 // Newtwork client
@@ -50,10 +54,11 @@ enum : byte { LAN_DOWN_MQTT_DOWN, LAN_UP_MQTT_DOWN, LAN_UP_MQTT_STARTED, LAN_UP_
 byte networkState = LAN_DOWN_MQTT_DOWN;
 // Track state of overall puzzle
 enum DeviceState {Initialising, Running, Solved};
-DeviceState devicestate = DeviceState::Initialising;
+DeviceState deviceState = DeviceState::Initialising;
 // An array of bounce objects for each switch input
 Bounce switches[numSwitches] = {Bounce(), Bounce(), Bounce(), Bounce(), Bounce()};
 bool inputState[numSwitches] = {true, false, true, false, true};
+CRGB leds[1];
 
 void setup(){
   // Initialise serial connection
@@ -66,6 +71,11 @@ void setup(){
     switches[i].attach(switchPins[i], INPUT_PULLUP);
   }
  
+  // Tell FastLED about the LED strip configuration
+  FastLED.addLeds<PL9823, ledPin>(leds, 1).setCorrection(TypicalLEDStrip);
+  leds[0] = CRGB(255,0,0);
+  FastLED.show();
+  
   mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
     // Create a JSON document from the MQTT message received. Note best practice is NOT to have a reusable 
     // JSON document, but create a new one each time it is needed.  https://arduinojson.org/v6/assistant/
@@ -78,6 +88,28 @@ void setup(){
   // Set the puzzle state
   deviceState = DeviceState::Running;	
 }
+
+
+// Set the LED colour/pattern to indicate the status of the device
+void ledLoop() {
+  uint8_t hue = 0; // colour
+  uint8_t v = 128; // brightness
+  if(deviceState == DeviceState::Initialising) {
+    hue = 0;
+    v = beatsin8(10, 0, 128);
+  }
+  else if(deviceState == DeviceState::Solved) {
+    hue = 96; 
+    v =128;
+  }
+  else {
+    hue = 160;
+    v = beatsin8(10, 0, 128);
+  }
+  leds[0] = CHSV(hue, 255, v); 
+  FastLED.show();
+}
+
 
 void inputLoop() {
   bool changed = false;
@@ -94,7 +126,7 @@ void inputLoop() {
       solved = false;
     }
   }
-  deviceState = (solved ? State::Solved : State::Running);
+  deviceState = (solved ? DeviceState::Solved : DeviceState::Running);
   // Only send an update if at least one input has been changed
   if(changed) {
     sendUpdate();
@@ -245,4 +277,5 @@ void loop(){
   // Process update loops
   inputLoop();
   networkLoop();
+  ledLoop();
 }

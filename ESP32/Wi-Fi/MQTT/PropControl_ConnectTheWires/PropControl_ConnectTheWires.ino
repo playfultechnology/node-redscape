@@ -7,12 +7,18 @@
  * Example code for a simple RFID escape room puzzle integrated with Node-RED GM control.
 */
 
+// REQUIREMENT CHECKS
+#ifndef ESP32
+  // Example uses features not present in Arduino WiFi.h implementation
+  #error "This code is designed for ESP32 architecture"
+#endif
+
 // INCLUDES
 // ESP32 Wi-Fi library
 #include <WiFi.h>
-// MQTT client, see https://github.com/knolleary/pubsubclient
+// MQTT client (tested with v2.8.0), see https://github.com/knolleary/pubsubclient
 #include <PubSubClient.h>
-// For LED status display
+// Programmable LED display (tested with v3.5), see https://github.com/FastLED/FastLED
 #include <FastLED.h>
 // JSON serialization (tested with v6.19.4), see https://arduinojson.org
 #include <ArduinoJson.h>
@@ -25,7 +31,7 @@ const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
 const char* wifiPassword = "molly1869";
 // IP address of remote MQTT server
-const char* remoteMQTTServer = "192.168.0.136";
+const char* remoteMQTTServer = "192.168.0.114";
 const int remoteMQTTPort = 1883;
 const char* remoteMQTTUser = "user";
 const char* remoteMQTTPass = "pass";
@@ -46,7 +52,7 @@ WiFiClient networkClient;
 // MQTT client based on the chosen network
 PubSubClient mqttClient(remoteMQTTServer, remoteMQTTPort, networkClient);
 // A re-usable buffer to hold MQTT messages to be sent/have been received
-char mqttMsg[128];
+char mqttMsg[256];
 // The MQTT topic in which to publish a message
 char mqttTopic[32];
 // Keep track of connection state of both WiFi and MQTT network
@@ -116,15 +122,20 @@ void ledLoop() {
   switch (networkState) {
     // If there is no Wi-Fi connection
     case WLAN_DOWN_MQTT_DOWN:
+      v = beatsin8(125, 16, 128);
+      break;
     case WLAN_STARTING_MQTT_DOWN:
-      v = beatsin8(60,0, 128);
+      v = beatsin8(100, 16, 128);
       break;
     case WLAN_UP_MQTT_DOWN:
+      v = beatsin8(75, 16, 128);
+      break;
     case WLAN_UP_MQTT_STARTED:
-      v = beatsin8(20,0, 128);
+      v = beatsin8(50, 16, 128);
       break;
     case WLAN_UP_MQTT_UP:
-      v = beatsin8(10,0, 128);
+      unsigned long beat = millis() >> 10; // Approx once per second
+      v = (beat % 2) ? 128 : 0;
       break;
   }
   // Solid Green
@@ -154,7 +165,7 @@ void sendUpdate() {
     JsonObject connection = inputs.createNestedObject();
     connection["F"] = connections[i][0];
     connection["T"] = connections[i][1];
-    connection["S"] = connectionState[i];
+    connection["S"] = connectionState[i] ? 1 : 0;
   }
   // Send to Serial
   serializeJson(jsonDoc, Serial);
@@ -292,7 +303,6 @@ void inputLoop() {
   else if (!allConnectionsCorrect && state == Solved){
     state = Running;
   }
-  
   // If a connection has been made/broken since last time we checked
   if(stateChanged) {
     sendUpdate();
