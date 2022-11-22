@@ -6,30 +6,33 @@
  * 
  * NOTE:
  * - If you have problems establishing a network connection on the ESP8266, 
- *   select the following option in Arduino IDE: 
+ *   it could be due to a corrupt WiFi configuration  - select the following in Arduino IDE: 
  *   Tools > Erase Flash > All Flash Contents
- * 
  */
 
 // REQUIREMENT CHECKS
 #ifndef ESP8266
-  // Example uses features not present in WiFi.h implementation used in Arduino boards
+  // Example uses features not present in Arduino WiFi.h implementation
   #error "This code is designed for ESP8266 architecture"
 #endif
 
 // INCLUDES
-// ESP8266 WiFi library, see https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html
+// ESP8266 Wi-Fi library, see https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html
 #include <ESP8266WiFi.h>
-// MQTT client, see https://github.com/knolleary/pubsubclient
+// MQTT client (tested with v2.8.0), see https://github.com/knolleary/pubsubclient
 #include <PubSubClient.h>
 // JSON serialisation (tested with v6.19.4), see https://arduinojson.org/
 #include <ArduinoJson.h>
 // RFID input, see https://github.com/playfultechnology/PN5180-Library
 #include <PN5180.h>
 #include <PN5180ISO15693.h>
-// OLED display (tested with v1.1.4), see https://github.com/lexus2k/lcdgfx
+// OLED display (tested with v1.1.1), see https://github.com/lexus2k/lcdgfx
 #include <SPI.h>
 #include <lcdgfx.h>
+// For LED status display
+#include <FastLED.h>
+// Connected to the DIN of the programmable LED
+const byte ledPin = D4;
 
 // CONSTANTS
 // Unique name of this device, used as client ID to connect to MQTT server
@@ -40,10 +43,11 @@ const char* wifiSSID = "Hyrule";
 // Wi-Fi password if required
 const char* wifiPassword = "molly1869";
 // IP address of remote MQTT server
-const char* remoteMQTTServer = "192.168.0.114";
+const char* remoteMQTTServer = "192.168.0.136";
 const int remoteMQTTPort = 1883;
 const char* remoteMQTTUser = "user";
 const char* remoteMQTTPass = "pass";
+const uint8_t solveUid[8] = {0xA4, 0x0A, 0x6D, 0xBE, 0x50, 0x01, 0x04, 0xE0};
 
 // GLOBALS
 // Instance of the WiFi client object
@@ -55,13 +59,13 @@ char mqttMsg[128];
 // The MQTT topic in which to publish a message
 char mqttTopic[32];
 // Keep track of connection state of both WiFi and MQTT network
-enum : byte { WLAN_DOWN_MQTT_DOWN, WLAN_STARTING_MQTT_DOWN, WLAN_UP_MQTT_DOWN, WLAN_UP_MQTT_STARTED, WLAN_UP_MQTT_UP } connectionState;
+enum : byte { WLAN_DOWN_MQTT_DOWN, WLAN_STARTING_MQTT_DOWN, WLAN_UP_MQTT_DOWN, WLAN_UP_MQTT_STARTED, WLAN_UP_MQTT_UP } NetworkState;
 byte networkState = WLAN_DOWN_MQTT_DOWN;
 // Track state of overall puzzle
-enum State {Initialising, Running, Solved};
-State state = Initialising;
-// Define GPGIO pins for PN5180 NSS, BUSY, and RESET lines
-PN5180ISO15693 nfc(D8, D0, D4);
+enum DeviceState {Initialising, Running, Solved};
+DeviceState deviceState = DeviceState::Initialising;
+// Define GPIO pins for PN5180 NSS, BUSY, and RESET lines
+PN5180ISO15693 nfc(D8, D0, D3);
 // WiFi network event handlers, see https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/generic-examples.html
 WiFiEventHandler gotIpEventHandler, disconnectedEventHandler;
 // Last UID scanned
@@ -69,19 +73,14 @@ unsigned long lastUpdateTime;
 uint8_t lastUid[8];
 // OLED display
 DisplaySSD1306_128x64_I2C display(-1);
+// Programmable LED array
+CRGB leds[1];
 
 void setup(){
   // Initialise serial connection
   Serial.begin(115200);
   Serial.println("");
 	Serial.println(__FILE__ __DATE__);
-  
-  // We'll use built-in LED to indicate state of the controller
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);  
-  
-  // Set the puzzle state
-  state = State::Running;
 
   // OLED display  
   display.setFixedFont(ssd1306xled_font6x8);
@@ -91,7 +90,7 @@ void setup(){
   display.printFixed(0, 8, "RFID Controller", STYLE_NORMAL);
   display.printFixed (0, 32, "Playful Technology", STYLE_BOLD);
 
-  //PN5180 setup NSS, BUSY, and RESET
+  // PN5180 setup NSS, BUSY, and RESET
   Serial.println(F("Beginning NFC..."));
   nfc.begin();
   delay(100);
@@ -129,12 +128,52 @@ void setup(){
     networkState = WLAN_DOWN_MQTT_DOWN;
     // ESP.restart();
   });
+
+  // Initialise programmable status LED
+  FastLED.addLeds<PL9823, ledPin>(leds, 1).setCorrection(TypicalLEDStrip);
+  leds[0] = CRGB(255,0,0);
+  FastLED.show();
+
+  // Set the device state
+  deviceState = DeviceState::Running;
+}
+
+// Set the LED colour/pattern to indicate the status of the device
+void ledLoop() {
+  uint8_t hue = 0; // colour
+  uint8_t v = 128; // brightness
+  switch (networkState) {
+    // If there is no Wi-Fi connection
+    case WLAN_DOWN_MQTT_DOWN:
+      v = beatsin8(125, 16, 128);
+      break;
+    case WLAN_STARTING_MQTT_DOWN:
+      v = beatsin8(100,16, 128);
+      break;
+    case WLAN_UP_MQTT_DOWN:
+      v = beatsin8(75,16, 128);
+      break;
+    case WLAN_UP_MQTT_STARTED:
+      v = beatsin8(50,16, 128);
+      break;
+    case WLAN_UP_MQTT_UP:
+      unsigned long beat = millis() >> 10; // Approx once per second
+      v = (beat % 2) ? 128 : 0;
+      break;
+  }
+  // Solid Green
+  if(deviceState == DeviceState::Solved) {
+    hue = 96; 
+    v = 128;
+  }
+  leds[0] = CHSV(hue, 255, v); 
+  FastLED.show();
 }
 
 void receiveUpdate(const JsonDocument& jsonDoc) {
   // Act upon command received
-  if(jsonDoc["command"] == "SOLVE") { state = Solved; }
-  else if(jsonDoc["command"] == "RESET") { state = Running; }
+  if(jsonDoc["command"] == "SOLVE") { deviceState = DeviceState::Solved; }
+  else if(jsonDoc["command"] == "RESET") { deviceState = DeviceState::Running; }
   // Now send refreshed values back
   sendUpdate();
 }
@@ -143,8 +182,8 @@ void sendUpdate() {
   // Create JSON document reflecting current state - determine size using https://arduinojson.org/v6/assistant/
   StaticJsonDocument<128> jsonDoc;
   jsonDoc["id"] = deviceID;
-  jsonDoc["state"] = (state == State::Solved) ? "SOLVED" : "UNSOLVED";
-  char uid[16];
+  jsonDoc["state"] = (deviceState == DeviceState::Solved) ? "SOLVED" : "UNSOLVED";
+  char uid[17];
   memset(uid, 0, sizeof uid);
   snprintf(uid, 16, "%02x%02x%02x%02x%02x%02x%02x%02x", lastUid[7], lastUid[6], lastUid[5], lastUid[4], lastUid[3], lastUid[2], lastUid[1], lastUid[0] );
   jsonDoc["input"] = uid;
@@ -171,17 +210,18 @@ void inputLoop() {
       // If the ID is different from that we read last frame
       if(memcmp(currentUid, lastUid, 8) != 0) {
         // Format it nicely for display
-        char buffer[16];
+        char buffer[17];
         memset(buffer, 0, sizeof buffer);
-        snprintf(buffer, 16, "%02x%02x%02x%02x%02x%02x%02x%02x", currentUid[7], currentUid[6], currentUid[5], currentUid[4], currentUid[3], currentUid[2], currentUid[1], currentUid[0] );
-        display.printFixed(0,  16, buffer, STYLE_NORMAL);
-        
+        snprintf(buffer, 17, "%02x%02x%02x%02x%02x%02x%02x%02x", currentUid[7], currentUid[6], currentUid[5], currentUid[4], currentUid[3], currentUid[2], currentUid[1], currentUid[0] );
+        display.printFixed(0, 16, buffer, STYLE_NORMAL);
         // Output to serial monitor
         Serial.println(buffer);
-  
-        //Update the stored value
+        // Update the stored value
         memcpy(lastUid, currentUid, 8);
-
+        // If it's the correct ID
+        if(memcmp(currentUid, solveUid, 8) == 0) {
+          deviceState = DeviceState::Solved;
+        }
         // Send status update to Node-RED
         sendUpdate();
       }
@@ -191,6 +231,9 @@ void inputLoop() {
       if(memcmp(lastUid, currentUid, 8) != 0) { 
         memcpy(lastUid, currentUid, 8);
         display.printFixed(0,  16, "No card in range", STYLE_NORMAL);
+
+        deviceState = DeviceState::Running;
+        
         // Send status update to Node-RED
         sendUpdate();
       }
@@ -288,10 +331,8 @@ void networkLoop() {
 }
 
 void loop(){
-  // Use built-in LED as indicator of device state
-  digitalWrite(LED_BUILTIN, !(state == State::Solved));
-    
   // Process update loops
   inputLoop();
   networkLoop();
+  ledLoop();
 }
