@@ -1,169 +1,147 @@
 [
     {
-        "id": "5aec1535.570c94",
+        "id": "3a2dfccb3eb7d2cd",
         "type": "tab",
         "label": "Keypad",
         "disabled": false,
-        "info": ""
+        "info": "",
+        "env": []
     },
     {
-        "id": "88c1bf4a.cf04b",
-        "type": "ui_template",
-        "z": "5aec1535.570c94",
-        "group": "dd53b5d1.ca999",
-        "name": "Dashboard Panel",
-        "order": 1,
-        "width": "6",
-        "height": "4",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n            <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n        </div>\n \n    </div>\n    \n</md-card-content>",
-        "storeOutMessages": false,
-        "fwdInMessages": false,
-        "templateScope": "local",
-        "x": 886,
-        "y": 172,
-        "wires": [
-            []
-        ]
+        "id": "695e61b18594ed49",
+        "type": "group",
+        "z": "3a2dfccb3eb7d2cd",
+        "name": "Initial state set on system startup / reset",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "48713f34b61c5cd2",
+            "7fd4506cfed2714b",
+            "2a7c5f53d647022e",
+            "e609df79425c78e8",
+            "649bae21c23b40c2"
+        ],
+        "x": 94,
+        "y": 79,
+        "w": 462,
+        "h": 122
     },
     {
-        "id": "2ea1a823.2b6f7",
-        "type": "mqtt in",
-        "z": "5aec1535.570c94",
-        "name": "MQTT FromDevice",
-        "topic": "FromDevice/Keypad",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "125f6c81.60151b",
-        "x": 193,
-        "y": 172,
-        "wires": [
-            [
-                "48e5e2ee.212fb4"
-            ]
-        ]
-    },
-    {
-        "id": "48e5e2ee.212fb4",
-        "type": "json",
-        "z": "5aec1535.570c94",
-        "name": "",
-        "property": "payload",
-        "action": "obj",
-        "pretty": false,
-        "x": 375,
-        "y": 172,
-        "wires": [
-            [
-                "2c76b6e6.c46f72"
-            ]
-        ]
-    },
-    {
-        "id": "2c76b6e6.c46f72",
-        "type": "function",
-        "z": "5aec1535.570c94",
-        "name": "Parse JSON and update global state",
-        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 607,
-        "y": 172,
-        "wires": [
-            [
-                "88c1bf4a.cf04b"
-            ]
-        ]
-    },
-    {
-        "id": "5c5dcafe.cf93dc",
-        "type": "mqtt out",
-        "z": "5aec1535.570c94",
-        "name": "MQTT ToDevice",
-        "topic": "ToDevice/HoldHands",
-        "qos": "",
-        "retain": "",
-        "broker": "125f6c81.60151b",
-        "x": 1105,
-        "y": 171,
-        "wires": []
-    },
-    {
-        "id": "c3f0fae3.b99fd",
-        "type": "inject",
-        "z": "5aec1535.570c94",
-        "name": "Solve",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"state\":\"SOLVED\"}",
-        "payloadType": "json",
-        "x": 232.5,
-        "y": 278,
-        "wires": [
-            [
-                "48e5e2ee.212fb4"
-            ]
-        ]
-    },
-    {
-        "id": "e7585342.3811f8",
-        "type": "inject",
-        "z": "5aec1535.570c94",
-        "name": "Reset",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"state\":\"UNSOLVED\"}",
-        "payloadType": "json",
-        "x": 232,
+        "id": "6527b366fa2fb6a1",
+        "type": "group",
+        "z": "3a2dfccb3eb7d2cd",
+        "name": "Receive updates from device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "720fcba659e64d65",
+            "7bc2ed8bfe4ba0fe",
+            "dee52485766dc42f",
+            "2a6d13423bb66601",
+            "7bfa1d8f5c6fae2c",
+            "d1ab9a4141b207f5",
+            "79850dd83f2c7768",
+            "ded68e5f530935e0",
+            "b4092255337b89c7",
+            "2dc65d76712b0582",
+            "bb1039fe6bb6c88a"
+        ],
+        "x": 84,
         "y": 239,
-        "wires": [
-            [
-                "48e5e2ee.212fb4"
-            ]
-        ]
+        "w": 972,
+        "h": 282
     },
     {
-        "id": "9fd45c1c.09ae08",
-        "type": "ui_button",
-        "z": "5aec1535.570c94",
-        "name": "RESET",
-        "group": "dd53b5d1.ca999",
-        "order": 1,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "Reset",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "fa-lock",
-        "payload": "{\"command\":\"RESET\"}",
-        "payloadType": "json",
-        "topic": "",
-        "x": 914,
-        "y": 124,
-        "wires": [
-            [
-                "5c5dcafe.cf93dc"
-            ]
-        ]
+        "id": "e6788749644a0d50",
+        "type": "group",
+        "z": "3a2dfccb3eb7d2cd",
+        "name": "Send updates to device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c8ce82f902ed12ff",
+            "081b0d55ac70d71b",
+            "5845569f348b1dae",
+            "bf6c1ef8be2dd1d8",
+            "80c1787c1b767f09",
+            "56d96f3908f7f65a",
+            "2cc234ac6225d73e",
+            "e414231d04753c05",
+            "30970f07319c94e3",
+            "f8edf6a3d603db4f",
+            "34f92ec5335b4946",
+            "792927b6fe3e12a4",
+            "b32f461490051db2",
+            "453a3125c6315b9b",
+            "4382a2870109f93b",
+            "3b9e0564709dedd1",
+            "619b3928e975c8ac",
+            "1caa0e82b7cca774",
+            "0c8c4d006f885072",
+            "a8839d07c00f2c42"
+        ],
+        "x": 1084,
+        "y": 239,
+        "w": 422,
+        "h": 522
     },
     {
-        "id": "94f83c72.4a6768",
+        "id": "51b78ad4a8465dad",
+        "type": "group",
+        "z": "3a2dfccb3eb7d2cd",
+        "name": "Dashboard controls",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "07bb6a1d8ccbe063",
+            "d2a89b140e78d237",
+            "3ee83a8ee6320d64",
+            "e0b487dffe7304d7",
+            "0aa6533c7faad29f",
+            "e0cc23830f35da62",
+            "b498833b2fb8b448",
+            "c7ee40485f52bc3a"
+        ],
+        "x": 94,
+        "y": 559,
+        "w": 542,
+        "h": 202
+    },
+    {
+        "id": "b333e789a16b1597",
+        "type": "group",
+        "z": "3a2dfccb3eb7d2cd",
+        "name": "Game Events",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "b48975a1bf60e67a",
+            "92a647cdd2420edf",
+            "d15096d8e10dc6b9",
+            "d756410ab8495266"
+        ],
+        "x": 584,
+        "y": 79,
+        "w": 432,
+        "h": 82
+    },
+    {
+        "id": "48713f34b61c5cd2",
         "type": "change",
-        "z": "5aec1535.570c94",
-        "name": "Config",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "695e61b18594ed49",
+        "name": "Configuration",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "flow",
-                "to": "{\"id\":\"Keypad\",\"name\":\"Keypad\",\"description\":\"Players must enter the code 1234 on the keypad\",\"state\":\"UNSOLVED\"}",
+                "to": "{    \"id\": \"Keypad\",    \"name\": \"Keypad\",    \"description\": \"Players must enter the code 1234 on the keypad\",    \"state\": \"UNSOLVED\"    \"ip\": \"0.0.0.0\",    \"port\": \"23\"}",
                 "tot": "json"
             },
             {
@@ -179,21 +157,747 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 230.5,
-        "y": 124,
+        "x": 280,
+        "y": 140,
         "wires": [
             [
-                "48e5e2ee.212fb4"
+                "649bae21c23b40c2"
             ]
         ]
     },
     {
-        "id": "c304f8d8.7f7258",
+        "id": "7fd4506cfed2714b",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "695e61b18594ed49",
+        "name": "On Initialisation",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 135,
+        "y": 120,
+        "wires": [
+            [
+                "48713f34b61c5cd2"
+            ]
+        ]
+    },
+    {
+        "id": "2a7c5f53d647022e",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "695e61b18594ed49",
+        "name": "On Reset",
+        "links": [
+            "c9289f5e.1fb3b8",
+            "4f97d4b38ed5c552"
+        ],
+        "x": 135,
+        "y": 160,
+        "wires": [
+            [
+                "48713f34b61c5cd2"
+            ]
+        ]
+    },
+    {
+        "id": "e609df79425c78e8",
+        "type": "link out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "695e61b18594ed49",
+        "name": "On Config Set",
+        "mode": "link",
+        "links": [
+            "ded68e5f530935e0",
+            "80df62030689a0b8",
+            "f8edf6a3d603db4f",
+            "34f92ec5335b4946",
+            "792927b6fe3e12a4",
+            "b32f461490051db2",
+            "0e6a7ea34ed569b3"
+        ],
+        "x": 515,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "649bae21c23b40c2",
+        "type": "function",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "695e61b18594ed49",
+        "name": "Store",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "e609df79425c78e8"
+            ]
+        ]
+    },
+    {
+        "id": "720fcba659e64d65",
+        "type": "mqtt in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "MQTT FromDevice",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "125f6c81.60151b",
+        "nl": false,
+        "rap": false,
+        "inputs": 1,
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "7bc2ed8bfe4ba0fe",
+        "type": "udp in",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "iface": "",
+        "port": "161",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "dee52485766dc42f",
+        "type": "tcp in",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "server": "server",
+        "host": "",
+        "port": "80",
+        "datamode": "stream",
+        "datatype": "buffer",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 430,
+        "y": 400,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "2a6d13423bb66601",
+        "type": "serial in",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "serial": "",
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "7bfa1d8f5c6fae2c",
+        "type": "websocket in",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "d1ab9a4141b207f5",
+        "type": "http in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "url": "/FromDevice",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 390,
+        "y": 480,
+        "wires": [
+            [
+                "b4092255337b89c7"
+            ]
+        ]
+    },
+    {
+        "id": "79850dd83f2c7768",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "Subscribe",
+        "rules": [
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "subscribe",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'FromDevice/' & $$.payload.id",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "720fcba659e64d65"
+            ]
+        ]
+    },
+    {
+        "id": "ded68e5f530935e0",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "link in 30",
+        "links": [
+            "e609df79425c78e8"
+        ],
+        "x": 125,
+        "y": 280,
+        "wires": [
+            [
+                "79850dd83f2c7768"
+            ]
+        ]
+    },
+    {
+        "id": "b4092255337b89c7",
+        "type": "json",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "2dc65d76712b0582"
+            ]
+        ]
+    },
+    {
+        "id": "2dc65d76712b0582",
+        "type": "function",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "Parse JSON and update stored state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 360,
+        "wires": [
+            [
+                "bb1039fe6bb6c88a"
+            ]
+        ]
+    },
+    {
+        "id": "bb1039fe6bb6c88a",
+        "type": "link out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "6527b366fa2fb6a1",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [],
+        "x": 1015,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c8ce82f902ed12ff",
+        "type": "mqtt out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "MQTT ToDevice",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "125f6c81.60151b",
+        "x": 1400,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "081b0d55ac70d71b",
+        "type": "tcp out",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "e6788749644a0d50",
+        "name": "",
+        "host": "",
+        "port": "",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "",
+        "x": 1430,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5845569f348b1dae",
+        "type": "serial out",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "e6788749644a0d50",
+        "name": "",
+        "serial": "",
+        "x": 1430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "bf6c1ef8be2dd1d8",
+        "type": "udp out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "",
+        "addr": "",
+        "iface": "",
+        "port": "",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1430,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "80c1787c1b767f09",
+        "type": "websocket out",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "e6788749644a0d50",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 1400,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "56d96f3908f7f65a",
+        "type": "http request",
+        "z": "3a2dfccb3eb7d2cd",
+        "d": true,
+        "g": "e6788749644a0d50",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1410,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2cc234ac6225d73e",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "Set Target IP and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ip",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 440,
+        "wires": [
+            [
+                "bf6c1ef8be2dd1d8"
+            ]
+        ]
+    },
+    {
+        "id": "e414231d04753c05",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "Set URL",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'ToDevice/' & $flowContext('id')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 680,
+        "wires": [
+            [
+                "56d96f3908f7f65a"
+            ]
+        ]
+    },
+    {
+        "id": "30970f07319c94e3",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "Set Host and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 520,
+        "wires": [
+            [
+                "081b0d55ac70d71b"
+            ]
+        ]
+    },
+    {
+        "id": "f8edf6a3d603db4f",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 31",
+        "links": [
+            "e609df79425c78e8"
+        ],
+        "x": 1145,
+        "y": 280,
+        "wires": [
+            [
+                "453a3125c6315b9b"
+            ]
+        ]
+    },
+    {
+        "id": "34f92ec5335b4946",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 32",
+        "links": [
+            "e609df79425c78e8"
+        ],
+        "x": 1125,
+        "y": 440,
+        "wires": [
+            [
+                "2cc234ac6225d73e"
+            ]
+        ]
+    },
+    {
+        "id": "792927b6fe3e12a4",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 33",
+        "links": [
+            "e609df79425c78e8"
+        ],
+        "x": 1145,
+        "y": 520,
+        "wires": [
+            [
+                "30970f07319c94e3"
+            ]
+        ]
+    },
+    {
+        "id": "b32f461490051db2",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 34",
+        "links": [
+            "e609df79425c78e8"
+        ],
+        "x": 1165,
+        "y": 680,
+        "wires": [
+            [
+                "e414231d04753c05"
+            ]
+        ]
+    },
+    {
+        "id": "453a3125c6315b9b",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "Set Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'ToDevice/' & $flowContext('payload.id')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 280,
+        "wires": [
+            [
+                "c8ce82f902ed12ff"
+            ]
+        ]
+    },
+    {
+        "id": "4382a2870109f93b",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 35",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1285,
+        "y": 320,
+        "wires": [
+            [
+                "c8ce82f902ed12ff"
+            ]
+        ]
+    },
+    {
+        "id": "3b9e0564709dedd1",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 36",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1345,
+        "y": 380,
+        "wires": [
+            [
+                "5845569f348b1dae"
+            ]
+        ]
+    },
+    {
+        "id": "619b3928e975c8ac",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 37",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1345,
+        "y": 480,
+        "wires": [
+            [
+                "bf6c1ef8be2dd1d8"
+            ]
+        ]
+    },
+    {
+        "id": "1caa0e82b7cca774",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 38",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1345,
+        "y": 560,
+        "wires": [
+            [
+                "081b0d55ac70d71b"
+            ]
+        ]
+    },
+    {
+        "id": "0c8c4d006f885072",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 39",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1305,
+        "y": 720,
+        "wires": [
+            [
+                "56d96f3908f7f65a"
+            ]
+        ]
+    },
+    {
+        "id": "a8839d07c00f2c42",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "e6788749644a0d50",
+        "name": "link in 40",
+        "links": [
+            "e0cc23830f35da62",
+            "d756410ab8495266"
+        ],
+        "x": 1285,
+        "y": 620,
+        "wires": [
+            [
+                "80c1787c1b767f09"
+            ]
+        ]
+    },
+    {
+        "id": "07bb6a1d8ccbe063",
         "type": "ui_button",
-        "z": "5aec1535.570c94",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "name": "RESET",
+        "group": "8f886ae1479c4797",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 180,
+        "y": 720,
+        "wires": [
+            [
+                "e0b487dffe7304d7"
+            ]
+        ]
+    },
+    {
+        "id": "d2a89b140e78d237",
+        "type": "ui_button",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
         "name": "SOLVE",
-        "group": "dd53b5d1.ca999",
-        "order": 1,
+        "group": "8f886ae1479c4797",
+        "order": 3,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -205,39 +909,244 @@
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 913,
-        "y": 84,
+        "x": 190,
+        "y": 660,
         "wires": [
             [
-                "5c5dcafe.cf93dc"
+                "3ee83a8ee6320d64"
             ]
         ]
     },
     {
-        "id": "753e49af.e1fbf8",
-        "type": "link in",
-        "z": "5aec1535.570c94",
+        "id": "3ee83a8ee6320d64",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
         "name": "",
-        "links": [
-            "8a4dffa5.a7935"
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "SOLVE",
+                "tot": "str"
+            }
         ],
-        "x": 148.5,
-        "y": 124,
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 660,
         "wires": [
             [
-                "94f83c72.4a6768"
+                "0aa6533c7faad29f"
             ]
         ]
     },
     {
-        "id": "dd53b5d1.ca999",
-        "type": "ui_group",
-        "name": "Keypad",
-        "tab": "7d66f574.b154cc",
-        "order": 2,
-        "disp": false,
+        "id": "e0b487dffe7304d7",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "SOLVE",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 720,
+        "wires": [
+            [
+                "0aa6533c7faad29f"
+            ]
+        ]
+    },
+    {
+        "id": "0aa6533c7faad29f",
+        "type": "json",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 510,
+        "y": 680,
+        "wires": [
+            [
+                "e0cc23830f35da62"
+            ]
+        ]
+    },
+    {
+        "id": "e0cc23830f35da62",
+        "type": "link out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "name": "link out 10",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "4382a2870109f93b",
+            "3b9e0564709dedd1",
+            "619b3928e975c8ac",
+            "1caa0e82b7cca774",
+            "0c8c4d006f885072",
+            "a8839d07c00f2c42"
+        ],
+        "x": 595,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "b498833b2fb8b448",
+        "type": "ui_template",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "group": "8f886ae1479c4797",
+        "name": "Dashboard Panel",
+        "order": 1,
         "width": "6",
-        "collapse": false
+        "height": "5",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 390,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c7ee40485f52bc3a",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "51b78ad4a8465dad",
+        "name": "link in 41",
+        "links": [],
+        "x": 265,
+        "y": 600,
+        "wires": [
+            [
+                "b498833b2fb8b448"
+            ]
+        ]
+    },
+    {
+        "id": "b48975a1bf60e67a",
+        "type": "change",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "b333e789a16b1597",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "RESET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 120,
+        "wires": [
+            [
+                "d15096d8e10dc6b9"
+            ]
+        ]
+    },
+    {
+        "id": "92a647cdd2420edf",
+        "type": "link in",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "b333e789a16b1597",
+        "name": "link in 42",
+        "links": [],
+        "x": 625,
+        "y": 120,
+        "wires": [
+            [
+                "b48975a1bf60e67a"
+            ]
+        ]
+    },
+    {
+        "id": "d15096d8e10dc6b9",
+        "type": "json",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "b333e789a16b1597",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 890,
+        "y": 120,
+        "wires": [
+            [
+                "d756410ab8495266"
+            ]
+        ]
+    },
+    {
+        "id": "d756410ab8495266",
+        "type": "link out",
+        "z": "3a2dfccb3eb7d2cd",
+        "g": "b333e789a16b1597",
+        "name": "link out 11",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "4382a2870109f93b",
+            "3b9e0564709dedd1",
+            "619b3928e975c8ac",
+            "1caa0e82b7cca774",
+            "0c8c4d006f885072",
+            "a8839d07c00f2c42"
+        ],
+        "x": 975,
+        "y": 120,
+        "wires": []
     },
     {
         "id": "125f6c81.60151b",
@@ -260,6 +1169,23 @@
         "willTopic": "",
         "willQos": "0",
         "willPayload": ""
+    },
+    {
+        "id": "4e976676.9e1538",
+        "type": "websocket-listener",
+        "path": "/ws/input",
+        "wholemsg": "false"
+    },
+    {
+        "id": "8f886ae1479c4797",
+        "type": "ui_group",
+        "name": "RFID",
+        "tab": "7d66f574.b154cc",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "7d66f574.b154cc",

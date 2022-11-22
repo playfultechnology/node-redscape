@@ -22,8 +22,8 @@
             "5f8ee5e00e91f276",
             "de4fe69d187abf2f"
         ],
-        "x": 74,
-        "y": 39,
+        "x": 94,
+        "y": 79,
         "w": 462,
         "h": 122
     },
@@ -46,11 +46,11 @@
             "e5e353a6553e1faa",
             "d244cacd33b48c04",
             "b0bbeb33dee663d4",
-            "5cf9f3f76f7e865f"
+            "3cb93ab39a48537e"
         ],
-        "x": 64,
-        "y": 179,
-        "w": 1122,
+        "x": 84,
+        "y": 239,
+        "w": 972,
         "h": 282
     },
     {
@@ -83,8 +83,8 @@
             "e324bf88c28b9632",
             "7b161ea468c88e5f"
         ],
-        "x": 1224,
-        "y": 179,
+        "x": 1084,
+        "y": 239,
         "w": 422,
         "h": 522
     },
@@ -102,12 +102,14 @@
             "d32f3cda43abd08a",
             "33d5db47a22c7468",
             "7b830cddb6dc1176",
-            "46fe3fba38d8ec55"
+            "46fe3fba38d8ec55",
+            "5cf9f3f76f7e865f",
+            "a2cf83622d7edd2d"
         ],
-        "x": 74,
-        "y": 479,
+        "x": 94,
+        "y": 559,
         "w": 542,
-        "h": 122
+        "h": 202
     },
     {
         "id": "d2b09579688e10ae",
@@ -123,32 +125,10 @@
             "bf18e4a24416a052",
             "5391d11b8ac651f5"
         ],
-        "x": 84,
-        "y": 619,
+        "x": 584,
+        "y": 79,
         "w": 432,
         "h": 82
-    },
-    {
-        "id": "5cf9f3f76f7e865f",
-        "type": "ui_template",
-        "z": "a1538f107b6f4fdc",
-        "g": "83ec599797030eba",
-        "group": "8f886ae1479c4797",
-        "name": "Dashboard Panel",
-        "order": 1,
-        "width": "6",
-        "height": "5",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
-        "storeOutMessages": false,
-        "fwdInMessages": false,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 1070,
-        "y": 300,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "d244cacd33b48c04",
@@ -159,8 +139,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 590,
-        "y": 300,
+        "x": 610,
+        "y": 360,
         "wires": [
             [
                 "b0bbeb33dee663d4"
@@ -179,11 +159,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
-        "y": 300,
+        "x": 830,
+        "y": 360,
         "wires": [
             [
-                "5cf9f3f76f7e865f"
+                "3cb93ab39a48537e"
             ]
         ]
     },
@@ -206,8 +186,8 @@
         "payload": "{\"command\":\"RESET\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 160,
-        "y": 560,
+        "x": 180,
+        "y": 720,
         "wires": [
             [
                 "33d5db47a22c7468"
@@ -233,8 +213,8 @@
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 159,
-        "y": 520,
+        "x": 190,
+        "y": 660,
         "wires": [
             [
                 "d32f3cda43abd08a"
@@ -268,8 +248,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
-        "y": 100,
+        "x": 280,
+        "y": 140,
         "wires": [
             [
                 "de4fe69d187abf2f"
@@ -285,8 +265,8 @@
         "links": [
             "8a4dffa5.a7935"
         ],
-        "x": 115,
-        "y": 80,
+        "x": 135,
+        "y": 120,
         "wires": [
             [
                 "fe525b913c466898"
@@ -306,8 +286,8 @@
         "nl": false,
         "rap": false,
         "inputs": 1,
-        "x": 370,
-        "y": 220,
+        "x": 390,
+        "y": 280,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -327,8 +307,8 @@
         "multicast": "false",
         "group": "",
         "datatype": "utf8",
-        "x": 400,
-        "y": 260,
+        "x": 420,
+        "y": 320,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -352,8 +332,8 @@
         "trim": false,
         "base64": false,
         "tls": "",
-        "x": 410,
-        "y": 340,
+        "x": 430,
+        "y": 400,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -368,8 +348,8 @@
         "g": "83ec599797030eba",
         "name": "",
         "serial": "",
-        "x": 410,
-        "y": 300,
+        "x": 430,
+        "y": 360,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -385,8 +365,8 @@
         "name": "",
         "server": "4e976676.9e1538",
         "client": "",
-        "x": 390,
-        "y": 380,
+        "x": 410,
+        "y": 440,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -403,8 +383,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 370,
-        "y": 420,
+        "x": 390,
+        "y": 480,
         "wires": [
             [
                 "d244cacd33b48c04"
@@ -426,8 +406,8 @@
         "correl": "",
         "expiry": "",
         "broker": "125f6c81.60151b",
-        "x": 1540,
-        "y": 240,
+        "x": 1400,
+        "y": 300,
         "wires": []
     },
     {
@@ -443,8 +423,8 @@
         "base64": false,
         "end": false,
         "tls": "",
-        "x": 1570,
-        "y": 480,
+        "x": 1430,
+        "y": 540,
         "wires": []
     },
     {
@@ -455,8 +435,8 @@
         "g": "287cddd6953c1cbd",
         "name": "",
         "serial": "",
-        "x": 1570,
-        "y": 320,
+        "x": 1430,
+        "y": 380,
         "wires": []
     },
     {
@@ -472,8 +452,8 @@
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 1570,
-        "y": 400,
+        "x": 1430,
+        "y": 460,
         "wires": []
     },
     {
@@ -485,8 +465,8 @@
         "name": "",
         "server": "4e976676.9e1538",
         "client": "",
-        "x": 1540,
-        "y": 560,
+        "x": 1400,
+        "y": 620,
         "wires": []
     },
     {
@@ -507,8 +487,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1550,
-        "y": 640,
+        "x": 1410,
+        "y": 700,
         "wires": [
             []
         ]
@@ -523,8 +503,8 @@
             "c9289f5e.1fb3b8",
             "4f97d4b38ed5c552"
         ],
-        "x": 115,
-        "y": 120,
+        "x": 135,
+        "y": 160,
         "wires": [
             [
                 "fe525b913c466898"
@@ -558,8 +538,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 240,
-        "y": 660,
+        "x": 740,
+        "y": 120,
         "wires": [
             [
                 "bf18e4a24416a052"
@@ -593,8 +573,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1400,
-        "y": 380,
+        "x": 1260,
+        "y": 440,
         "wires": [
             [
                 "3ee03b513fbbadf7"
@@ -617,8 +597,8 @@
             "e324bf88c28b9632",
             "7b161ea468c88e5f"
         ],
-        "x": 575,
-        "y": 540,
+        "x": 595,
+        "y": 680,
         "wires": []
     },
     {
@@ -648,8 +628,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 220,
+        "x": 220,
+        "y": 280,
         "wires": [
             [
                 "eae1ab410ce116f7"
@@ -676,8 +656,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1400,
-        "y": 620,
+        "x": 1260,
+        "y": 680,
         "wires": [
             [
                 "3420a7e0ad035902"
@@ -711,8 +691,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1410,
-        "y": 460,
+        "x": 1270,
+        "y": 520,
         "wires": [
             [
                 "aab1e2292b20982c"
@@ -746,8 +726,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 520,
+        "x": 340,
+        "y": 660,
         "wires": [
             [
                 "7b830cddb6dc1176"
@@ -781,8 +761,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 560,
+        "x": 340,
+        "y": 720,
         "wires": [
             [
                 "7b830cddb6dc1176"
@@ -805,8 +785,8 @@
             "32e73d5c4a486c53",
             "0e6a7ea34ed569b3"
         ],
-        "x": 495,
-        "y": 100,
+        "x": 515,
+        "y": 140,
         "wires": []
     },
     {
@@ -818,8 +798,8 @@
         "links": [
             "5f8ee5e00e91f276"
         ],
-        "x": 105,
-        "y": 220,
+        "x": 125,
+        "y": 280,
         "wires": [
             [
                 "01a1a7c17f18ab07"
@@ -835,8 +815,8 @@
         "links": [
             "5f8ee5e00e91f276"
         ],
-        "x": 1285,
-        "y": 220,
+        "x": 1145,
+        "y": 280,
         "wires": [
             [
                 "37c1a8d31de5fbb2"
@@ -852,8 +832,8 @@
         "links": [
             "5f8ee5e00e91f276"
         ],
-        "x": 1265,
-        "y": 380,
+        "x": 1125,
+        "y": 440,
         "wires": [
             [
                 "4365ef5bec7a3903"
@@ -869,8 +849,8 @@
         "links": [
             "5f8ee5e00e91f276"
         ],
-        "x": 1285,
-        "y": 460,
+        "x": 1145,
+        "y": 520,
         "wires": [
             [
                 "6c35a9477115b5aa"
@@ -886,8 +866,8 @@
         "links": [
             "5f8ee5e00e91f276"
         ],
-        "x": 1305,
-        "y": 620,
+        "x": 1165,
+        "y": 680,
         "wires": [
             [
                 "cc71ea4ed2e4c080"
@@ -906,8 +886,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
-        "y": 100,
+        "x": 430,
+        "y": 140,
         "wires": [
             [
                 "5f8ee5e00e91f276"
@@ -934,8 +914,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1380,
-        "y": 220,
+        "x": 1240,
+        "y": 280,
         "wires": [
             [
                 "9b390b713b48f7f6"
@@ -951,8 +931,8 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 490,
-        "y": 540,
+        "x": 510,
+        "y": 680,
         "wires": [
             [
                 "46fe3fba38d8ec55"
@@ -969,8 +949,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1425,
-        "y": 260,
+        "x": 1285,
+        "y": 320,
         "wires": [
             [
                 "9b390b713b48f7f6"
@@ -987,8 +967,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1485,
-        "y": 320,
+        "x": 1345,
+        "y": 380,
         "wires": [
             [
                 "e7783caa4d468f89"
@@ -1005,8 +985,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1485,
-        "y": 420,
+        "x": 1345,
+        "y": 480,
         "wires": [
             [
                 "3ee03b513fbbadf7"
@@ -1023,8 +1003,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1485,
-        "y": 500,
+        "x": 1345,
+        "y": 560,
         "wires": [
             [
                 "aab1e2292b20982c"
@@ -1041,8 +1021,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1445,
-        "y": 660,
+        "x": 1305,
+        "y": 720,
         "wires": [
             [
                 "3420a7e0ad035902"
@@ -1059,8 +1039,8 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1425,
-        "y": 560,
+        "x": 1285,
+        "y": 620,
         "wires": [
             [
                 "8033bc0ae52a4c01"
@@ -1074,8 +1054,8 @@
         "g": "d2b09579688e10ae",
         "name": "link in 15",
         "links": [],
-        "x": 125,
-        "y": 660,
+        "x": 625,
+        "y": 120,
         "wires": [
             [
                 "936acb30e1aa36d2"
@@ -1098,8 +1078,8 @@
             "e324bf88c28b9632",
             "7b161ea468c88e5f"
         ],
-        "x": 475,
-        "y": 660,
+        "x": 975,
+        "y": 120,
         "wires": []
     },
     {
@@ -1111,11 +1091,60 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 390,
-        "y": 660,
+        "x": 890,
+        "y": 120,
         "wires": [
             [
                 "5391d11b8ac651f5"
+            ]
+        ]
+    },
+    {
+        "id": "5cf9f3f76f7e865f",
+        "type": "ui_template",
+        "z": "a1538f107b6f4fdc",
+        "g": "217067ffa17d7c85",
+        "group": "8f886ae1479c4797",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 390,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3cb93ab39a48537e",
+        "type": "link out",
+        "z": "a1538f107b6f4fdc",
+        "g": "83ec599797030eba",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [],
+        "x": 1015,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a2cf83622d7edd2d",
+        "type": "link in",
+        "z": "a1538f107b6f4fdc",
+        "g": "217067ffa17d7c85",
+        "name": "link in 29",
+        "links": [],
+        "x": 265,
+        "y": 600,
+        "wires": [
+            [
+                "5cf9f3f76f7e865f"
             ]
         ]
     },

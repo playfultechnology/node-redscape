@@ -1,169 +1,147 @@
 [
     {
-        "id": "3a6dd7fc.4c7cd",
+        "id": "f02a251a8b3893a7",
         "type": "tab",
         "label": "Toggle Switches",
         "disabled": false,
-        "info": ""
+        "info": "",
+        "env": []
     },
     {
-        "id": "12fc424a.8536d6",
-        "type": "ui_template",
-        "z": "3a6dd7fc.4c7cd",
-        "group": "176fd05d.aa8588",
-        "name": "Dashboard Panel",
-        "order": 1,
-        "width": "6",
-        "height": "4",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content style=\"overflow-y:hidden;\">\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div>\n    <ul>\n    <li style=\"display: inline;\" ng-repeat=\"input in msg.payload.inputs track by $index\">\n        <span ng-class=\"input == 1 ? 'fa fa-2x fa-arrow-circle-down' : 'fa fa-2x fa-arrow-circle-up'\">&nbsp;</span> \n    </ul>\n    </div>\n</md-card-content>",
-        "storeOutMessages": false,
-        "fwdInMessages": false,
-        "templateScope": "local",
-        "x": 902,
-        "y": 154,
-        "wires": [
-            []
-        ]
+        "id": "429373e5233523e6",
+        "type": "group",
+        "z": "f02a251a8b3893a7",
+        "name": "Initial state set on system startup / reset",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "14b7c0626bb95f0c",
+            "c4a8de8b032253c9",
+            "4ebe0fad3f34dd57",
+            "7dc10f9cb19dfc49",
+            "b54ff19414bba6ce"
+        ],
+        "x": 94,
+        "y": 79,
+        "w": 462,
+        "h": 122
     },
     {
-        "id": "ba1efa99.666ec",
-        "type": "mqtt in",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "MQTT FromDevice",
-        "topic": "FromDevice/ToggleSwitch",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "125f6c81.60151b",
-        "x": 197,
-        "y": 153,
-        "wires": [
-            [
-                "fb900008.f428e8"
-            ]
-        ]
+        "id": "242c5067e5990cb6",
+        "type": "group",
+        "z": "f02a251a8b3893a7",
+        "name": "Receive updates from device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "3f6158c816a3e3ad",
+            "193046c08df17a03",
+            "46d2d8c897dfbc34",
+            "9d4de88b2d47a81a",
+            "c81b7ca307e44dc9",
+            "0bae644f4ef32b3b",
+            "614e2133501147a9",
+            "43b12966abaf1bba",
+            "6f7c0b799add1c61",
+            "6df64cda15351c9c",
+            "847b421197d02589"
+        ],
+        "x": 84,
+        "y": 239,
+        "w": 972,
+        "h": 282
     },
     {
-        "id": "fb900008.f428e8",
-        "type": "json",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "",
-        "property": "payload",
-        "action": "obj",
-        "pretty": false,
-        "x": 379,
-        "y": 153,
-        "wires": [
-            [
-                "eaa06cba.4a4fc8"
-            ]
-        ]
+        "id": "b4cb822bc21ec6e7",
+        "type": "group",
+        "z": "f02a251a8b3893a7",
+        "name": "Send updates to device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "fc70cd751de0acaf",
+            "4338465079054013",
+            "0d089ed5f02ed1c5",
+            "7376a7de02bccc4c",
+            "588554adfdfbcddc",
+            "857cba0f307e447b",
+            "5f829c5ff4c229fe",
+            "eb8c10edc327e03d",
+            "3190d2863cb6bcf4",
+            "b8484cb19490b977",
+            "6d095509c90ec1fe",
+            "afae3397cc3782ef",
+            "92746eb3b07a5cd6",
+            "e20d4a60346e4a53",
+            "7fa852135a7e4380",
+            "7da127199ae74f67",
+            "6177dd302557454b",
+            "18c136e9d40472f2",
+            "55bbcecbb5d7a09a",
+            "b00aa8785c264d25"
+        ],
+        "x": 1084,
+        "y": 239,
+        "w": 422,
+        "h": 522
     },
     {
-        "id": "eaa06cba.4a4fc8",
-        "type": "function",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "Parse JSON and update global state",
-        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 623,
-        "y": 154,
-        "wires": [
-            [
-                "12fc424a.8536d6"
-            ]
-        ]
+        "id": "0aeaaf521b466e91",
+        "type": "group",
+        "z": "f02a251a8b3893a7",
+        "name": "Dashboard controls",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "1b481f66da7664a9",
+            "fd90c1e4d3ec7f76",
+            "0285899cfa9ef975",
+            "d7822f7ddb5df848",
+            "a83bb5851ac04eb7",
+            "5401a4803632510b",
+            "f795a60513f492c1",
+            "0e0e37218bad75ba"
+        ],
+        "x": 94,
+        "y": 559,
+        "w": 542,
+        "h": 202
     },
     {
-        "id": "3b739e6.daddfe2",
-        "type": "mqtt out",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "MQTT ToDevice",
-        "topic": "ToDevice/Toggle",
-        "qos": "",
-        "retain": "",
-        "broker": "125f6c81.60151b",
-        "x": 1117,
-        "y": 152,
-        "wires": []
+        "id": "67e6b33cac4a1b6e",
+        "type": "group",
+        "z": "f02a251a8b3893a7",
+        "name": "Game Events",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "5f4b4ee0be573ad7",
+            "52e926b6a0d14402",
+            "4e0df6e985b8421b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 584,
+        "y": 79,
+        "w": 432,
+        "h": 82
     },
     {
-        "id": "b3beadb7.c8e048",
-        "type": "inject",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "Solve",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"state\":\"SOLVED\"}",
-        "payloadType": "json",
-        "x": 237.5,
-        "y": 247,
-        "wires": [
-            [
-                "fb900008.f428e8"
-            ]
-        ]
-    },
-    {
-        "id": "e3062108.ce3e4",
-        "type": "inject",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "Reset",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"state\":\"UNSOLVED\"}",
-        "payloadType": "json",
-        "x": 237,
-        "y": 208,
-        "wires": [
-            [
-                "fb900008.f428e8"
-            ]
-        ]
-    },
-    {
-        "id": "d1f2e33.18a072",
-        "type": "ui_button",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "RESET",
-        "group": "176fd05d.aa8588",
-        "order": 1,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "Reset",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "fa-lock",
-        "payload": "{\"command\":\"RESET\"}",
-        "payloadType": "json",
-        "topic": "",
-        "x": 930,
-        "y": 106,
-        "wires": [
-            [
-                "3b739e6.daddfe2"
-            ]
-        ]
-    },
-    {
-        "id": "7e153167.5252a8",
+        "id": "14b7c0626bb95f0c",
         "type": "change",
-        "z": "3a6dd7fc.4c7cd",
-        "name": "Config",
+        "z": "f02a251a8b3893a7",
+        "g": "429373e5233523e6",
+        "name": "Configuration",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "flow",
-                "to": "{\"id\":\"ToggleSwitches\",\"name\":\"Toggle Switches\",\"description\":\"Players must set switches to correct pattern\",\"inputs\":[0,0,0,0,0],\"state\":\"UNSOLVED\"}",
+                "to": "{\"id\":\"Switches-1\",\"name\":\"Toggle Switches\",\"description\":\"Players must scan the switches\",\"state\":\"UNSOLVED\"}",
                 "tot": "json"
             },
             {
@@ -179,21 +157,737 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 234.5,
-        "y": 105,
+        "x": 280,
+        "y": 140,
         "wires": [
             [
-                "fb900008.f428e8"
+                "b54ff19414bba6ce"
             ]
         ]
     },
     {
-        "id": "581cde05.debe4",
+        "id": "c4a8de8b032253c9",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "429373e5233523e6",
+        "name": "On Initialisation",
+        "links": [
+            "8a4dffa5.a7935"
+        ],
+        "x": 135,
+        "y": 120,
+        "wires": [
+            [
+                "14b7c0626bb95f0c"
+            ]
+        ]
+    },
+    {
+        "id": "4ebe0fad3f34dd57",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "429373e5233523e6",
+        "name": "On Reset",
+        "links": [
+            "c9289f5e.1fb3b8",
+            "4f97d4b38ed5c552"
+        ],
+        "x": 135,
+        "y": 160,
+        "wires": [
+            [
+                "14b7c0626bb95f0c"
+            ]
+        ]
+    },
+    {
+        "id": "7dc10f9cb19dfc49",
+        "type": "link out",
+        "z": "f02a251a8b3893a7",
+        "g": "429373e5233523e6",
+        "name": "On Config Set",
+        "mode": "link",
+        "links": [
+            "43b12966abaf1bba",
+            "80df62030689a0b8",
+            "b8484cb19490b977",
+            "6d095509c90ec1fe",
+            "afae3397cc3782ef",
+            "92746eb3b07a5cd6",
+            "0e6a7ea34ed569b3"
+        ],
+        "x": 515,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b54ff19414bba6ce",
+        "type": "function",
+        "z": "f02a251a8b3893a7",
+        "g": "429373e5233523e6",
+        "name": "Store",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "7dc10f9cb19dfc49"
+            ]
+        ]
+    },
+    {
+        "id": "3f6158c816a3e3ad",
+        "type": "mqtt in",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "MQTT FromDevice",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "125f6c81.60151b",
+        "nl": false,
+        "rap": false,
+        "inputs": 1,
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "193046c08df17a03",
+        "type": "udp in",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "iface": "",
+        "port": "161",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 420,
+        "y": 320,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "46d2d8c897dfbc34",
+        "type": "tcp in",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "server": "server",
+        "host": "",
+        "port": "80",
+        "datamode": "stream",
+        "datatype": "buffer",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 430,
+        "y": 400,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "9d4de88b2d47a81a",
+        "type": "serial in",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "serial": "",
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "c81b7ca307e44dc9",
+        "type": "websocket in",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "0bae644f4ef32b3b",
+        "type": "http in",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "url": "/FromDevice",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 390,
+        "y": 480,
+        "wires": [
+            [
+                "6f7c0b799add1c61"
+            ]
+        ]
+    },
+    {
+        "id": "614e2133501147a9",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "Subscribe",
+        "rules": [
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "subscribe",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'FromDevice/' & $$.payload.id",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "3f6158c816a3e3ad"
+            ]
+        ]
+    },
+    {
+        "id": "43b12966abaf1bba",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "link in 16",
+        "links": [
+            "7dc10f9cb19dfc49"
+        ],
+        "x": 125,
+        "y": 280,
+        "wires": [
+            [
+                "614e2133501147a9"
+            ]
+        ]
+    },
+    {
+        "id": "6f7c0b799add1c61",
+        "type": "json",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "6df64cda15351c9c"
+            ]
+        ]
+    },
+    {
+        "id": "6df64cda15351c9c",
+        "type": "function",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "Parse JSON and update stored state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 360,
+        "wires": [
+            [
+                "847b421197d02589"
+            ]
+        ]
+    },
+    {
+        "id": "fc70cd751de0acaf",
+        "type": "mqtt out",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "MQTT ToDevice",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "125f6c81.60151b",
+        "x": 1400,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "4338465079054013",
+        "type": "tcp out",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "b4cb822bc21ec6e7",
+        "name": "",
+        "host": "",
+        "port": "",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "",
+        "x": 1430,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "0d089ed5f02ed1c5",
+        "type": "serial out",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "b4cb822bc21ec6e7",
+        "name": "",
+        "serial": "",
+        "x": 1430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7376a7de02bccc4c",
+        "type": "udp out",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "",
+        "addr": "",
+        "iface": "",
+        "port": "",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 1430,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "588554adfdfbcddc",
+        "type": "websocket out",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "b4cb822bc21ec6e7",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 1400,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "857cba0f307e447b",
+        "type": "http request",
+        "z": "f02a251a8b3893a7",
+        "d": true,
+        "g": "b4cb822bc21ec6e7",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1410,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f829c5ff4c229fe",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "Set Target IP and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ip",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 440,
+        "wires": [
+            [
+                "7376a7de02bccc4c"
+            ]
+        ]
+    },
+    {
+        "id": "eb8c10edc327e03d",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "Set URL",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'ToDevice/' & $flowContext('id')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 680,
+        "wires": [
+            [
+                "857cba0f307e447b"
+            ]
+        ]
+    },
+    {
+        "id": "3190d2863cb6bcf4",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "Set Host and Port",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "payload.ip",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "payload.port",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 520,
+        "wires": [
+            [
+                "4338465079054013"
+            ]
+        ]
+    },
+    {
+        "id": "b8484cb19490b977",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 17",
+        "links": [
+            "7dc10f9cb19dfc49"
+        ],
+        "x": 1145,
+        "y": 280,
+        "wires": [
+            [
+                "e20d4a60346e4a53"
+            ]
+        ]
+    },
+    {
+        "id": "6d095509c90ec1fe",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 18",
+        "links": [
+            "7dc10f9cb19dfc49"
+        ],
+        "x": 1125,
+        "y": 440,
+        "wires": [
+            [
+                "5f829c5ff4c229fe"
+            ]
+        ]
+    },
+    {
+        "id": "afae3397cc3782ef",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 19",
+        "links": [
+            "7dc10f9cb19dfc49"
+        ],
+        "x": 1145,
+        "y": 520,
+        "wires": [
+            [
+                "3190d2863cb6bcf4"
+            ]
+        ]
+    },
+    {
+        "id": "92746eb3b07a5cd6",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 20",
+        "links": [
+            "7dc10f9cb19dfc49"
+        ],
+        "x": 1165,
+        "y": 680,
+        "wires": [
+            [
+                "eb8c10edc327e03d"
+            ]
+        ]
+    },
+    {
+        "id": "e20d4a60346e4a53",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "Set Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'ToDevice/' & $flowContext('payload.id')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 280,
+        "wires": [
+            [
+                "fc70cd751de0acaf"
+            ]
+        ]
+    },
+    {
+        "id": "7fa852135a7e4380",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 21",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1285,
+        "y": 320,
+        "wires": [
+            [
+                "fc70cd751de0acaf"
+            ]
+        ]
+    },
+    {
+        "id": "7da127199ae74f67",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 22",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1345,
+        "y": 380,
+        "wires": [
+            [
+                "0d089ed5f02ed1c5"
+            ]
+        ]
+    },
+    {
+        "id": "6177dd302557454b",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 23",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1345,
+        "y": 480,
+        "wires": [
+            [
+                "7376a7de02bccc4c"
+            ]
+        ]
+    },
+    {
+        "id": "18c136e9d40472f2",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 24",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1345,
+        "y": 560,
+        "wires": [
+            [
+                "4338465079054013"
+            ]
+        ]
+    },
+    {
+        "id": "55bbcecbb5d7a09a",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 25",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1305,
+        "y": 720,
+        "wires": [
+            [
+                "857cba0f307e447b"
+            ]
+        ]
+    },
+    {
+        "id": "b00aa8785c264d25",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "b4cb822bc21ec6e7",
+        "name": "link in 26",
+        "links": [
+            "5401a4803632510b",
+            "f860ce1fb56334cb"
+        ],
+        "x": 1285,
+        "y": 620,
+        "wires": [
+            [
+                "588554adfdfbcddc"
+            ]
+        ]
+    },
+    {
+        "id": "1b481f66da7664a9",
         "type": "ui_button",
-        "z": "3a6dd7fc.4c7cd",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "name": "RESET",
+        "group": "176fd05d.aa8588",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 180,
+        "y": 720,
+        "wires": [
+            [
+                "d7822f7ddb5df848"
+            ]
+        ]
+    },
+    {
+        "id": "fd90c1e4d3ec7f76",
+        "type": "ui_button",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
         "name": "SOLVE",
         "group": "176fd05d.aa8588",
-        "order": 1,
+        "order": 3,
         "width": "3",
         "height": "1",
         "passthru": false,
@@ -201,43 +895,276 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "fa-unlock",
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
-        "x": 929,
-        "y": 66,
+        "topicType": "str",
+        "x": 190,
+        "y": 660,
         "wires": [
             [
-                "3b739e6.daddfe2"
+                "0285899cfa9ef975"
             ]
         ]
     },
     {
-        "id": "b382fdf1.42dfd",
-        "type": "link in",
-        "z": "3a6dd7fc.4c7cd",
+        "id": "0285899cfa9ef975",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
         "name": "",
-        "links": [
-            "8a4dffa5.a7935"
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "SOLVE",
+                "tot": "str"
+            }
         ],
-        "x": 143.5,
-        "y": 105,
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 660,
         "wires": [
             [
-                "7e153167.5252a8"
+                "a83bb5851ac04eb7"
             ]
         ]
     },
     {
-        "id": "176fd05d.aa8588",
-        "type": "ui_group",
-        "name": "Toggle Switches",
-        "tab": "7d66f574.b154cc",
+        "id": "d7822f7ddb5df848",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "SOLVE",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 720,
+        "wires": [
+            [
+                "a83bb5851ac04eb7"
+            ]
+        ]
+    },
+    {
+        "id": "a83bb5851ac04eb7",
+        "type": "json",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 510,
+        "y": 680,
+        "wires": [
+            [
+                "5401a4803632510b"
+            ]
+        ]
+    },
+    {
+        "id": "5401a4803632510b",
+        "type": "link out",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "7fa852135a7e4380",
+            "7da127199ae74f67",
+            "6177dd302557454b",
+            "18c136e9d40472f2",
+            "55bbcecbb5d7a09a",
+            "b00aa8785c264d25"
+        ],
+        "x": 595,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "5f4b4ee0be573ad7",
+        "type": "change",
+        "z": "f02a251a8b3893a7",
+        "g": "67e6b33cac4a1b6e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "RESET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 120,
+        "wires": [
+            [
+                "4e0df6e985b8421b"
+            ]
+        ]
+    },
+    {
+        "id": "52e926b6a0d14402",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "67e6b33cac4a1b6e",
+        "name": "link in 27",
+        "links": [],
+        "x": 625,
+        "y": 120,
+        "wires": [
+            [
+                "5f4b4ee0be573ad7"
+            ]
+        ]
+    },
+    {
+        "id": "4e0df6e985b8421b",
+        "type": "json",
+        "z": "f02a251a8b3893a7",
+        "g": "67e6b33cac4a1b6e",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 890,
+        "y": 120,
+        "wires": [
+            [
+                "f860ce1fb56334cb"
+            ]
+        ]
+    },
+    {
+        "id": "f860ce1fb56334cb",
+        "type": "link out",
+        "z": "f02a251a8b3893a7",
+        "g": "67e6b33cac4a1b6e",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "7fa852135a7e4380",
+            "7da127199ae74f67",
+            "6177dd302557454b",
+            "18c136e9d40472f2",
+            "55bbcecbb5d7a09a",
+            "b00aa8785c264d25"
+        ],
+        "x": 975,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f795a60513f492c1",
+        "type": "ui_template",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "group": "176fd05d.aa8588",
+        "name": "Dashboard Panel",
         "order": 1,
-        "disp": false,
         "width": "6",
-        "collapse": false
+        "height": "4",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div>\n        <ul>\n            <li style=\"display: inline;\" ng-repeat=\"input in msg.payload.inputs track by $index\">\n                <span ng-class=\"input == 1 ? 'fa fa-2x fa-arrow-circle-down' : 'fa fa-2x fa-arrow-circle-up'\">&nbsp;</span>\n        </ul>\n    </div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 390,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "847b421197d02589",
+        "type": "link out",
+        "z": "f02a251a8b3893a7",
+        "g": "242c5067e5990cb6",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "0e0e37218bad75ba"
+        ],
+        "x": 1015,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0e0e37218bad75ba",
+        "type": "link in",
+        "z": "f02a251a8b3893a7",
+        "g": "0aeaaf521b466e91",
+        "name": "link in 28",
+        "links": [
+            "847b421197d02589"
+        ],
+        "x": 265,
+        "y": 600,
+        "wires": [
+            [
+                "f795a60513f492c1"
+            ]
+        ]
+    },
+    {
+        "id": "13ceb8ed0ffefe4f",
+        "type": "comment",
+        "z": "f02a251a8b3893a7",
+        "name": "README",
+        "info": "This flow contains all the required to interface a device to Node-RED.\n\nTo setup a new device.\n\ni.) Create a copy of this flow \n    - Ctrl+A to select all the nodes\n    - Ctrl+C to copy them\n    - Click the + icon to add a new flow\n    - Ctrl+V to paste nodes into the new flow\n\nii.) Edit the \"Configuration\" node at the top left\n - Edit the JSON string of the flow.payload. It must contain the unique \"id\" of this prop, and that must match the one defined on the prop controller.\n    {\n        \"id\": \"Switches-1\",\n        \"name\": \"Toggle Switches\",\n        \"description\": \"Players must scan the switches\",\n        \"state\": \"UNSOLVED\"\n    }\n\niii.) There are _many_ possible methods by which a device can communicate with Node-RED.\nThis flow contains several alternatives - MQTT, UDP, Serial, TCP, WebSockets, HTTP - only _one_ needs to be activated, the others should be disabled or removed from the flow.\nIf possible, the initial configuration is performed automatically based on values supplied in the \"Configuration\" node. \nWhen the device with the specified device id first connects, the ip address and port from which it is sent will be stored and used for all future messages sent back to the device.\nIf using Serial connection, you will need to select the COM port to which the device is attached, as this is not auto-detected.\n\niii.) In the \"Dashboard controls\" group, edit the HTML in the Dashboard Panel node to create the desired graphical representation of the state of this device\n\niv.) Also edit the group in which the \"SOLVE\" and \"RESET\" buttons are placed.",
+        "x": 160,
+        "y": 40,
+        "wires": []
     },
     {
         "id": "125f6c81.60151b",
@@ -260,6 +1187,23 @@
         "willTopic": "",
         "willQos": "0",
         "willPayload": ""
+    },
+    {
+        "id": "4e976676.9e1538",
+        "type": "websocket-listener",
+        "path": "/ws/input",
+        "wholemsg": "false"
+    },
+    {
+        "id": "176fd05d.aa8588",
+        "type": "ui_group",
+        "name": "Toggle Switches",
+        "tab": "7d66f574.b154cc",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "7d66f574.b154cc",
