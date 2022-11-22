@@ -71,7 +71,6 @@
             "5f829c5ff4c229fe",
             "eb8c10edc327e03d",
             "3190d2863cb6bcf4",
-            "b8484cb19490b977",
             "6d095509c90ec1fe",
             "afae3397cc3782ef",
             "92746eb3b07a5cd6",
@@ -84,9 +83,9 @@
             "b00aa8785c264d25"
         ],
         "x": 1084,
-        "y": 239,
+        "y": 259,
         "w": 422,
-        "h": 522
+        "h": 502
     },
     {
         "id": "0aeaaf521b466e91",
@@ -141,7 +140,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "flow",
-                "to": "{\"id\":\"Switches-1\",\"name\":\"Toggle Switches\",\"description\":\"Players must scan the switches\",\"state\":\"UNSOLVED\"}",
+                "to": "{\"id\":\"Switches-1\",\"name\":\"Toggle Switches\",\"description\":\"Players must set the switches\",\"state\":\"UNSOLVED\"}",
                 "tot": "json"
             },
             {
@@ -172,7 +171,7 @@
         "g": "429373e5233523e6",
         "name": "On Initialisation",
         "links": [
-            "8a4dffa5.a7935"
+            "758310f9eb5818de"
         ],
         "x": 135,
         "y": 120,
@@ -214,7 +213,8 @@
             "6d095509c90ec1fe",
             "afae3397cc3782ef",
             "92746eb3b07a5cd6",
-            "0e6a7ea34ed569b3"
+            "0e6a7ea34ed569b3",
+            "0e0e37218bad75ba"
         ],
         "x": 515,
         "y": 140,
@@ -344,6 +344,7 @@
         "id": "0bae644f4ef32b3b",
         "type": "http in",
         "z": "f02a251a8b3893a7",
+        "d": true,
         "g": "242c5067e5990cb6",
         "name": "",
         "url": "/FromDevice",
@@ -648,23 +649,6 @@
         ]
     },
     {
-        "id": "b8484cb19490b977",
-        "type": "link in",
-        "z": "f02a251a8b3893a7",
-        "g": "b4cb822bc21ec6e7",
-        "name": "link in 17",
-        "links": [
-            "7dc10f9cb19dfc49"
-        ],
-        "x": 1145,
-        "y": 280,
-        "wires": [
-            [
-                "e20d4a60346e4a53"
-            ]
-        ]
-    },
-    {
         "id": "6d095509c90ec1fe",
         "type": "link in",
         "z": "f02a251a8b3893a7",
@@ -736,7 +720,7 @@
         "to": "",
         "reg": false,
         "x": 1240,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "fc70cd751de0acaf"
@@ -753,11 +737,11 @@
             "5401a4803632510b",
             "f860ce1fb56334cb"
         ],
-        "x": 1285,
-        "y": 320,
+        "x": 1145,
+        "y": 300,
         "wires": [
             [
-                "fc70cd751de0acaf"
+                "e20d4a60346e4a53"
             ]
         ]
     },
@@ -918,9 +902,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
@@ -953,16 +937,16 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
                 "t": "set",
                 "p": "payload.command",
                 "pt": "msg",
-                "to": "SOLVE",
+                "to": "RESET",
                 "tot": "str"
             }
         ],
@@ -1112,7 +1096,7 @@
         "name": "Dashboard Panel",
         "order": 1,
         "width": "6",
-        "height": "4",
+        "height": "6",
         "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div>\n        <ul>\n            <li style=\"display: inline;\" ng-repeat=\"input in msg.payload.inputs track by $index\">\n                <span ng-class=\"input == 1 ? 'fa fa-2x fa-arrow-circle-down' : 'fa fa-2x fa-arrow-circle-up'\">&nbsp;</span>\n        </ul>\n    </div>\n</md-card-content>",
         "storeOutMessages": false,
         "fwdInMessages": false,
@@ -1146,7 +1130,8 @@
         "g": "0aeaaf521b466e91",
         "name": "link in 28",
         "links": [
-            "847b421197d02589"
+            "847b421197d02589",
+            "7dc10f9cb19dfc49"
         ],
         "x": 265,
         "y": 600,
@@ -1198,19 +1183,19 @@
         "id": "176fd05d.aa8588",
         "type": "ui_group",
         "name": "Toggle Switches",
-        "tab": "7d66f574.b154cc",
-        "order": 1,
+        "tab": "a38c3d325d960343",
+        "order": 5,
         "disp": false,
         "width": "6",
         "collapse": false,
         "className": ""
     },
     {
-        "id": "7d66f574.b154cc",
+        "id": "a38c3d325d960343",
         "type": "ui_tab",
-        "name": "Puzzle Status Monitor",
+        "name": "Main",
         "icon": "dashboard",
-        "order": 1,
+        "order": 0,
         "disabled": false,
         "hidden": false
     }

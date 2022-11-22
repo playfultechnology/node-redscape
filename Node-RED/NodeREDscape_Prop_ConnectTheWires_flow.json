@@ -71,7 +71,6 @@
             "c66ebe93bd8a5d39",
             "4a3035d558c2809b",
             "d4aec9ab1940fab1",
-            "44742918442ed8d4",
             "1de62044314e2839",
             "f0b9205b412f8e57",
             "8af6bcf87c0b9eaa",
@@ -81,12 +80,13 @@
             "22417f88a194a4df",
             "f9ae5d12228c7c76",
             "8792544bb3a387e5",
-            "291a3aecd92642e6"
+            "291a3aecd92642e6",
+            "593023bd8afcb4d3"
         ],
         "x": 1084,
-        "y": 239,
+        "y": 219,
         "w": 422,
-        "h": 522
+        "h": 542
     },
     {
         "id": "6dd44294fe3befa6",
@@ -141,7 +141,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "flow",
-                "to": "{\"id\":\"Keypad\",\"name\":\"Connect The Wires\",\"description\":\"Players must plug cables into the correct sockets\",\"inputs\":[{\"from\":1,\"to\":2,\"state\":true},{\"from\":3,\"to\":0,\"state\":true},{\"from\":4,\"to\":6,\"state\":false},{\"from\":5,\"to\":7,\"state\":true}],\"state\":\"UNSOLVED\",\"ip\":\"0.0.0.0\",\"port\":\"23\"}",
+                "to": "{\"id\":\"Wires-1\",\"name\":\"Connect The Wires\",\"description\":\"Players must plug cables into the correct sockets\",\"inputs\":[{\"F\":1,\"T\":2,\"S\":0},{\"F\":3,\"T\":0,\"S\":0},{\"F\":4,\"T\":6,\"S\":0},{\"F\":5,\"T\":7,\"S\":0}],\"state\":\"UNSOLVED\",\"ip\":\"0.0.0.0\",\"port\":\"23\"}",
                 "tot": "json"
             },
             {
@@ -172,7 +172,7 @@
         "g": "258dfc15121ac57a",
         "name": "On Initialisation",
         "links": [
-            "8a4dffa5.a7935"
+            "758310f9eb5818de"
         ],
         "x": 135,
         "y": 120,
@@ -189,8 +189,7 @@
         "g": "258dfc15121ac57a",
         "name": "On Reset",
         "links": [
-            "c9289f5e.1fb3b8",
-            "4f97d4b38ed5c552"
+            "442e7bc38dd4c3b7"
         ],
         "x": 135,
         "y": 160,
@@ -214,7 +213,8 @@
             "1de62044314e2839",
             "f0b9205b412f8e57",
             "8af6bcf87c0b9eaa",
-            "0e6a7ea34ed569b3"
+            "0e6a7ea34ed569b3",
+            "fc69cfe1cc4c1dde"
         ],
         "x": 515,
         "y": 140,
@@ -314,7 +314,7 @@
         "d": true,
         "g": "43cf984a114e505c",
         "name": "",
-        "serial": "",
+        "serial": "68c2fc3e.0d9184",
         "x": 430,
         "y": 360,
         "wires": [
@@ -344,6 +344,7 @@
         "id": "ecf82440cd865cab",
         "type": "http in",
         "z": "e37a92ffd40561e1",
+        "d": true,
         "g": "43cf984a114e505c",
         "name": "",
         "url": "/FromDevice",
@@ -454,7 +455,9 @@
         "g": "43cf984a114e505c",
         "name": "link out 12",
         "mode": "link",
-        "links": [],
+        "links": [
+            "fc69cfe1cc4c1dde"
+        ],
         "x": 1015,
         "y": 360,
         "wires": []
@@ -511,6 +514,7 @@
         "id": "ac73484ff9743015",
         "type": "udp out",
         "z": "e37a92ffd40561e1",
+        "d": true,
         "g": "3d04053bd8a94471",
         "name": "",
         "addr": "",
@@ -660,23 +664,6 @@
         ]
     },
     {
-        "id": "44742918442ed8d4",
-        "type": "link in",
-        "z": "e37a92ffd40561e1",
-        "g": "3d04053bd8a94471",
-        "name": "link in 44",
-        "links": [
-            "6c4d9a4eab206509"
-        ],
-        "x": 1145,
-        "y": 280,
-        "wires": [
-            [
-                "06da8aa5befc64a8"
-            ]
-        ]
-    },
-    {
         "id": "1de62044314e2839",
         "type": "link in",
         "z": "e37a92ffd40561e1",
@@ -748,10 +735,11 @@
         "to": "",
         "reg": false,
         "x": 1240,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
-                "3ed4dcc9fc1f05b8"
+                "3ed4dcc9fc1f05b8",
+                "593023bd8afcb4d3"
             ]
         ]
     },
@@ -765,11 +753,11 @@
             "8fbc183311ff8192",
             "8309e92bcfaee8ad"
         ],
-        "x": 1285,
-        "y": 320,
+        "x": 1145,
+        "y": 300,
         "wires": [
             [
-                "3ed4dcc9fc1f05b8"
+                "06da8aa5befc64a8"
             ]
         ]
     },
@@ -869,7 +857,7 @@
         "z": "e37a92ffd40561e1",
         "g": "6dd44294fe3befa6",
         "name": "RESET",
-        "group": "8f886ae1479c4797",
+        "group": "161a09b.036e1f6",
         "order": 2,
         "width": "3",
         "height": "1",
@@ -878,10 +866,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "fa-lock",
         "payload": "{\"command\":\"RESET\"}",
         "payloadType": "json",
         "topic": "",
+        "topicType": "str",
         "x": 180,
         "y": 720,
         "wires": [
@@ -896,7 +886,7 @@
         "z": "e37a92ffd40561e1",
         "g": "6dd44294fe3befa6",
         "name": "SOLVE",
-        "group": "8f886ae1479c4797",
+        "group": "161a09b.036e1f6",
         "order": 3,
         "width": "3",
         "height": "1",
@@ -905,10 +895,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "fa-unlock",
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
+        "topicType": "str",
         "x": 190,
         "y": 660,
         "wires": [
@@ -926,9 +918,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
@@ -961,16 +953,16 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
                 "t": "set",
                 "p": "payload.command",
                 "pt": "msg",
-                "to": "SOLVE",
+                "to": "RESET",
                 "tot": "str"
             }
         ],
@@ -1029,12 +1021,12 @@
         "type": "ui_template",
         "z": "e37a92ffd40561e1",
         "g": "6dd44294fe3befa6",
-        "group": "8f886ae1479c4797",
+        "group": "161a09b.036e1f6",
         "name": "Dashboard Panel",
         "order": 1,
         "width": "6",
-        "height": "5",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div ng-repeat=\"input in msg.payload.inputs track by $index\">\n        <span style=\"font-size: 2em;\">{{input.from}}  </span>\n        <span ng-class=\"input.connected == 1 ? 'fa fa-2x fa-arrows-h' : 'fa fa-2x '\">&nbsp;</span>\n        <span style=\"font-size: 2em;\">{{input.to}} </span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
+        "height": "6",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='S' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\" ng-repeat=\"input in msg.payload.inputs track by $index\">\n        <span style=\"font-size: 2em;\">{{input.F}}  </span>\n        <span ng-class=\"input.S == 1 ? 'fa fa-2x fa-arrows-h' : 'fa fa-2x '\">&nbsp;</span>\n        <span style=\"font-size: 2em;\">{{input.T}} </span>\n    </div>\n    <div style=\"height:10px;\">&nbsp;</div>\n</md-card-content>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
@@ -1052,7 +1044,10 @@
         "z": "e37a92ffd40561e1",
         "g": "6dd44294fe3befa6",
         "name": "link in 54",
-        "links": [],
+        "links": [
+            "6c4d9a4eab206509",
+            "d2372d71557558d4"
+        ],
         "x": 265,
         "y": 600,
         "wires": [
@@ -1149,6 +1144,23 @@
         "wires": []
     },
     {
+        "id": "593023bd8afcb4d3",
+        "type": "debug",
+        "z": "e37a92ffd40561e1",
+        "g": "3d04053bd8a94471",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 260,
+        "wires": []
+    },
+    {
         "id": "125f6c81.60151b",
         "type": "mqtt-broker",
         "name": "MQTT Server",
@@ -1171,28 +1183,42 @@
         "willPayload": ""
     },
     {
+        "id": "68c2fc3e.0d9184",
+        "type": "serial-port",
+        "serialport": "COM5",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
         "id": "4e976676.9e1538",
         "type": "websocket-listener",
         "path": "/ws/input",
         "wholemsg": "false"
     },
     {
-        "id": "8f886ae1479c4797",
+        "id": "161a09b.036e1f6",
         "type": "ui_group",
-        "name": "RFID",
-        "tab": "7d66f574.b154cc",
-        "order": 3,
+        "name": "Connect the Wires",
+        "tab": "a38c3d325d960343",
+        "order": 4,
         "disp": false,
         "width": "6",
-        "collapse": false,
-        "className": ""
+        "collapse": false
     },
     {
-        "id": "7d66f574.b154cc",
+        "id": "a38c3d325d960343",
         "type": "ui_tab",
-        "name": "Puzzle Status Monitor",
+        "name": "Main",
         "icon": "dashboard",
-        "order": 1,
+        "order": 0,
         "disabled": false,
         "hidden": false
     }

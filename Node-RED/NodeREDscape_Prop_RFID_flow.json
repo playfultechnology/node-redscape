@@ -71,7 +71,6 @@
             "4365ef5bec7a3903",
             "cc71ea4ed2e4c080",
             "6c35a9477115b5aa",
-            "a0c1bac628768a7b",
             "bb4ebba85fdd4601",
             "a90458d48e7c2815",
             "32e73d5c4a486c53",
@@ -84,9 +83,9 @@
             "7b161ea468c88e5f"
         ],
         "x": 1084,
-        "y": 239,
+        "y": 259,
         "w": 422,
-        "h": 522
+        "h": 502
     },
     {
         "id": "217067ffa17d7c85",
@@ -182,10 +181,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "fa-lock",
         "payload": "{\"command\":\"RESET\"}",
         "payloadType": "json",
         "topic": "",
+        "topicType": "str",
         "x": 180,
         "y": 720,
         "wires": [
@@ -209,10 +210,12 @@
         "tooltip": "",
         "color": "",
         "bgcolor": "",
+        "className": "",
         "icon": "fa-unlock",
         "payload": "{\"command\":\"SOLVE\"}",
         "payloadType": "json",
         "topic": "",
+        "topicType": "str",
         "x": 190,
         "y": 660,
         "wires": [
@@ -263,7 +266,7 @@
         "g": "f6cd596f08218abf",
         "name": "On Initialisation",
         "links": [
-            "8a4dffa5.a7935"
+            "758310f9eb5818de"
         ],
         "x": 135,
         "y": 120,
@@ -347,7 +350,7 @@
         "d": true,
         "g": "83ec599797030eba",
         "name": "",
-        "serial": "",
+        "serial": "5487261c.78129",
         "x": 430,
         "y": 360,
         "wires": [
@@ -377,6 +380,7 @@
         "id": "c1ae3a0b21703c42",
         "type": "http in",
         "z": "a1538f107b6f4fdc",
+        "d": true,
         "g": "83ec599797030eba",
         "name": "",
         "url": "/FromDevice",
@@ -708,9 +712,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
@@ -743,16 +747,16 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "payload.id",
                 "pt": "msg",
-                "to": "payload",
+                "to": "payload.id",
                 "tot": "flow"
             },
             {
                 "t": "set",
                 "p": "payload.command",
                 "pt": "msg",
-                "to": "SOLVE",
+                "to": "RESET",
                 "tot": "str"
             }
         ],
@@ -783,7 +787,8 @@
             "bb4ebba85fdd4601",
             "a90458d48e7c2815",
             "32e73d5c4a486c53",
-            "0e6a7ea34ed569b3"
+            "0e6a7ea34ed569b3",
+            "a2cf83622d7edd2d"
         ],
         "x": 515,
         "y": 140,
@@ -803,23 +808,6 @@
         "wires": [
             [
                 "01a1a7c17f18ab07"
-            ]
-        ]
-    },
-    {
-        "id": "a0c1bac628768a7b",
-        "type": "link in",
-        "z": "a1538f107b6f4fdc",
-        "g": "287cddd6953c1cbd",
-        "name": "link in 5",
-        "links": [
-            "5f8ee5e00e91f276"
-        ],
-        "x": 1145,
-        "y": 280,
-        "wires": [
-            [
-                "37c1a8d31de5fbb2"
             ]
         ]
     },
@@ -915,7 +903,7 @@
         "to": "",
         "reg": false,
         "x": 1240,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "9b390b713b48f7f6"
@@ -949,11 +937,11 @@
             "46fe3fba38d8ec55",
             "5391d11b8ac651f5"
         ],
-        "x": 1285,
-        "y": 320,
+        "x": 1145,
+        "y": 300,
         "wires": [
             [
-                "9b390b713b48f7f6"
+                "37c1a8d31de5fbb2"
             ]
         ]
     },
@@ -1108,8 +1096,8 @@
         "name": "Dashboard Panel",
         "order": 1,
         "width": "6",
-        "height": "5",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">&nbsp;</span>\n    </div>\n</md-card-content>",
+        "height": "6",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\" ></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input == '000000000000000' ? 'No Tag' : msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"height:60px;\">&nbsp;</div>\n</md-card-content>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
@@ -1128,7 +1116,9 @@
         "g": "83ec599797030eba",
         "name": "link out 8",
         "mode": "link",
-        "links": [],
+        "links": [
+            "a2cf83622d7edd2d"
+        ],
         "x": 1015,
         "y": 360,
         "wires": []
@@ -1139,7 +1129,10 @@
         "z": "a1538f107b6f4fdc",
         "g": "217067ffa17d7c85",
         "name": "link in 29",
-        "links": [],
+        "links": [
+            "5f8ee5e00e91f276",
+            "3cb93ab39a48537e"
+        ],
         "x": 265,
         "y": 600,
         "wires": [
@@ -1152,7 +1145,7 @@
         "id": "8f886ae1479c4797",
         "type": "ui_group",
         "name": "RFID",
-        "tab": "7d66f574.b154cc",
+        "tab": "a38c3d325d960343",
         "order": 3,
         "disp": false,
         "width": "6",
@@ -1182,17 +1175,32 @@
         "willPayload": ""
     },
     {
+        "id": "5487261c.78129",
+        "type": "serial-port",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
         "id": "4e976676.9e1538",
         "type": "websocket-listener",
         "path": "/ws/input",
         "wholemsg": "false"
     },
     {
-        "id": "7d66f574.b154cc",
+        "id": "a38c3d325d960343",
         "type": "ui_tab",
-        "name": "Puzzle Status Monitor",
+        "name": "Main",
         "icon": "dashboard",
-        "order": 1,
+        "order": 0,
         "disabled": false,
         "hidden": false
     }
