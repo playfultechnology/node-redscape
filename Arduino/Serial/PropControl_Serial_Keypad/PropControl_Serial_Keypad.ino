@@ -49,8 +49,8 @@ byte sequenceNum = 0;
 TM1637 display;
 CRGB leds[1];
 // Track state of overall puzzle
-enum State {Initialising, Running, Solved};
-State state = Initialising;
+enum DeviceState {Initialising, Running, Solved};
+DeviceState deviceState = DeviceState::Initialising;
 
 void setup(){
   // Initialise serial connection
@@ -58,27 +58,27 @@ void setup(){
   Serial.println("");
 	Serial.println(__FILE__ __DATE__);
 
-  // Set the puzzle state
-  state = State::Running;
-
   // Set brightness
   display.begin(displayClockPin, displayDataPin, displayNumDigits);
 
   // Tell FastLED about the LED strip configuration
   FastLED.addLeds<PL9823, ledPin>(leds, 1).setCorrection(TypicalLEDStrip);
   leds[0] = CRGB(255,0,0);
-  FastLED.show();  
+  FastLED.show();
+
+  // Set the puzzle state
+  deviceState = DeviceState::Running;	
 }
 
 // Set the LED colour/pattern to indicate the status of the device
 void ledLoop() {
   uint8_t hue = 0; // colour
   uint8_t v = 128; // brightness
-  if(state == Initialising) {
+  if(deviceState == DeviceState::Initialising) {
     hue = 0;
     v = beatsin8(10,0, 128);
   }
-  else if(state == Solved) {
+  else if(deviceState == DeviceState::Solved) {
     hue = 96; 
     v =128;
   }
@@ -136,7 +136,7 @@ void sendUpdate() {
   // Create JSON document - determine size using https://arduinojson.org/v6/assistant/
   StaticJsonDocument<64> jsonDoc;
   jsonDoc["id"] = deviceID;
-  jsonDoc["state"] = (state == State::Solved) ? "SOLVED" : "UNSOLVED";
+  jsonDoc["state"] = (deviceState == DeviceState::Solved) ? "SOLVED" : "UNSOLVED";
   jsonDoc["input"] = inputCode;
   serializeJson(jsonDoc, Serial);
   Serial.println("");
@@ -170,12 +170,12 @@ void inputLoop() {
     // If the player has entered all 4 digits of a code
     if(sequenceNum == 4) {
       if(strcmp(inputCode, solutionCode) == 0){
-        state = State::Solved;
+        deviceState = DeviceState::Solved;
       }
       else{
         // Flash the display
         flashDisplay();
-        state = State::Running;
+        deviceState = DeviceState::Running;
       }
       // Reset
       memset(inputCode, 0, sizeof(inputCode));

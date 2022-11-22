@@ -5,12 +5,6 @@
  * Example code for a simple RFID escape room puzzle integrated with Node-RED GM control.
  */
 
-// DEFINES
-#ifndef LED_BUILTIN
-  // If not defined otherwise, assume LED attached to pin 13
-  #define LED_BUILTIN 13 
-#endif
-
 // INCLUDES
 // Networking library (tested with v2.0.1)
 #include <Ethernet.h>
@@ -52,11 +46,11 @@ char mqttMsg[128];
 // The MQTT topic in which to publish a message
 char mqttTopic[32];
 // Keep track of connection state of both WiFi and MQTT server
-enum : byte { LAN_DOWN_MQTT_DOWN, LAN_UP_MQTT_DOWN, LAN_UP_MQTT_STARTED, LAN_UP_MQTT_UP } connectionState;
+enum : byte { LAN_DOWN_MQTT_DOWN, LAN_UP_MQTT_DOWN, LAN_UP_MQTT_STARTED, LAN_UP_MQTT_UP } NetworkState;
 byte networkState = LAN_DOWN_MQTT_DOWN;
 // Track state of overall puzzle
-enum State {Initialising, Running, Solved};
-State state = Initialising;
+enum DeviceState {Initialising, Running, Solved};
+DeviceState devicestate = DeviceState::Initialising;
 // An array of bounce objects for each switch input
 Bounce switches[numSwitches] = {Bounce(), Bounce(), Bounce(), Bounce(), Bounce()};
 bool inputState[numSwitches] = {true, false, true, false, true};
@@ -66,19 +60,12 @@ void setup(){
   Serial.begin(115200);
   Serial.println("");
 	Serial.println(__FILE__ __DATE__);
-  
-  // We'll use built-in LED to indicate state of the controller
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);  
 
   // Attach a debouncer to each switch
   for(int i=0; i<numSwitches; i++){
     switches[i].attach(switchPins[i], INPUT_PULLUP);
   }
-
-  // Set the puzzle state
-  state = State::Running;
-  
+ 
   mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
     // Create a JSON document from the MQTT message received. Note best practice is NOT to have a reusable 
     // JSON document, but create a new one each time it is needed.  https://arduinojson.org/v6/assistant/
@@ -87,6 +74,9 @@ void setup(){
     // Process the contents of the update received
     receiveUpdate(jsonDoc);
   });
+	
+  // Set the puzzle state
+  deviceState = DeviceState::Running;	
 }
 
 void inputLoop() {
@@ -104,7 +94,7 @@ void inputLoop() {
       solved = false;
     }
   }
-  state = (solved ? State::Solved : State::Running);
+  deviceState = (solved ? State::Solved : State::Running);
   // Only send an update if at least one input has been changed
   if(changed) {
     sendUpdate();
@@ -115,8 +105,8 @@ void receiveUpdate(const JsonDocument& jsonDoc) {
   // Debug - send output to serial monitor
   // serializeJsonPretty(jsonDoc, Serial);
   // Act upon command received
-  if(jsonDoc["command"] == "SOLVE") { state = Solved; }
-  else if(jsonDoc["command"] == "RESET") { state = Running; }
+  if(jsonDoc["command"] == "SOLVE") { deviceState = Solved; }
+  else if(jsonDoc["command"] == "RESET") { deviceState = Running; }
   // Now send refreshed values back
   sendUpdate();
 }
@@ -142,7 +132,7 @@ void sendUpdate() {
   for(int i=0;i<numSwitches; i++){ 
     inputs.add(inputState[i]);
   }
-  jsonDoc["state"] = (state == State::Solved) ? "SOLVED" : "UNSOLVED";
+  jsonDoc["state"] = (deviceState == DeviceState::Solved) ? "SOLVED" : "UNSOLVED";
   // Debug - send update to serial connection
   serializeJson(jsonDoc, Serial);
   Serial.println("");
@@ -252,9 +242,6 @@ void networkLoop() {
 }
 
 void loop(){
-  // Use built-in LED as indicator of device state
-  digitalWrite(LED_BUILTIN, (state == State::Solved));
-    
   // Process update loops
   inputLoop();
   networkLoop();
