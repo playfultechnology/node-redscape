@@ -36,8 +36,9 @@ const char* remoteMQTTPass = "pass";
 const byte ssPin = 10;
 // The number of switches. Can be as many as you have digital pins available
 const byte numSwitches = 5;
-// The pins to which switches are connected
-const byte switchPins[numSwitches] = {3, 4, 5, 6, 7};
+// The pins to which switches are connected. 
+// Note that GPIO Pins 4, 10, 11, 12, 13 are used by the SPI interface to the Ethernet shield
+const byte switchPins[numSwitches] = {A4, A3, A2, A1, A0};
 // The desired solution state
 const bool solution[numSwitches] = {true, false, true, false, true};
 
