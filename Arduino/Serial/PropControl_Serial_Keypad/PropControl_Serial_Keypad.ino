@@ -127,7 +127,9 @@ void flashDisplay(){
 }
 
 void receiveUpdate(const JsonDocument& jsonDoc) {
-  if(jsonDoc["command"] == "SOLVE") { deviceState = DeviceState::Solved; }
+  if(jsonDoc["command"] == "SOLVE") { 
+    deviceState = DeviceState::Solved; 
+    }
   else if(jsonDoc["command"] == "RESET") { 
     deviceState = DeviceState::Running; 
     memset(inputCode, 0, sizeof(inputCode));
