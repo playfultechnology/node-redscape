@@ -30,7 +30,6 @@ namespace Playful.Technology {
         public Monitor monitor;
         private MqttClient client;
 
-
         [SerializeField]
         [Tooltip("The IP address of the broker to which this client will subscribe, e.g. 85.119.83.194")]
         private string MQTTBrokerIPAddress;
@@ -38,6 +37,12 @@ namespace Playful.Technology {
         [SerializeField]
         [Tooltip("The port on which the MQTT broker is running, e.g. 1883")]
         private int MQTTBrokerPort;
+
+        [SerializeField]
+        private string username;
+
+        [SerializeField]
+        private string password;
 
         [SerializeField]
         [Tooltip("The topic(s) to which to subscribe, e.g. Door/Lock/1")]
@@ -76,9 +81,6 @@ namespace Playful.Technology {
 
             }
 
-
-            
-
             switch (System.Text.Encoding.UTF8.GetString(e.Message)) {
                 case "Ignore":
                     break;
@@ -92,25 +94,16 @@ namespace Playful.Technology {
             }
         }
         
-
         void OnGUI() {
-            
             if (GUI.Button(new Rect(20, 40, 80, 20), "Publish")) {
                 client_MqttMsgPublish("temp/random", "test message");
                 monitor.AddLog(string.Format("Published {0} to {1}", "test message", "temp/random"));
             }
-            
-
             GUI.Label(new Rect(0,0,200,100),"IP Address: " + GetLocalIPAddress());
-
-
         }
-
-
 
         // Start is called before the first frame update
         void Start() {
-
             // If no MQTT broker specified, assume it's running on this machine
             if (MQTTBrokerIPAddress == "") {
                 MQTTBrokerIPAddress = "127.0.0.1";
@@ -126,7 +119,12 @@ namespace Playful.Technology {
             string clientId = Guid.NewGuid().ToString();
 
             try {
-                client.Connect(clientId);
+                if (username != null && password != null) {
+                    client.Connect(clientId, username, password);
+                }
+                else {
+                    client.Connect(clientId);
+                }
                 monitor.AddLog(String.Format("Connected to MQTT server at {0} with client ID {1}", MQTTBrokerIPAddress, clientId));
             }
             catch(Exception e) {
@@ -138,11 +136,9 @@ namespace Playful.Technology {
                 client.Subscribe(new string[] { topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                 monitor.AddLog("Subscribed to " + topic);
             }
-            
         }
    
         // Update is called once per frame
-        void Update() {
-        }
+        void Update() {   }
     }
 }
