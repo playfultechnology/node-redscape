@@ -31,9 +31,9 @@
 // Unique name to identify this device on the network
 const char* deviceID = "Button-1";
 // SSID of the network to join
-const char* wifiSSID = "Hyrule";
+const char* wifiSSID = "YOURWIFINAME";
 // Wi-Fi password if required
-const char* wifiPassword = "molly1869";
+const char* wifiPassword = "YOURWIFIPASSWORD";
 // IP address of remote UDP server
 const char* remoteUDPServer = "192.168.0.136";
 const int remoteUDPPort = 161;

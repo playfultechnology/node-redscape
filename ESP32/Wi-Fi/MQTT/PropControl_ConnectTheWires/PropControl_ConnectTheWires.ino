@@ -27,9 +27,9 @@
 // Unique ID used to identify this device
 const char* deviceID = "Wires-1";
 // SSID of the network to join
-const char* wifiSSID = "Hyrule";
+const char* wifiSSID = "YOURWIFINAME";
 // Wi-Fi password if required
-const char* wifiPassword = "molly1869";
+const char* wifiPassword = "YOURWIFIPASSWORD";
 // IP address of remote MQTT server
 const char* remoteMQTTServer = "192.168.0.114";
 const int remoteMQTTPort = 1883;
