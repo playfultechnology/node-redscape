@@ -60,21 +60,49 @@
             "d2bfa31323cf7730",
             "98ab54042d4213d0",
             "342f119e8f4998e2",
-            "4a9c0dfb1f0b9b85",
             "890f86205d47ef77",
-            "c8fb5887561b01d3",
-            "39e77fdf6d2e5543",
             "ef582930fa6e08ef",
             "4e6a3fb6ac8e60de",
             "4a863b19c2050c0a",
             "4f3e8b2d7209c3c4",
-            "75a596869f308dab",
-            "442e7bc38dd4c3b7"
+            "442e7bc38dd4c3b7",
+            "06ef4faf69df41d0"
         ],
         "x": 34,
         "y": 319,
-        "w": 1032,
-        "h": 262
+        "w": 672,
+        "h": 202
+    },
+    {
+        "id": "c870415b6658eca9",
+        "type": "group",
+        "z": "350f3f1be5bf834e",
+        "name": "Timer",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4a9c0dfb1f0b9b85",
+            "c8fb5887561b01d3",
+            "39e77fdf6d2e5543",
+            "75a596869f308dab",
+            "e7252fb6a4819ecf",
+            "f457b1998a5d01b9",
+            "2ce811328a35a524",
+            "a98c2ab0de57b58a",
+            "32180624627a2049",
+            "f93150b86a48dd2b",
+            "0c9d3ef3bf7c7bc0",
+            "465e64fa2453bb6a",
+            "6e87bf8ee8b2ac47",
+            "f020309c907b1b75",
+            "59b3354d12a64752",
+            "65c75d67cdeec25c"
+        ],
+        "x": 34,
+        "y": 559,
+        "w": 812,
+        "h": 342
     },
     {
         "id": "197160bd5c9b62c4",
@@ -83,8 +111,8 @@
         "g": "1d39f27b3d601c72",
         "name": "",
         "group": "f08ba3d0ec182a89",
-        "order": 2,
-        "width": 2,
+        "order": 5,
+        "width": "2",
         "height": 1,
         "passthru": true,
         "label": "Start",
@@ -113,7 +141,7 @@
         "name": "",
         "group": "f08ba3d0ec182a89",
         "order": 3,
-        "width": 2,
+        "width": "2",
         "height": 1,
         "passthru": true,
         "label": "Stop",
@@ -159,8 +187,7 @@
         "y": 480,
         "wires": [
             [
-                "890f86205d47ef77",
-                "442e7bc38dd4c3b7"
+                "890f86205d47ef77"
             ]
         ]
     },
@@ -177,6 +204,13 @@
                 "pt": "global",
                 "to": "playing",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "startTime",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
             }
         ],
         "action": "",
@@ -184,7 +218,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 440,
+        "x": 380,
         "y": 360,
         "wires": [
             [
@@ -208,10 +242,10 @@
             },
             {
                 "t": "set",
-                "p": "timeRemaining",
-                "pt": "msg",
-                "to": "timeRemaining",
-                "tot": "global"
+                "p": "elapsedTimeDelta",
+                "pt": "global",
+                "to": "$globalContext('elapsedTimeDelta') + $millis() - $flowContext('startTime')",
+                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -219,11 +253,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 440,
+        "x": 380,
         "y": 420,
         "wires": [
             [
-                "39e77fdf6d2e5543",
                 "4a863b19c2050c0a"
             ]
         ]
@@ -246,7 +279,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 252,
+        "x": 230,
         "y": 360,
         "wires": [
             [
@@ -272,31 +305,11 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 250,
+        "x": 230,
         "y": 420,
         "wires": [
             [
                 "d2bfa31323cf7730"
-            ]
-        ]
-    },
-    {
-        "id": "4a9c0dfb1f0b9b85",
-        "type": "function",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
-        "name": "Update Timer",
-        "func": "// The current timestamp is injected at the start of the flow\nvar currentTime = msg.payload;\nvar lastTickTime = global.get(\"lastTickTime\")||currentTime;\nvar timeRemaining = global.get(\"timeRemaining\")||0;\nvar gameState = global.get(\"gameState\");\n\nif(gameState == \"playing\") {\n    // Reduce the time remaining based on the amount of time\n    // that has elapsed since the last tick count\n    timeRemaining -= (currentTime - lastTickTime);\n    \n    // Update the global variable\n    global.set(\"timeRemaining\", timeRemaining);\n}\n// Update the msg to carry formatted string        \nmsg.timeRemaining = timeRemaining;\n    \nglobal.set(\"lastTickTime\", currentTime);\nnode.status({fill:\"green\",shape:\"dot\",text:timeRemaining});\n// Only need to update UI if timeRemaining has changed\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 440,
-        "y": 540,
-        "wires": [
-            [
-                "39e77fdf6d2e5543"
             ]
         ]
     },
@@ -309,24 +322,31 @@
         "rules": [
             {
                 "t": "set",
-                "p": "timeRemaining",
+                "p": "elapsedTimeDelta",
                 "pt": "global",
-                "to": "gameLength",
-                "tot": "global"
+                "to": "0",
+                "tot": "num"
             },
             {
                 "t": "set",
                 "p": "timeRemaining",
-                "pt": "msg",
-                "to": "timeRemaining",
+                "pt": "global",
+                "to": "gameDuration",
                 "tot": "global"
             },
             {
                 "t": "set",
-                "p": "gameState",
+                "p": "startTime",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "timeElapsed",
                 "pt": "global",
-                "to": "stopped",
-                "tot": "str"
+                "to": "0",
+                "tot": "num"
             }
         ],
         "action": "",
@@ -334,53 +354,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 300,
+        "x": 320,
         "y": 480,
         "wires": [
             [
-                "39e77fdf6d2e5543"
-            ]
-        ]
-    },
-    {
-        "id": "c8fb5887561b01d3",
-        "type": "ui_template",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
-        "group": "f08ba3d0ec182a89",
-        "name": "",
-        "order": 1,
-        "width": "6",
-        "height": "4",
-        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">Time Remaining</p>\n    </md-card-title-text>\n    <span ng-class=\"'fa fa-clock-o fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div style=\"text-align:center\">\n        <span class=\"value\" style=\"color:{{msg.timeColour}}; font-size:3em;\">\n            {{msg.formattedTimeRemaining}}\n        </span>\n    </div>\n</md-card-content>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": false,
-        "templateScope": "local",
-        "className": "",
-        "x": 980,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "39e77fdf6d2e5543",
-        "type": "function",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
-        "name": "Format Time for Dashboard Display",
-        "func": "// Create formattedTime in hh:mm:ss\nvar t = msg.timeRemaining / 1000; //ms\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\nmsg.formattedTimeRemaining = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\n// Set timeColour depending on current gamestate and time remaining\nvar gameState = global.get(\"gameState\");\nif (gameState == \"playing\") {\n    if (msg.timeRemaining < 60000) { msg.timeColour = \"red\"; }\n    else { msg.timeColour = \"green\"; }\n}\nelse { msg.timeColour = \"white\"; }\n\n// Update the editor node\nnode.status({ fill: msg.timeColour, shape:\"dot\", text:msg.formattedTimeRemaining});\n\n// Forward the message along the flow\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 730,
-        "y": 480,
-        "wires": [
-            [
-                "c8fb5887561b01d3"
+                "442e7bc38dd4c3b7"
             ]
         ]
     },
@@ -390,7 +368,7 @@
         "z": "350f3f1be5bf834e",
         "g": "88186d2d626ead90",
         "name": "Initialise Global Vars",
-        "func": "global.set(\"gameState\", \"stopped\");\nglobal.set(\"gameLength\", 3600000);\nglobal.set(\"timeRemaining\", 3600000);\nglobal.set(\"currentTime\", Date.now());\n\nreturn msg;",
+        "func": "global.set(\"gameState\", \"stopped\");\nglobal.set(\"gameDuration\", 3600000);\nglobal.set(\"elapsedTimeDelta\", 0);\nglobal.set(\"timeElapsed\", 0);\nglobal.set(\"timeRemaining\", 3600000);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -399,7 +377,9 @@
         "x": 560,
         "y": 120,
         "wires": [
-            []
+            [
+                "cd9c79c0f7ca4c12"
+            ]
         ]
     },
     {
@@ -427,9 +407,11 @@
         "name": "On Game Start",
         "links": [
             "65781ff6.32997",
-            "f64afdb2.ae6738"
+            "f64afdb2.ae6738",
+            "75a596869f308dab",
+            "fde61d47216f1287"
         ],
-        "x": 585,
+        "x": 495,
         "y": 360,
         "wires": []
     },
@@ -440,7 +422,7 @@
         "g": "1d39f27b3d601c72",
         "name": "On Game Start",
         "info": "",
-        "x": 700,
+        "x": 600,
         "y": 360,
         "wires": []
     },
@@ -452,10 +434,12 @@
         "name": "On Game Stop",
         "links": [
             "b6c64fbb.744e7",
-            "f64afdb2.ae6738"
+            "f64afdb2.ae6738",
+            "75a596869f308dab",
+            "fde61d47216f1287"
         ],
-        "x": 585,
-        "y": 400,
+        "x": 495,
+        "y": 420,
         "wires": []
     },
     {
@@ -465,26 +449,9 @@
         "g": "1d39f27b3d601c72",
         "name": "On Game Stop",
         "info": "",
-        "x": 700,
-        "y": 400,
+        "x": 600,
+        "y": 420,
         "wires": []
-    },
-    {
-        "id": "75a596869f308dab",
-        "type": "link in",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
-        "name": "",
-        "links": [
-            "c7c4685c94a69e6f"
-        ],
-        "x": 325,
-        "y": 540,
-        "wires": [
-            [
-                "4a9c0dfb1f0b9b85"
-            ]
-        ]
     },
     {
         "id": "442e7bc38dd4c3b7",
@@ -502,10 +469,12 @@
             "f64afdb2.ae6738",
             "27a13ceb38ba3113",
             "b24d6dd76f244e1c",
-            "561c4af966865974"
+            "561c4af966865974",
+            "75a596869f308dab",
+            "fde61d47216f1287"
         ],
-        "x": 235,
-        "y": 540,
+        "x": 495,
+        "y": 480,
         "wires": []
     },
     {
@@ -556,13 +525,10 @@
         "name": "On Initialisation",
         "props": [
             {
-                "p": "payload",
-                "v": "",
-                "vt": "date"
+                "p": "payload"
             },
             {
                 "p": "topic",
-                "v": "Initialise",
                 "vt": "str"
             }
         ],
@@ -624,7 +590,8 @@
             "c0f514cb.a0e9c8",
             "e1535ac3.a19198",
             "e4a697a8.359b38",
-            "8bdfc662.b74d28"
+            "8bdfc662.b74d28",
+            "fde61d47216f1287"
         ],
         "x": 295,
         "y": 180,
@@ -673,7 +640,7 @@
         "resendOnRefresh": false,
         "templateScope": "global",
         "className": "",
-        "x": 840,
+        "x": 1000,
         "y": 140,
         "wires": [
             []
@@ -686,7 +653,7 @@
         "z": "350f3f1be5bf834e",
         "name": "Dashboard Styling",
         "info": "",
-        "x": 830,
+        "x": 990,
         "y": 101,
         "wires": []
     },
@@ -697,8 +664,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 160,
-        "y": 660,
+        "x": 940,
+        "y": 260,
         "wires": [
             [
                 "c02c1b80ce61d7d7"
@@ -718,8 +685,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 330,
-        "y": 680,
+        "x": 1130,
+        "y": 280,
         "wires": []
     },
     {
@@ -729,8 +696,8 @@
         "name": "",
         "scope": [],
         "uncaught": false,
-        "x": 150,
-        "y": 700,
+        "x": 950,
+        "y": 300,
         "wires": [
             [
                 "c02c1b80ce61d7d7"
@@ -743,8 +710,424 @@
         "z": "350f3f1be5bf834e",
         "name": "Exception Handling",
         "info": "",
-        "x": 190,
-        "y": 620,
+        "x": 990,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "cd9c79c0f7ca4c12",
+        "type": "link out",
+        "z": "350f3f1be5bf834e",
+        "name": "On System Start",
+        "links": [
+            "ce5e1241.adb708",
+            "891fa554.e2eb",
+            "a42117f2.e7b908",
+            "b382fdf1.42dfd",
+            "753e49af.e1fbf8",
+            "ab728aab.10a15",
+            "7a212126.b73c78",
+            "bca49e2.3ae506",
+            "fec95a4b.bb6bf",
+            "84bae66b.0b1488",
+            "91f5a57b8686c80a",
+            "46aaa4960e9ac869",
+            "e4bbd5899d3b356e",
+            "f64afdb2.ae6738",
+            "7fd4506cfed2714b",
+            "c4a8de8b032253c9",
+            "d22e738b256cdec6",
+            "75a596869f308dab",
+            "fde61d47216f1287"
+        ],
+        "x": 695,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "06ef4faf69df41d0",
+        "type": "comment",
+        "z": "350f3f1be5bf834e",
+        "g": "1d39f27b3d601c72",
+        "name": "On Game Reset",
+        "info": "",
+        "x": 600,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4a9c0dfb1f0b9b85",
+        "type": "function",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "Update Timer",
+        "func": "// Retrieve current state of global timer variables\nvar gameState = global.get(\"gameState\") || 'playing';\nvar gameDuration = global.get(\"gameDuration\") || 0;\nvar elapsedTimeDelta = global.get(\"elapsedTimeDelta\") || 0;\n// Total time elapsed is duration since the start button was last pressed, + any adjustments\nvar timeElapsed = global.get(\"timeElapsed\") || 0;\nvar startTime = flow.get(\"startTime\") || 0;\n\n// If the game is active, update the time elapsed\nif(gameState == \"playing\") {\n\n    // Total time elapsed is duration since the start button was last pressed, + any adjustments\n    timeElapsed = (Date.now() - startTime);\n\n    // Update the global variable\n    global.set(\"timeElapsed\", timeElapsed);\n}\n\n// We update these even if gameState is not playing, to allow for\n// adjustments to gameDuration or timeElapsed made when game is stopped\nvar timeElapsedAfterAdjustments = timeElapsed += elapsedTimeDelta;\nvar timeRemaining = gameDuration - timeElapsed;\n\nglobal.set(\"timeRemaining\", timeRemaining);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: timeRemaining });\n\n// Update the msg to carry string\nmsg.timeElapsed = timeElapsedAfterAdjustments;        \nmsg.timeRemaining = timeRemaining;\n\n// Only need to update UI if timeRemaining has changed\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "39e77fdf6d2e5543"
+            ]
+        ]
+    },
+    {
+        "id": "c8fb5887561b01d3",
+        "type": "ui_template",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "group": "f08ba3d0ec182a89",
+        "name": "Time Remaining",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">Time Remaining</p>\n    </md-card-title-text>\n    <span ng-class=\"'fa fa-clock-o fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div style=\"text-align:center\">\n        <span class=\"value\" style=\"color:{{msg.timeColour}}; font-size:3em;\">\n            {{msg.formattedTimeRemaining}}\n        </span>\n    </div>\n</md-card-content>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 740,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39e77fdf6d2e5543",
+        "type": "function",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "Format Time for Dashboard Display",
+        "func": "// Create formattedTime in hh:mm:ss\nvar t = msg.timeElapsed / 1000; //ms\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\nmsg.formattedTimeElapsed = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\nvar t2 = msg.timeRemaining / 1000; //ms\nvar h2 = Math.floor(t2 / 3600);\nvar m2 = Math.floor(t2 % 3600 / 60);\nvar s2 = Math.floor(t2 % 3600 % 60);\nmsg.formattedTimeRemaining = (\"0\" + h2).slice(-2) + \":\" + (\"0\" + m2).slice(-2) + \":\" + (\"0\" + s2).slice(-2);\n\nvar t3 = global.get(\"gameDuration\") / 1000; //ms\nvar h3 = Math.floor(t3 / 3600);\nvar m3 = Math.floor(t3 % 3600 / 60);\nvar s3 = Math.floor(t3 % 3600 % 60);\nmsg.formattedGameDuration = (\"0\" + h3).slice(-2) + \":\" + (\"0\" + m3).slice(-2) + \":\" + (\"0\" + s3).slice(-2);\n\n// Set timeColour depending on current gamestate and time remaining\nvar gameState = global.get(\"gameState\");\nif (gameState == \"playing\") {\n    if (msg.timeRemaining < 60000) { msg.timeColour = \"red\"; }\n    else { msg.timeColour = \"green\"; }\n}\nelse { msg.timeColour = \"white\"; }\n\n// Update the editor node\nnode.status({ fill: msg.timeColour, shape:\"dot\", text:msg.formattedTimeRemaining});\n\n// Forward the message along the flow\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 600,
+        "wires": [
+            [
+                "c8fb5887561b01d3",
+                "f93150b86a48dd2b",
+                "59b3354d12a64752"
+            ]
+        ]
+    },
+    {
+        "id": "75a596869f308dab",
+        "type": "link in",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "links": [
+            "c7c4685c94a69e6f",
+            "ef582930fa6e08ef",
+            "4a863b19c2050c0a",
+            "442e7bc38dd4c3b7",
+            "cd9c79c0f7ca4c12",
+            "32180624627a2049"
+        ],
+        "x": 85,
+        "y": 600,
+        "wires": [
+            [
+                "4a9c0dfb1f0b9b85"
+            ]
+        ]
+    },
+    {
+        "id": "e7252fb6a4819ecf",
+        "type": "ui_button",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "group": "f08ba3d0ec182a89",
+        "order": 8,
+        "width": "2",
+        "height": 1,
+        "passthru": true,
+        "label": "+5min",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "grey",
+        "className": "",
+        "icon": "fa-plus",
+        "payload": "{\"msg\":{\"payload\":\"add5\",\"timeout\":600,\"warning\":30}}",
+        "payloadType": "json",
+        "topic": "/game",
+        "topicType": "str",
+        "x": 110,
+        "y": 740,
+        "wires": [
+            [
+                "2ce811328a35a524"
+            ]
+        ]
+    },
+    {
+        "id": "f457b1998a5d01b9",
+        "type": "ui_button",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "group": "f08ba3d0ec182a89",
+        "order": 6,
+        "width": 2,
+        "height": 1,
+        "passthru": true,
+        "label": "-5min",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "gray",
+        "className": "",
+        "icon": "fa-minus",
+        "payload": "{\"msg\":{\"payload\":\"deduct5\",\"timeout\":600,\"warning\":30}}",
+        "payloadType": "json",
+        "topic": "/game",
+        "topicType": "str",
+        "x": 110,
+        "y": 780,
+        "wires": [
+            [
+                "a98c2ab0de57b58a"
+            ]
+        ]
+    },
+    {
+        "id": "2ce811328a35a524",
+        "type": "change",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gameDuration",
+                "pt": "global",
+                "to": "$globalContext('gameDuration') + (5000 * 60)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 740,
+        "wires": [
+            [
+                "32180624627a2049"
+            ]
+        ]
+    },
+    {
+        "id": "a98c2ab0de57b58a",
+        "type": "change",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "gameDuration",
+                "pt": "global",
+                "to": "$globalContext('gameDuration') - (5000 * 60)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 780,
+        "wires": [
+            [
+                "32180624627a2049"
+            ]
+        ]
+    },
+    {
+        "id": "32180624627a2049",
+        "type": "link out",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "On Time Adjust",
+        "mode": "link",
+        "links": [
+            "75a596869f308dab"
+        ],
+        "x": 535,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "f93150b86a48dd2b",
+        "type": "ui_text",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "group": "f08ba3d0ec182a89",
+        "order": 7,
+        "width": "2",
+        "height": "1",
+        "name": "",
+        "label": "Game Duration",
+        "format": "{{msg.formattedGameDuration}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 740,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "465e64fa2453bb6a",
+        "type": "ui_button",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "group": "f08ba3d0ec182a89",
+        "order": 11,
+        "width": "2",
+        "height": 1,
+        "passthru": true,
+        "label": "+5min",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#CCCCCC",
+        "className": "",
+        "icon": "fa-plus",
+        "payload": "{\"msg\":{\"payload\":\"add5\",\"timeout\":600,\"warning\":30}}",
+        "payloadType": "json",
+        "topic": "/game",
+        "topicType": "str",
+        "x": 110,
+        "y": 820,
+        "wires": [
+            [
+                "0c9d3ef3bf7c7bc0"
+            ]
+        ]
+    },
+    {
+        "id": "f020309c907b1b75",
+        "type": "ui_button",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "group": "f08ba3d0ec182a89",
+        "order": 9,
+        "width": 2,
+        "height": 1,
+        "passthru": true,
+        "label": "-5min",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#CCCCCC",
+        "className": "",
+        "icon": "fa-minus",
+        "payload": "{\"msg\":{\"payload\":\"deduct5\",\"timeout\":600,\"warning\":30}}",
+        "payloadType": "json",
+        "topic": "/game",
+        "topicType": "str",
+        "x": 110,
+        "y": 860,
+        "wires": [
+            [
+                "6e87bf8ee8b2ac47"
+            ]
+        ]
+    },
+    {
+        "id": "0c9d3ef3bf7c7bc0",
+        "type": "change",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "elapsedTimeDelta",
+                "pt": "global",
+                "to": "$globalContext('elapsedTimeDelta') + (5000 * 60)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 820,
+        "wires": [
+            [
+                "32180624627a2049"
+            ]
+        ]
+    },
+    {
+        "id": "6e87bf8ee8b2ac47",
+        "type": "change",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "elapsedTimeDelta",
+                "pt": "global",
+                "to": "$globalContext('elapsedTimeDelta') - (5000 * 60)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 860,
+        "wires": [
+            [
+                "32180624627a2049"
+            ]
+        ]
+    },
+    {
+        "id": "59b3354d12a64752",
+        "type": "ui_text",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "group": "f08ba3d0ec182a89",
+        "order": 10,
+        "width": "2",
+        "height": "1",
+        "name": "",
+        "label": "Time Elapsed",
+        "format": "{{msg.formattedTimeElapsed}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 740,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "65c75d67cdeec25c",
+        "type": "comment",
+        "z": "350f3f1be5bf834e",
+        "g": "c870415b6658eca9",
+        "name": "Adjustments to game duration or time taken",
+        "info": "",
+        "x": 230,
+        "y": 700,
         "wires": []
     },
     {
