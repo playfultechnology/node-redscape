@@ -62,12 +62,12 @@ namespace Playful.Technology {
 
         void client_MqttMsgReceived(object sender, MqttMsgPublishEventArgs e) {
             Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message));
-            /*
+            
             // Updates to UI need to be called on the main thread, but msgreceived callback is in a thread.
             UnityMainThreadDispatcher.Instance().Enqueue(() => {
                 monitor.AddLog(System.Text.Encoding.UTF8.GetString(e.Message));
             });
-            */
+            
             string[] topicArray;
             topicArray = e.Topic.Split('/');
 
@@ -97,7 +97,7 @@ namespace Playful.Technology {
         void OnGUI() {
             if (GUI.Button(new Rect(20, 40, 80, 20), "Publish")) {
                 client_MqttMsgPublish("temp/random", "test message");
-                monitor.AddLog(string.Format("Published {0} to {1}", "test message", "temp/random"));
+                monitor.AddLog(string.Format("Attempting to publish {0} to {1}", "test message", "temp/random"));
             }
             GUI.Label(new Rect(0,0,200,100),"IP Address: " + GetLocalIPAddress());
         }
