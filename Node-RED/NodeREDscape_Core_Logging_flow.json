@@ -7,6 +7,31 @@
         "info": ""
     },
     {
+        "id": "b7d18281c62f516e",
+        "type": "group",
+        "z": "31a7412f.61a816",
+        "name": "Logging Options",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "8ab5d029.5fa83",
+            "c371def0.c41d4",
+            "d1a37b5c.759ed",
+            "92a3d612.7206a",
+            "bf085b.4d65d7a8",
+            "75358499.0d6b64",
+            "9d634736069dcc14",
+            "8b08d1338508da81",
+            "ad8d062aaf3ea55f",
+            "5f92e99e26ab154a"
+        ],
+        "x": 74,
+        "y": 39,
+        "w": 452,
+        "h": 322
+    },
+    {
         "id": "d36489b9.a97398",
         "type": "file",
         "z": "31a7412f.61a816",
@@ -16,8 +41,8 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1190,
-        "y": 420,
+        "x": 1090,
+        "y": 600,
         "wires": [
             []
         ]
@@ -26,6 +51,7 @@
         "id": "c371def0.c41d4",
         "type": "ui_switch",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "label": "Logging",
         "tooltip": "",
@@ -45,8 +71,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 560,
-        "y": 100,
+        "x": 160,
+        "y": 120,
         "wires": [
             [
                 "8ab5d029.5fa83"
@@ -57,6 +83,7 @@
         "id": "8ab5d029.5fa83",
         "type": "change",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "rules": [
             {
@@ -72,8 +99,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 750,
-        "y": 100,
+        "x": 350,
+        "y": 120,
         "wires": [
             []
         ]
@@ -95,8 +122,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 470,
-        "y": 340,
+        "x": 370,
+        "y": 520,
         "wires": [
             [
                 "511b6d84.e268c4"
@@ -111,8 +138,8 @@
         "func": "// Define a payload object with the fields required\n// for the log entry\nvar log_entry = {\n    \"time\": new Date(),\n    \"topic\": msg.topic,\n    \"payload\": msg.payload\n};\nmsg.payload = log_entry;\n\n// Specify the log file\nmsg.filename = \"/Node-REDscape/log.txt\";\n\n// Show the log entry below the editor node\nnode.status({fill:\"green\", shape:\"dot\", text:JSON.stringify(log_entry)});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 750,
-        "y": 340,
+        "x": 650,
+        "y": 520,
         "wires": [
             [
                 "445cf6fe.4d8078",
@@ -124,10 +151,11 @@
         "id": "d1a37b5c.759ed",
         "type": "comment",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "Toggle Logging On/Off",
         "info": "",
-        "x": 600,
-        "y": 60,
+        "x": 200,
+        "y": 80,
         "wires": []
     },
     {
@@ -143,8 +171,8 @@
         "storeOutMessages": false,
         "fwdInMessages": false,
         "templateScope": "local",
-        "x": 1240,
-        "y": 280,
+        "x": 1140,
+        "y": 460,
         "wires": [
             []
         ]
@@ -157,8 +185,8 @@
         "func": "// Retrieve the existing log display\nvar logDisplay = flow.get(\"logDisplay\") || [];\n\n// Add the new log entry to the top \nlogDisplay.unshift(msg.payload);\n\n// Cap maximum size of the log display\nif(logDisplay.length > 100) {\n    // Remove the last element\n    logDisplay.pop();\n}\n\n// Save the updated log of entries\nflow.set(\"logDisplay\", logDisplay);\n\n// Pass the display along the flow\nmsg.payload = logDisplay;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1030,
-        "y": 280,
+        "x": 930,
+        "y": 460,
         "wires": [
             [
                 "c2f79075.e3d64"
@@ -178,8 +206,8 @@
             "dd31298f.6fb86",
             "e70201fd67e55953"
         ],
-        "x": 255,
-        "y": 340,
+        "x": 155,
+        "y": 520,
         "wires": [
             [
                 "4f0ef3a2.ba712c"
@@ -193,8 +221,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 640,
-        "y": 560,
+        "x": 680,
+        "y": 260,
         "wires": [
             [
                 "7ad70abc.0f24a4"
@@ -212,8 +240,10 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 810,
-        "y": 580,
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 280,
         "wires": []
     },
     {
@@ -223,8 +253,8 @@
         "name": "",
         "scope": [],
         "uncaught": false,
-        "x": 630,
-        "y": 600,
+        "x": 690,
+        "y": 300,
         "wires": [
             [
                 "7ad70abc.0f24a4"
@@ -237,14 +267,15 @@
         "z": "31a7412f.61a816",
         "name": "Exception Handling",
         "info": "",
-        "x": 670,
-        "y": 520,
+        "x": 710,
+        "y": 220,
         "wires": []
     },
     {
         "id": "92a3d612.7206a",
         "type": "ui_button",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "group": "eed1a8a6.8d8878",
         "order": 1,
@@ -259,8 +290,8 @@
         "payload": "true",
         "payloadType": "bool",
         "topic": "",
-        "x": 560,
-        "y": 220,
+        "x": 160,
+        "y": 320,
         "wires": [
             [
                 "bf085b.4d65d7a8"
@@ -271,6 +302,7 @@
         "id": "bf085b.4d65d7a8",
         "type": "change",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "rules": [
             {
@@ -286,11 +318,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 750,
-        "y": 220,
+        "x": 350,
+        "y": 320,
         "wires": [
             [
-                "445cf6fe.4d8078"
+                "5f92e99e26ab154a"
             ]
         ]
     },
@@ -298,10 +330,11 @@
         "id": "75358499.0d6b64",
         "type": "comment",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "Clear the Log Display",
         "info": "",
-        "x": 600,
-        "y": 180,
+        "x": 200,
+        "y": 280,
         "wires": []
     },
     {
@@ -310,8 +343,8 @@
         "z": "31a7412f.61a816",
         "name": "Log event",
         "info": "",
-        "x": 260,
-        "y": 300,
+        "x": 160,
+        "y": 480,
         "wires": []
     },
     {
@@ -320,8 +353,8 @@
         "z": "31a7412f.61a816",
         "name": "Only continue if logging enabled",
         "info": "",
-        "x": 490,
-        "y": 300,
+        "x": 390,
+        "y": 480,
         "wires": []
     },
     {
@@ -330,8 +363,8 @@
         "z": "31a7412f.61a816",
         "name": "Specify fields to log",
         "info": "",
-        "x": 750,
-        "y": 300,
+        "x": 650,
+        "y": 480,
         "wires": []
     },
     {
@@ -340,8 +373,8 @@
         "z": "31a7412f.61a816",
         "name": "Send Log to Dashboard",
         "info": "",
-        "x": 1050,
-        "y": 240,
+        "x": 950,
+        "y": 420,
         "wires": []
     },
     {
@@ -350,14 +383,15 @@
         "z": "31a7412f.61a816",
         "name": "Send Log to File",
         "info": "",
-        "x": 1180,
-        "y": 380,
+        "x": 1080,
+        "y": 560,
         "wires": []
     },
     {
         "id": "9d634736069dcc14",
         "type": "ui_switch",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "label": "Save to Logfile",
         "tooltip": "",
@@ -377,8 +411,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 1000,
-        "y": 100,
+        "x": 180,
+        "y": 220,
         "wires": [
             [
                 "8b08d1338508da81"
@@ -402,8 +436,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 970,
-        "y": 440,
+        "x": 910,
+        "y": 600,
         "wires": [
             [
                 "d36489b9.a97398"
@@ -414,6 +448,7 @@
         "id": "8b08d1338508da81",
         "type": "change",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "",
         "rules": [
             {
@@ -429,8 +464,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1220,
-        "y": 100,
+        "x": 400,
+        "y": 220,
         "wires": [
             []
         ]
@@ -448,8 +483,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 330,
-        "y": 560,
+        "x": 670,
+        "y": 100,
         "wires": [
             [
                 "e70201fd67e55953"
@@ -460,13 +495,13 @@
         "id": "e70201fd67e55953",
         "type": "link out",
         "z": "31a7412f.61a816",
-        "name": "link out 1",
+        "name": "On MQTT",
         "mode": "link",
         "links": [
             "f64afdb2.ae6738"
         ],
-        "x": 435,
-        "y": 560,
+        "x": 775,
+        "y": 100,
         "wires": []
     },
     {
@@ -475,19 +510,50 @@
         "z": "31a7412f.61a816",
         "name": "MQTT traffic",
         "info": "",
-        "x": 350,
-        "y": 520,
+        "x": 690,
+        "y": 60,
         "wires": []
     },
     {
         "id": "ad8d062aaf3ea55f",
         "type": "comment",
         "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
         "name": "Save log to file",
         "info": "",
-        "x": 1000,
-        "y": 60,
+        "x": 180,
+        "y": 180,
         "wires": []
+    },
+    {
+        "id": "5f92e99e26ab154a",
+        "type": "link out",
+        "z": "31a7412f.61a816",
+        "g": "b7d18281c62f516e",
+        "name": "On Clear Log",
+        "mode": "link",
+        "links": [
+            "a49f3cd87d2d459e"
+        ],
+        "x": 485,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a49f3cd87d2d459e",
+        "type": "link in",
+        "z": "31a7412f.61a816",
+        "name": "Update Log Display",
+        "links": [
+            "5f92e99e26ab154a"
+        ],
+        "x": 725,
+        "y": 420,
+        "wires": [
+            [
+                "445cf6fe.4d8078"
+            ]
+        ]
     },
     {
         "id": "eed1a8a6.8d8878",

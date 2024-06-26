@@ -1,116 +1,133 @@
 [
     {
-        "id": "350f3f1be5bf834e",
+        "id": "0e9b6e83699a936b",
         "type": "tab",
         "label": "Main",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "063501cbf8d4d96b",
+        "id": "e38da52e5679f0be",
         "type": "group",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "System Events",
         "style": {
             "label": true
         },
         "nodes": [
-            "aa84b0b3f6f24d4c",
-            "e2d366190836429a",
-            "758310f9eb5818de",
-            "c7c4685c94a69e6f",
-            "34e41184596a8cc2",
-            "87d09c692b8687fc"
+            "6d8d56ec1e35e476",
+            "f41245122e6cff1d",
+            "e0138284e2c09884",
+            "37eab63bc5230576",
+            "0a310e06b4292d47",
+            "574e6736a280d598"
         ],
         "x": 34,
-        "y": 79,
+        "y": 139,
         "w": 302,
-        "h": 202
+        "h": 162
     },
     {
-        "id": "88186d2d626ead90",
+        "id": "f140c03cd0252bfb",
         "type": "group",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "Configuration",
         "style": {
             "label": true
         },
         "nodes": [
-            "c60ade8d2522e8b4",
-            "42d9fcf53b80577d"
+            "7877610e9446b5aa",
+            "e9d7f2bb5235afb0",
+            "6dd740798336e33c"
         ],
-        "x": 374,
-        "y": 79,
-        "w": 312,
+        "x": 354,
+        "y": 139,
+        "w": 362,
         "h": 82
     },
     {
-        "id": "1d39f27b3d601c72",
+        "id": "b3347a2580c58dea",
         "type": "group",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "Game State",
         "style": {
             "label": true
         },
         "nodes": [
-            "197160bd5c9b62c4",
-            "0deb9fba3b6f3c48",
-            "c1d322a0a9c2b4ac",
-            "4a56258a14858018",
-            "d2bfa31323cf7730",
-            "98ab54042d4213d0",
-            "342f119e8f4998e2",
-            "890f86205d47ef77",
-            "ef582930fa6e08ef",
-            "4e6a3fb6ac8e60de",
-            "4a863b19c2050c0a",
-            "4f3e8b2d7209c3c4",
-            "442e7bc38dd4c3b7",
-            "06ef4faf69df41d0"
+            "3d988688d528b497",
+            "418d947d92d5c979",
+            "7d5b08fa137d79b3",
+            "1185277447cbe044",
+            "9551d5269e5df73d",
+            "f11001833c75f582",
+            "c94cba2ac4521bb0",
+            "139166a6297ed2e3",
+            "a92dc4ae64fd20fc",
+            "bee0b6fbe7d58380",
+            "1009ecbecdde0354",
+            "42549cd797aeedc9",
+            "9238ddca0e1a3d85",
+            "2e9397b8414319d9"
         ],
         "x": 34,
         "y": 319,
         "w": 672,
-        "h": 202
+        "h": 162
     },
     {
-        "id": "c870415b6658eca9",
+        "id": "7dae6bb0080ed610",
         "type": "group",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "Timer",
         "style": {
             "label": true
         },
         "nodes": [
-            "4a9c0dfb1f0b9b85",
-            "c8fb5887561b01d3",
-            "39e77fdf6d2e5543",
-            "75a596869f308dab",
-            "e7252fb6a4819ecf",
-            "f457b1998a5d01b9",
-            "2ce811328a35a524",
-            "a98c2ab0de57b58a",
-            "32180624627a2049",
-            "f93150b86a48dd2b",
-            "0c9d3ef3bf7c7bc0",
-            "465e64fa2453bb6a",
-            "6e87bf8ee8b2ac47",
-            "f020309c907b1b75",
-            "59b3354d12a64752",
-            "65c75d67cdeec25c"
+            "85c6af671bb6d06d",
+            "4e8e208e95aff9af",
+            "bf0e90488198976d",
+            "d129991d9a5ab333",
+            "d37f5d54578b73b3",
+            "4502951251b4bd6c",
+            "b604b62acb653363",
+            "4990cf4d3d5c7aeb",
+            "693af0266a738886",
+            "12db1fbec89853d6",
+            "71d6d0a04de13655",
+            "35ea6c311b392cb9",
+            "c4e0449933c6455f",
+            "b84b0cb48b4d37a4",
+            "c66067452355c582",
+            "f760cc5a8ffaba23"
         ],
         "x": 34,
-        "y": 559,
-        "w": 812,
-        "h": 342
+        "y": 499,
+        "w": 832,
+        "h": 322
     },
     {
-        "id": "197160bd5c9b62c4",
+        "id": "5131f7b8cd68af74",
+        "type": "group",
+        "z": "0e9b6e83699a936b",
+        "name": "Dashboad Config",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9719c523f57b592a"
+        ],
+        "x": 734,
+        "y": 139,
+        "w": 252,
+        "h": 82
+    },
+    {
+        "id": "3d988688d528b497",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 5,
         "width": "2",
         "height": 1,
@@ -129,17 +146,17 @@
         "y": 360,
         "wires": [
             [
-                "98ab54042d4213d0"
+                "f11001833c75f582"
             ]
         ]
     },
     {
-        "id": "0deb9fba3b6f3c48",
+        "id": "418d947d92d5c979",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 3,
         "width": "2",
         "height": 1,
@@ -155,20 +172,20 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
-                "342f119e8f4998e2"
+                "c94cba2ac4521bb0"
             ]
         ]
     },
     {
-        "id": "c1d322a0a9c2b4ac",
+        "id": "7d5b08fa137d79b3",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 4,
         "width": 2,
         "height": 1,
@@ -184,18 +201,18 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 480,
+        "y": 440,
         "wires": [
             [
-                "890f86205d47ef77"
+                "139166a6297ed2e3"
             ]
         ]
     },
     {
-        "id": "4a56258a14858018",
+        "id": "1185277447cbe044",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
         "rules": [
             {
@@ -222,15 +239,15 @@
         "y": 360,
         "wires": [
             [
-                "ef582930fa6e08ef"
+                "a92dc4ae64fd20fc"
             ]
         ]
     },
     {
-        "id": "d2bfa31323cf7730",
+        "id": "9551d5269e5df73d",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
         "rules": [
             {
@@ -254,18 +271,18 @@
         "to": "",
         "reg": false,
         "x": 380,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
-                "4a863b19c2050c0a"
+                "1009ecbecdde0354"
             ]
         ]
     },
     {
-        "id": "98ab54042d4213d0",
+        "id": "f11001833c75f582",
         "type": "switch",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
         "property": "gameState",
         "propertyType": "global",
@@ -283,15 +300,15 @@
         "y": 360,
         "wires": [
             [
-                "4a56258a14858018"
+                "1185277447cbe044"
             ]
         ]
     },
     {
-        "id": "342f119e8f4998e2",
+        "id": "c94cba2ac4521bb0",
         "type": "switch",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
         "property": "gameState",
         "propertyType": "global",
@@ -306,18 +323,18 @@
         "repair": false,
         "outputs": 1,
         "x": 230,
-        "y": 420,
+        "y": 400,
         "wires": [
             [
-                "d2bfa31323cf7730"
+                "9551d5269e5df73d"
             ]
         ]
     },
     {
-        "id": "890f86205d47ef77",
+        "id": "139166a6297ed2e3",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "",
         "rules": [
             {
@@ -355,18 +372,18 @@
         "to": "",
         "reg": false,
         "x": 320,
-        "y": 480,
+        "y": 440,
         "wires": [
             [
-                "442e7bc38dd4c3b7"
+                "9238ddca0e1a3d85"
             ]
         ]
     },
     {
-        "id": "c60ade8d2522e8b4",
+        "id": "7877610e9446b5aa",
         "type": "function",
-        "z": "350f3f1be5bf834e",
-        "g": "88186d2d626ead90",
+        "z": "0e9b6e83699a936b",
+        "g": "f140c03cd0252bfb",
         "name": "Initialise Global Vars",
         "func": "global.set(\"gameState\", \"stopped\");\nglobal.set(\"gameDuration\", 3600000);\nglobal.set(\"elapsedTimeDelta\", 0);\nglobal.set(\"timeElapsed\", 0);\nglobal.set(\"timeRemaining\", 3600000);\nreturn msg;",
         "outputs": 1,
@@ -374,41 +391,41 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 120,
+        "x": 540,
+        "y": 180,
         "wires": [
             [
-                "cd9c79c0f7ca4c12"
+                "6dd740798336e33c"
             ]
         ]
     },
     {
-        "id": "42d9fcf53b80577d",
+        "id": "e9d7f2bb5235afb0",
         "type": "link in",
-        "z": "350f3f1be5bf834e",
-        "g": "88186d2d626ead90",
-        "name": "",
+        "z": "0e9b6e83699a936b",
+        "g": "f140c03cd0252bfb",
+        "name": "Initialise Variables",
         "links": [
-            "758310f9eb5818de"
+            "e0138284e2c09884"
         ],
-        "x": 415,
-        "y": 120,
+        "x": 395,
+        "y": 180,
         "wires": [
             [
-                "c60ade8d2522e8b4"
+                "7877610e9446b5aa"
             ]
         ]
     },
     {
-        "id": "ef582930fa6e08ef",
+        "id": "a92dc4ae64fd20fc",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Start",
         "links": [
             "65781ff6.32997",
             "f64afdb2.ae6738",
-            "75a596869f308dab",
+            "d129991d9a5ab333",
             "fde61d47216f1287"
         ],
         "x": 495,
@@ -416,10 +433,10 @@
         "wires": []
     },
     {
-        "id": "4e6a3fb6ac8e60de",
+        "id": "bee0b6fbe7d58380",
         "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Start",
         "info": "",
         "x": 600,
@@ -427,37 +444,37 @@
         "wires": []
     },
     {
-        "id": "4a863b19c2050c0a",
+        "id": "1009ecbecdde0354",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Stop",
         "links": [
             "b6c64fbb.744e7",
             "f64afdb2.ae6738",
-            "75a596869f308dab",
+            "d129991d9a5ab333",
             "fde61d47216f1287"
         ],
         "x": 495,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "4f3e8b2d7209c3c4",
+        "id": "42549cd797aeedc9",
         "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Stop",
         "info": "",
         "x": 600,
-        "y": 420,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "442e7bc38dd4c3b7",
+        "id": "9238ddca0e1a3d85",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Reset",
         "links": [
             "b72df54c.54dbc8",
@@ -470,17 +487,17 @@
             "27a13ceb38ba3113",
             "b24d6dd76f244e1c",
             "561c4af966865974",
-            "75a596869f308dab",
+            "d129991d9a5ab333",
             "fde61d47216f1287"
         ],
         "x": 495,
-        "y": 480,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "05b37843628a96bf",
+        "id": "2a923135113b296e",
         "type": "comment",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "Main Flow",
         "info": "This flow contains nodes that define the overall configuration and monitor state of the system.\n",
         "x": 100,
@@ -488,10 +505,10 @@
         "wires": []
     },
     {
-        "id": "aa84b0b3f6f24d4c",
+        "id": "6d8d56ec1e35e476",
         "type": "inject",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "Every second",
         "props": [
             {
@@ -510,18 +527,18 @@
         "payload": "",
         "payloadType": "date",
         "x": 160,
-        "y": 180,
+        "y": 220,
         "wires": [
             [
-                "c7c4685c94a69e6f"
+                "37eab63bc5230576"
             ]
         ]
     },
     {
-        "id": "e2d366190836429a",
+        "id": "f41245122e6cff1d",
         "type": "inject",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "On Initialisation",
         "props": [
             {
@@ -540,23 +557,23 @@
         "payload": "",
         "payloadType": "date",
         "x": 160,
-        "y": 120,
+        "y": 180,
         "wires": [
             [
-                "758310f9eb5818de"
+                "e0138284e2c09884"
             ]
         ]
     },
     {
-        "id": "758310f9eb5818de",
+        "id": "e0138284e2c09884",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "On System Start",
         "links": [
             "ce5e1241.adb708",
             "891fa554.e2eb",
-            "42d9fcf53b80577d",
+            "e9d7f2bb5235afb0",
             "a42117f2.e7b908",
             "b382fdf1.42dfd",
             "753e49af.e1fbf8",
@@ -574,18 +591,18 @@
             "d22e738b256cdec6"
         ],
         "x": 295,
-        "y": 120,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "c7c4685c94a69e6f",
+        "id": "37eab63bc5230576",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "On Tick",
         "links": [
             "81cfa1d4.86b898",
-            "75a596869f308dab",
+            "d129991d9a5ab333",
             "d9928e8d.c5c588",
             "c0f514cb.a0e9c8",
             "e1535ac3.a19198",
@@ -594,42 +611,43 @@
             "fde61d47216f1287"
         ],
         "x": 295,
-        "y": 180,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "34e41184596a8cc2",
+        "id": "0a310e06b4292d47",
         "type": "ui_ui_control",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "On Browser Refresh",
         "events": "all",
         "x": 160,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
-                "87d09c692b8687fc"
+                "574e6736a280d598"
             ]
         ]
     },
     {
-        "id": "87d09c692b8687fc",
+        "id": "574e6736a280d598",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "063501cbf8d4d96b",
+        "z": "0e9b6e83699a936b",
+        "g": "e38da52e5679f0be",
         "name": "On Browser Refresh",
         "links": [
             "91bbad40.53273"
         ],
         "x": 295,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
-        "id": "0b46b07651aabd95",
+        "id": "9719c523f57b592a",
         "type": "ui_template",
-        "z": "350f3f1be5bf834e",
-        "group": "f08ba3d0ec182a89",
+        "z": "0e9b6e83699a936b",
+        "g": "5131f7b8cd68af74",
+        "group": "2167d545401575ce",
         "name": "CSS-style overrides",
         "order": 1,
         "width": 0,
@@ -640,84 +658,18 @@
         "resendOnRefresh": false,
         "templateScope": "global",
         "className": "",
-        "x": 1000,
-        "y": 140,
+        "x": 860,
+        "y": 180,
         "wires": [
             []
         ],
         "info": "CSS Style overrides to the Node-RED Dark theme.\n\nFrom the Dashboard node information panel (View->Dashboard), select\n - Site: Options -> Node-RED theme everywhere\n - Theme: Style -> Dark"
     },
     {
-        "id": "e364bd8ab15e99bb",
-        "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "name": "Dashboard Styling",
-        "info": "",
-        "x": 990,
-        "y": 101,
-        "wires": []
-    },
-    {
-        "id": "a16e88a8d5c65b16",
-        "type": "catch",
-        "z": "350f3f1be5bf834e",
-        "name": "",
-        "scope": null,
-        "uncaught": false,
-        "x": 940,
-        "y": 260,
-        "wires": [
-            [
-                "c02c1b80ce61d7d7"
-            ]
-        ]
-    },
-    {
-        "id": "c02c1b80ce61d7d7",
-        "type": "debug",
-        "z": "350f3f1be5bf834e",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1130,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "a4e1b2d5ee32da8d",
-        "type": "complete",
-        "z": "350f3f1be5bf834e",
-        "name": "",
-        "scope": [],
-        "uncaught": false,
-        "x": 950,
-        "y": 300,
-        "wires": [
-            [
-                "c02c1b80ce61d7d7"
-            ]
-        ]
-    },
-    {
-        "id": "21156e9a382b1245",
-        "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "name": "Exception Handling",
-        "info": "",
-        "x": 990,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "cd9c79c0f7ca4c12",
+        "id": "6dd740798336e33c",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
+        "g": "f140c03cd0252bfb",
         "name": "On System Start",
         "links": [
             "ce5e1241.adb708",
@@ -737,50 +689,51 @@
             "7fd4506cfed2714b",
             "c4a8de8b032253c9",
             "d22e738b256cdec6",
-            "75a596869f308dab",
+            "d129991d9a5ab333",
             "fde61d47216f1287"
         ],
-        "x": 695,
-        "y": 120,
+        "x": 675,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "06ef4faf69df41d0",
+        "id": "2e9397b8414319d9",
         "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "g": "1d39f27b3d601c72",
+        "z": "0e9b6e83699a936b",
+        "g": "b3347a2580c58dea",
         "name": "On Game Reset",
         "info": "",
         "x": 600,
-        "y": 480,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "4a9c0dfb1f0b9b85",
+        "id": "85c6af671bb6d06d",
         "type": "function",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "Update Timer",
-        "func": "// Retrieve current state of global timer variables\nvar gameState = global.get(\"gameState\") || 'playing';\nvar gameDuration = global.get(\"gameDuration\") || 0;\nvar elapsedTimeDelta = global.get(\"elapsedTimeDelta\") || 0;\n// Total time elapsed is duration since the start button was last pressed, + any adjustments\nvar timeElapsed = global.get(\"timeElapsed\") || 0;\nvar startTime = flow.get(\"startTime\") || 0;\n\n// If the game is active, update the time elapsed\nif(gameState == \"playing\") {\n\n    // Total time elapsed is duration since the start button was last pressed, + any adjustments\n    timeElapsed = (Date.now() - startTime);\n\n    // Update the global variable\n    global.set(\"timeElapsed\", timeElapsed);\n}\n\n// We update these even if gameState is not playing, to allow for\n// adjustments to gameDuration or timeElapsed made when game is stopped\nvar timeElapsedAfterAdjustments = timeElapsed += elapsedTimeDelta;\nvar timeRemaining = gameDuration - timeElapsed;\n\nglobal.set(\"timeRemaining\", timeRemaining);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: timeRemaining });\n\n// Update the msg to carry string\nmsg.timeElapsed = timeElapsedAfterAdjustments;        \nmsg.timeRemaining = timeRemaining;\n\n// Only need to update UI if timeRemaining has changed\nreturn msg;",
+        "func": "// Retrieve current state of global timer variables\nvar gameState = global.get(\"gameState\") || 'playing';\nvar gameDuration = global.get(\"gameDuration\") || 0;\nvar elapsedTimeDelta = global.get(\"elapsedTimeDelta\") || 0;\n// Total time elapsed is duration since the start button was last pressed, + any adjustments\nvar timeElapsed = 0;\nvar startTime = flow.get(\"startTime\") || 0;\n\n// If the game is in progress, update the time passed since start button was last pressed\nif(gameState == \"playing\") {\n    timeElapsed = (Date.now() - startTime);\n}\n\n// We update these even if gameState is not playing, to allow for\n// adjustments to gameDuration or timeElapsed made while game is stopped\nvar timeElapsedAfterAdjustments = timeElapsed + elapsedTimeDelta;\nvar timeRemaining = gameDuration - timeElapsedAfterAdjustments;\n\n// Update the global variable so that it is available to other nodes if required\nglobal.set(\"timeRemaining\", timeRemaining);\n\n// Update the msg to carry string\nmsg.timeElapsed = timeElapsedAfterAdjustments;        \nmsg.timeRemaining = timeRemaining;\n\n// Display status nof this node in the flow\nnode.status({ fill: \"green\", shape: \"dot\", text: timeRemaining });\n\n// Only need to update UI if timeRemaining has changed\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 200,
-        "y": 600,
+        "y": 540,
         "wires": [
             [
-                "39e77fdf6d2e5543"
+                "bf0e90488198976d"
             ]
         ]
     },
     {
-        "id": "c8fb5887561b01d3",
+        "id": "4e8e208e95aff9af",
         "type": "ui_template",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
-        "group": "f08ba3d0ec182a89",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
+        "group": "2167d545401575ce",
         "name": "Time Remaining",
         "order": 2,
         "width": "6",
@@ -791,63 +744,64 @@
         "resendOnRefresh": false,
         "templateScope": "local",
         "className": "",
-        "x": 740,
-        "y": 600,
+        "x": 750,
+        "y": 540,
         "wires": [
             []
         ]
     },
     {
-        "id": "39e77fdf6d2e5543",
+        "id": "bf0e90488198976d",
         "type": "function",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "Format Time for Dashboard Display",
-        "func": "// Create formattedTime in hh:mm:ss\nvar t = msg.timeElapsed / 1000; //ms\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\nmsg.formattedTimeElapsed = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\nvar t2 = msg.timeRemaining / 1000; //ms\nvar h2 = Math.floor(t2 / 3600);\nvar m2 = Math.floor(t2 % 3600 / 60);\nvar s2 = Math.floor(t2 % 3600 % 60);\nmsg.formattedTimeRemaining = (\"0\" + h2).slice(-2) + \":\" + (\"0\" + m2).slice(-2) + \":\" + (\"0\" + s2).slice(-2);\n\nvar t3 = global.get(\"gameDuration\") / 1000; //ms\nvar h3 = Math.floor(t3 / 3600);\nvar m3 = Math.floor(t3 % 3600 / 60);\nvar s3 = Math.floor(t3 % 3600 % 60);\nmsg.formattedGameDuration = (\"0\" + h3).slice(-2) + \":\" + (\"0\" + m3).slice(-2) + \":\" + (\"0\" + s3).slice(-2);\n\n// Set timeColour depending on current gamestate and time remaining\nvar gameState = global.get(\"gameState\");\nif (gameState == \"playing\") {\n    if (msg.timeRemaining < 60000) { msg.timeColour = \"red\"; }\n    else { msg.timeColour = \"green\"; }\n}\nelse { msg.timeColour = \"white\"; }\n\n// Update the editor node\nnode.status({ fill: msg.timeColour, shape:\"dot\", text:msg.formattedTimeRemaining});\n\n// Forward the message along the flow\nreturn msg;",
+        "func": "// Create formattedTime in hh:mm:ss\nvar t = msg.timeElapsed / 1000; //ms\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\nmsg.formattedTimeElapsed = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\nvar t2 = msg.timeRemaining / 1000; //ms\nvar h2 = Math.floor(t2 / 3600);\nvar m2 = Math.floor(t2 % 3600 / 60);\nvar s2 = Math.floor(t2 % 3600 % 60);\nmsg.formattedTimeRemaining = (\"0\" + h2).slice(-2) + \":\" + (\"0\" + m2).slice(-2) + \":\" + (\"0\" + s2).slice(-2);\n\nvar t3 = global.get(\"gameDuration\") / 1000; //ms\nvar h3 = Math.floor(t3 / 3600);\nvar m3 = Math.floor(t3 % 3600 / 60);\nvar s3 = Math.floor(t3 % 3600 % 60);\nmsg.formattedGameDuration = (\"0\" + h3).slice(-2) + \":\" + (\"0\" + m3).slice(-2) + \":\" + (\"0\" + s3).slice(-2);\n\n// Set timeColour depending on current gamestate and time remaining\nvar gameState = global.get(\"gameState\");\nif (gameState == \"playing\") {\n    if (msg.timeRemaining < 60000) { msg.timeColour = \"red\"; }\n    else { msg.timeColour = \"green\"; }\n}\nelse { msg.timeColour = \"gray\"; }\n\n// Update the editor node\nnode.status({ fill: msg.timeColour, shape:\"dot\", text:msg.formattedTimeRemaining});\n\n// Forward the message along the flow\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 600,
+        "x": 450,
+        "y": 540,
         "wires": [
             [
-                "c8fb5887561b01d3",
-                "f93150b86a48dd2b",
-                "59b3354d12a64752"
+                "4e8e208e95aff9af",
+                "12db1fbec89853d6",
+                "c66067452355c582"
             ]
         ]
     },
     {
-        "id": "75a596869f308dab",
+        "id": "d129991d9a5ab333",
         "type": "link in",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
-        "name": "",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
+        "name": "Update Timer",
         "links": [
-            "c7c4685c94a69e6f",
-            "ef582930fa6e08ef",
-            "4a863b19c2050c0a",
-            "442e7bc38dd4c3b7",
-            "cd9c79c0f7ca4c12",
-            "32180624627a2049"
+            "1009ecbecdde0354",
+            "37eab63bc5230576",
+            "693af0266a738886",
+            "6dd740798336e33c",
+            "9238ddca0e1a3d85",
+            "a92dc4ae64fd20fc"
         ],
         "x": 85,
-        "y": 600,
+        "y": 540,
         "wires": [
             [
-                "4a9c0dfb1f0b9b85"
+                "85c6af671bb6d06d"
             ]
         ]
     },
     {
-        "id": "e7252fb6a4819ecf",
+        "id": "d37f5d54578b73b3",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 9,
         "width": "2",
         "height": 1,
@@ -863,20 +817,20 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 740,
+        "y": 660,
         "wires": [
             [
-                "2ce811328a35a524"
+                "b604b62acb653363"
             ]
         ]
     },
     {
-        "id": "f457b1998a5d01b9",
+        "id": "4502951251b4bd6c",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 7,
         "width": 2,
         "height": 1,
@@ -892,18 +846,18 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 780,
+        "y": 700,
         "wires": [
             [
-                "a98c2ab0de57b58a"
+                "4990cf4d3d5c7aeb"
             ]
         ]
     },
     {
-        "id": "2ce811328a35a524",
+        "id": "b604b62acb653363",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
         "rules": [
             {
@@ -920,18 +874,18 @@
         "to": "",
         "reg": false,
         "x": 310,
-        "y": 740,
+        "y": 660,
         "wires": [
             [
-                "32180624627a2049"
+                "693af0266a738886"
             ]
         ]
     },
     {
-        "id": "a98c2ab0de57b58a",
+        "id": "4990cf4d3d5c7aeb",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
         "rules": [
             {
@@ -948,33 +902,33 @@
         "to": "",
         "reg": false,
         "x": 310,
-        "y": 780,
+        "y": 700,
         "wires": [
             [
-                "32180624627a2049"
+                "693af0266a738886"
             ]
         ]
     },
     {
-        "id": "32180624627a2049",
+        "id": "693af0266a738886",
         "type": "link out",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "On Time Adjust",
         "mode": "link",
         "links": [
-            "75a596869f308dab"
+            "d129991d9a5ab333"
         ],
-        "x": 535,
-        "y": 800,
+        "x": 495,
+        "y": 720,
         "wires": []
     },
     {
-        "id": "f93150b86a48dd2b",
+        "id": "12db1fbec89853d6",
         "type": "ui_text",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
-        "group": "f08ba3d0ec182a89",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
+        "group": "2167d545401575ce",
         "order": 8,
         "width": "2",
         "height": "1",
@@ -984,16 +938,16 @@
         "layout": "col-center",
         "className": "",
         "x": 740,
-        "y": 680,
+        "y": 620,
         "wires": []
     },
     {
-        "id": "465e64fa2453bb6a",
+        "id": "35ea6c311b392cb9",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 12,
         "width": "2",
         "height": 1,
@@ -1009,20 +963,20 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 820,
+        "y": 740,
         "wires": [
             [
-                "0c9d3ef3bf7c7bc0"
+                "71d6d0a04de13655"
             ]
         ]
     },
     {
-        "id": "f020309c907b1b75",
+        "id": "b84b0cb48b4d37a4",
         "type": "ui_button",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 10,
         "width": 2,
         "height": 1,
@@ -1038,18 +992,18 @@
         "topic": "/game",
         "topicType": "str",
         "x": 110,
-        "y": 860,
+        "y": 780,
         "wires": [
             [
-                "6e87bf8ee8b2ac47"
+                "c4e0449933c6455f"
             ]
         ]
     },
     {
-        "id": "0c9d3ef3bf7c7bc0",
+        "id": "71d6d0a04de13655",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
         "rules": [
             {
@@ -1065,19 +1019,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 820,
+        "x": 300,
+        "y": 740,
         "wires": [
             [
-                "32180624627a2049"
+                "693af0266a738886"
             ]
         ]
     },
     {
-        "id": "6e87bf8ee8b2ac47",
+        "id": "c4e0449933c6455f",
         "type": "change",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "",
         "rules": [
             {
@@ -1093,20 +1047,20 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
-        "y": 860,
+        "x": 300,
+        "y": 780,
         "wires": [
             [
-                "32180624627a2049"
+                "693af0266a738886"
             ]
         ]
     },
     {
-        "id": "59b3354d12a64752",
+        "id": "c66067452355c582",
         "type": "ui_text",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
-        "group": "f08ba3d0ec182a89",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
+        "group": "2167d545401575ce",
         "order": 11,
         "width": "2",
         "height": "1",
@@ -1116,35 +1070,45 @@
         "layout": "col-center",
         "className": "",
         "x": 740,
-        "y": 640,
+        "y": 580,
         "wires": []
     },
     {
-        "id": "65c75d67cdeec25c",
+        "id": "f760cc5a8ffaba23",
         "type": "comment",
-        "z": "350f3f1be5bf834e",
-        "g": "c870415b6658eca9",
+        "z": "0e9b6e83699a936b",
+        "g": "7dae6bb0080ed610",
         "name": "Adjustments to game duration or time taken",
         "info": "",
         "x": 230,
-        "y": 700,
+        "y": 620,
         "wires": []
     },
     {
-        "id": "45013fdfd43f76cb",
+        "id": "5ac1f4e237f3aa75",
+        "type": "comment",
+        "z": "0e9b6e83699a936b",
+        "name": "This flow requires the node-red-dashboard module, which can be installed from the Pallete Manager",
+        "info": "This flow contains nodes that define the overall configuration and monitor state of the system.\n",
+        "x": 390,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "205bf7c33e3c90ef",
         "type": "ui_spacer",
-        "z": "350f3f1be5bf834e",
+        "z": "0e9b6e83699a936b",
         "name": "spacer",
-        "group": "f08ba3d0ec182a89",
+        "group": "2167d545401575ce",
         "order": 6,
         "width": "6",
         "height": "1"
     },
     {
-        "id": "f08ba3d0ec182a89",
+        "id": "2167d545401575ce",
         "type": "ui_group",
         "name": "Game Control",
-        "tab": "a38c3d325d960343",
+        "tab": "ff24fa37c64a35b4",
         "order": 1,
         "disp": false,
         "width": "6",
@@ -1152,7 +1116,7 @@
         "className": ""
     },
     {
-        "id": "a38c3d325d960343",
+        "id": "ff24fa37c64a35b4",
         "type": "ui_tab",
         "name": "Main",
         "icon": "dashboard",
