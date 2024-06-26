@@ -15,16 +15,16 @@
             "label": true
         },
         "nodes": [
-            "e7d9299c.bdf7f",
             "4582c4d0.5f7514",
             "ad0ff882.98e9e8",
             "b87de174.0904f",
-            "7c66bf35.7453b",
             "cdf5f82c.df5a6",
-            "0a6a3a37e5124120"
+            "0a6a3a37e5124120",
+            "e5a16602705051b4",
+            "0c49790606029a9a"
         ],
-        "x": 74,
-        "y": 79,
+        "x": 84,
+        "y": 299,
         "w": 792,
         "h": 122
     },
@@ -32,20 +32,17 @@
         "id": "b6e8e1a1e254255d",
         "type": "group",
         "z": "7daa0e0f.94fa2",
-        "name": "Dynamic Content",
+        "name": "Dashboard-Triggered Content",
         "style": {
             "label": true
         },
         "nodes": [
             "b782529.f84303",
-            "f93ed504.8ff1e8",
             "be0ceb5e.052c2",
             "60685308.193364",
-            "4cdde7a76b0193e6",
             "e010597f183d18d3",
             "5b5594959cae269d",
             "e8e7614b0f0b087d",
-            "8a30a6b580225ff9",
             "248e8aa4daf653fd",
             "2317359a0cc526c7",
             "08dc603866e4fa96",
@@ -61,12 +58,17 @@
             "b0dcaa5b50a76803",
             "e7719e3bb7ad01d4",
             "c05cf02d0d3d308d",
-            "a710abaab60de1be"
+            "a710abaab60de1be",
+            "5badc7e7b71741ef",
+            "40a3695082bdc952",
+            "fc19babf24737e50",
+            "e9745b55be8f18d0",
+            "3f83b2dfb6eae6e8"
         ],
-        "x": 74,
-        "y": 239,
-        "w": 1232,
-        "h": 462
+        "x": 84,
+        "y": 459,
+        "w": 1102,
+        "h": 662
     },
     {
         "id": "e17fac2177b869a8",
@@ -83,31 +85,38 @@
             "be92a823.2ccd2",
             "a4a9969470c26952"
         ],
-        "x": 914,
-        "y": 79,
-        "w": 479,
+        "x": 524,
+        "y": 159,
+        "w": 542,
         "h": 122
     },
     {
-        "id": "e7d9299c.bdf7f",
-        "type": "comment",
+        "id": "798c58adc45d859b",
+        "type": "group",
         "z": "7daa0e0f.94fa2",
-        "g": "8e9d4fc868cd9abc",
-        "name": "Format into hh:mm:ss",
-        "info": "",
-        "x": 660,
-        "y": 120,
-        "wires": []
+        "name": "Initialisation",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "108f0f2638f4f9fe",
+            "2c02fd78688aef48",
+            "6e030344ddef1ee5"
+        ],
+        "x": 74,
+        "y": 179,
+        "w": 412,
+        "h": 82
     },
     {
         "id": "4582c4d0.5f7514",
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "8e9d4fc868cd9abc",
-        "name": "Retrieve global game time",
+        "name": "Retrieve and format global game time",
         "info": "",
-        "x": 410,
-        "y": 120,
+        "x": 450,
+        "y": 340,
         "wires": [],
         "icon": "node-red/parser-html.svg"
     },
@@ -133,11 +142,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 190,
-        "y": 160,
+        "x": 210,
+        "y": 380,
         "wires": [
             [
-                "7c66bf35.7453b"
+                "cdf5f82c.df5a6"
             ]
         ]
     },
@@ -149,47 +158,28 @@
         "name": "Timer",
         "info": "",
         "x": 190,
-        "y": 120,
+        "y": 340,
         "wires": [],
         "icon": "node-red/parser-html.svg"
-    },
-    {
-        "id": "7c66bf35.7453b",
-        "type": "function",
-        "z": "7daa0e0f.94fa2",
-        "g": "8e9d4fc868cd9abc",
-        "name": "Update Game Timer",
-        "func": "\n// Retrieve the global time remaining counter\nmsg.timeRemaining = global.get(\"timeRemaining\") || 0;\n\n// Display value in the editor\nnode.status({ fill: \"green\", shape: \"dot\", text: msg.timeRemaining});\n\n// Pass value along the flow\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 160,
-        "wires": [
-            [
-                "cdf5f82c.df5a6"
-            ]
-        ]
     },
     {
         "id": "cdf5f82c.df5a6",
         "type": "function",
         "z": "7daa0e0f.94fa2",
         "g": "8e9d4fc868cd9abc",
-        "name": "Format Time As HH:MM:SS",
-        "func": "// msg.timeRemaining is in milliseconds\nvar t = msg.timeRemaining / 1000;\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\n\n// Format into hh:mm:ss\nmsg.timerText = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\n// Update the editor node\nnode.status({fill:\"green\", shape:\"dot\", text:msg.timerText});\n\n// Forward the message along the flow\nreturn msg;",
+        "name": "Get Global Time Remaining",
+        "func": "// Retrieve the global time remaining counter\nmsg.timeRemaining = global.get(\"timeRemaining\") || 0;\n\n// msg.timeRemaining is in milliseconds\nvar t = msg.timeRemaining / 1000;\nvar h = Math.floor(t / 3600);\nvar m = Math.floor(t % 3600 / 60);\nvar s = Math.floor(t % 3600 % 60);\n\n// Format into hh:mm:ss\nmsg.timerText = (\"0\" + h).slice(-2) + \":\" + (\"0\" + m).slice(-2) + \":\" + (\"0\" + s).slice(-2);\n\n// Update the editor node\nnode.status({fill:\"green\", shape:\"dot\", text:msg.timerText});\n\n// Forward the message along the flow\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 160,
+        "x": 440,
+        "y": 380,
         "wires": [
             [
-                "0a6a3a37e5124120"
+                "e5a16602705051b4"
             ]
         ]
     },
@@ -211,39 +201,11 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 420,
-        "y": 320,
+        "x": 440,
+        "y": 540,
         "wires": [
             [
-                "f93ed504.8ff1e8"
-            ]
-        ]
-    },
-    {
-        "id": "f93ed504.8ff1e8",
-        "type": "change",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "displayText",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 320,
-        "wires": [
-            [
-                "248e8aa4daf653fd"
+                "5badc7e7b71741ef"
             ]
         ]
     },
@@ -268,8 +230,8 @@
         "reduceInit": "",
         "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 1050,
-        "y": 160,
+        "x": 660,
+        "y": 240,
         "wires": [
             [
                 "f4c671fc.65fa3"
@@ -283,8 +245,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Duration before clearing",
         "info": "",
-        "x": 440,
-        "y": 280,
+        "x": 490,
+        "y": 500,
         "wires": []
     },
     {
@@ -292,10 +254,10 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "e17fac2177b869a8",
-        "name": "Combine time + clue + video",
+        "name": "Combine elements",
         "info": "",
-        "x": 1063,
-        "y": 120,
+        "x": 643,
+        "y": 200,
         "wires": []
     },
     {
@@ -303,10 +265,10 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "Set msg variable from payload",
+        "name": "Update UI Builder element",
         "info": "",
-        "x": 710,
-        "y": 280,
+        "x": 730,
+        "y": 500,
         "wires": []
     },
     {
@@ -316,21 +278,23 @@
         "g": "e17fac2177b869a8",
         "name": "",
         "topic": "",
-        "url": "room_display",
+        "url": "display",
+        "okToGo": true,
         "fwdInMessages": false,
         "allowScripts": true,
         "allowStyles": false,
         "copyIndex": true,
-        "templateFolder": "blank",
+        "templateFolder": "iife-blank-client",
         "extTemplate": "",
         "showfolder": false,
-        "useSecurity": false,
-        "sessionLength": 432000,
-        "tokenAutoExtend": false,
         "reload": true,
         "sourceFolder": "src",
-        "x": 1280,
-        "y": 160,
+        "deployedVersion": "6.8.2",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "x": 830,
+        "y": 240,
         "wires": [
             [],
             []
@@ -341,39 +305,11 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "e17fac2177b869a8",
-        "name": "Send to display",
+        "name": "Send to display at specified URL",
         "info": "",
-        "x": 1287,
-        "y": 120,
+        "x": 900,
+        "y": 200,
         "wires": []
-    },
-    {
-        "id": "4cdde7a76b0193e6",
-        "type": "change",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "videoOverlaySrc",
-                "pt": "msg",
-                "to": "/Pexels Videos 3853.mp4",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 520,
-        "wires": [
-            [
-                "7280d7b3983f313f"
-            ]
-        ]
     },
     {
         "id": "e010597f183d18d3",
@@ -393,12 +329,12 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 640,
-        "y": 620,
+        "x": 660,
+        "y": 1000,
         "wires": [
             [
                 "e8e7614b0f0b087d",
-                "8a30a6b580225ff9"
+                "fc19babf24737e50"
             ]
         ]
     },
@@ -422,8 +358,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 460,
-        "y": 620,
+        "x": 480,
+        "y": 1000,
         "wires": [
             [
                 "e010597f183d18d3"
@@ -450,38 +386,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
-        "y": 660,
+        "x": 880,
+        "y": 1080,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "8a30a6b580225ff9",
-        "type": "change",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "videoOverlaySrc",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 870,
-        "y": 580,
-        "wires": [
-            [
-                "984ba29d19a7117f"
-            ]
         ]
     },
     {
@@ -499,10 +407,11 @@
             "984ba29d19a7117f",
             "4586a515dd11f3a4",
             "cff28163790bb4b6",
-            "d1ddfac3b8f1e655"
+            "d1ddfac3b8f1e655",
+            "6e030344ddef1ee5"
         ],
-        "x": 955,
-        "y": 160,
+        "x": 565,
+        "y": 240,
         "wires": [
             [
                 "b92a0984.a479c"
@@ -519,8 +428,8 @@
         "links": [
             "a4a9969470c26952"
         ],
-        "x": 825,
-        "y": 320,
+        "x": 855,
+        "y": 540,
         "wires": []
     },
     {
@@ -559,8 +468,8 @@
         "topic": "",
         "topicType": "str",
         "className": "",
-        "x": 190,
-        "y": 320,
+        "x": 180,
+        "y": 540,
         "wires": [
             [
                 "b782529.f84303",
@@ -573,10 +482,10 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "Predefined Messages",
+        "name": "Predefined Text",
         "info": "",
         "x": 200,
-        "y": 280,
+        "y": 500,
         "wires": []
     },
     {
@@ -599,7 +508,7 @@
         "className": "",
         "topicType": "str",
         "x": 180,
-        "y": 420,
+        "y": 640,
         "wires": [
             [
                 "b782529.f84303",
@@ -616,8 +525,8 @@
         "group": "fb11b34b7ab1c984",
         "voice": "",
         "always": true,
-        "x": 1220,
-        "y": 420,
+        "x": 1100,
+        "y": 640,
         "wires": []
     },
     {
@@ -626,15 +535,15 @@
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
         "name": "",
-        "filename": "C:\\Users\\alast\\Documents\\GitHub\\node-redscape\\extras\\Notification Sounds\\out-of-nowhere-message-tone.mp3",
+        "filename": "D:\\GitHub\\node-redscape\\extras\\Notification Sounds\\out-of-nowhere-message-tone.mp3",
         "filenameType": "str",
         "format": "",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 750,
-        "y": 420,
+        "x": 700,
+        "y": 640,
         "wires": [
             [
                 "3882bd533d90d4d9"
@@ -646,10 +555,10 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "Free Text Messages",
+        "name": "Free Text",
         "info": "",
-        "x": 190,
-        "y": 380,
+        "x": 170,
+        "y": 600,
         "wires": []
     },
     {
@@ -674,11 +583,11 @@
         "topic": "topic",
         "topicType": "msg",
         "x": 190,
-        "y": 520,
+        "y": 900,
         "wires": [
             [
-                "4cdde7a76b0193e6",
-                "5b5594959cae269d"
+                "5b5594959cae269d",
+                "40a3695082bdc952"
             ]
         ]
     },
@@ -689,8 +598,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Play video overlay",
         "info": "",
-        "x": 190,
-        "y": 480,
+        "x": 210,
+        "y": 860,
         "wires": []
     },
     {
@@ -700,8 +609,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Play audible alert for players",
         "info": "",
-        "x": 480,
-        "y": 380,
+        "x": 500,
+        "y": 600,
         "wires": []
     },
     {
@@ -714,8 +623,8 @@
         "links": [
             "a4a9969470c26952"
         ],
-        "x": 625,
-        "y": 520,
+        "x": 615,
+        "y": 900,
         "wires": []
     },
     {
@@ -728,8 +637,8 @@
         "links": [
             "a4a9969470c26952"
         ],
-        "x": 825,
-        "y": 160,
+        "x": 835,
+        "y": 380,
         "wires": []
     },
     {
@@ -742,8 +651,8 @@
         "links": [
             "a4a9969470c26952"
         ],
-        "x": 1025,
-        "y": 580,
+        "x": 1035,
+        "y": 980,
         "wires": []
     },
     {
@@ -753,8 +662,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Assign video file",
         "info": "",
-        "x": 440,
-        "y": 480,
+        "x": 460,
+        "y": 860,
         "wires": []
     },
     {
@@ -764,8 +673,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Pause game while video plays",
         "info": "",
-        "x": 480,
-        "y": 580,
+        "x": 500,
+        "y": 960,
         "wires": []
     },
     {
@@ -775,8 +684,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Clear video overlay",
         "info": "",
-        "x": 850,
-        "y": 540,
+        "x": 870,
+        "y": 940,
         "wires": []
     },
     {
@@ -786,8 +695,222 @@
         "g": "b6e8e1a1e254255d",
         "name": "Resume game",
         "info": "",
-        "x": 830,
-        "y": 620,
+        "x": 860,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "669dbbe342335aa2",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "In-Game Display",
+        "info": "",
+        "x": 140,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "91c75419fe50602e",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "Requires the node-red-contrib-uibuilder node, which can be installed from the Palette Manager",
+        "info": "",
+        "x": 390,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "5badc7e7b71741ef",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": ".displayText",
+        "cssSelectorType": "str",
+        "slotSourceProp": "payload",
+        "slotSourcePropType": "msg",
+        "attribsSource": "",
+        "attribsSourceType": "msg",
+        "slotPropMarkdown": false,
+        "x": 720,
+        "y": 540,
+        "wires": [
+            [
+                "248e8aa4daf653fd"
+            ]
+        ]
+    },
+    {
+        "id": "e5a16602705051b4",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "8e9d4fc868cd9abc",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": ".timerText",
+        "cssSelectorType": "str",
+        "slotSourceProp": "timerText",
+        "slotSourcePropType": "msg",
+        "attribsSource": "",
+        "attribsSourceType": "msg",
+        "slotPropMarkdown": false,
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "0a6a3a37e5124120"
+            ]
+        ]
+    },
+    {
+        "id": "0c49790606029a9a",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "g": "8e9d4fc868cd9abc",
+        "name": "Update UI Builder element",
+        "info": "",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "40a3695082bdc952",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": "#overlayVideo",
+        "cssSelectorType": "str",
+        "slotSourceProp": "",
+        "slotSourcePropType": "str",
+        "attribsSource": "{\"src\":\"./media/Pexels Videos 3853.mp4\"}",
+        "attribsSourceType": "json",
+        "slotPropMarkdown": false,
+        "x": 480,
+        "y": 900,
+        "wires": [
+            [
+                "7280d7b3983f313f"
+            ]
+        ]
+    },
+    {
+        "id": "108f0f2638f4f9fe",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "798c58adc45d859b",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": "#backgroundVideo",
+        "cssSelectorType": "str",
+        "slotSourceProp": "",
+        "slotSourcePropType": "msg",
+        "attribsSource": "{\"src\":\"./media/roomdisplay_bg.mp4\"}",
+        "attribsSourceType": "json",
+        "slotPropMarkdown": false,
+        "x": 280,
+        "y": 220,
+        "wires": [
+            [
+                "6e030344ddef1ee5"
+            ]
+        ]
+    },
+    {
+        "id": "2c02fd78688aef48",
+        "type": "link in",
+        "z": "7daa0e0f.94fa2",
+        "g": "798c58adc45d859b",
+        "name": "link in 8",
+        "links": [
+            "e0138284e2c09884"
+        ],
+        "x": 115,
+        "y": 220,
+        "wires": [
+            [
+                "108f0f2638f4f9fe"
+            ]
+        ]
+    },
+    {
+        "id": "6e030344ddef1ee5",
+        "type": "link out",
+        "z": "7daa0e0f.94fa2",
+        "g": "798c58adc45d859b",
+        "name": "In-Game Text Display Out",
+        "mode": "link",
+        "links": [
+            "a4a9969470c26952"
+        ],
+        "x": 445,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "fc19babf24737e50",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": "#overlayVideo",
+        "cssSelectorType": "str",
+        "slotSourceProp": "",
+        "slotSourcePropType": "str",
+        "attribsSource": "{\"src\":\"\"}",
+        "attribsSourceType": "json",
+        "slotPropMarkdown": false,
+        "x": 880,
+        "y": 980,
+        "wires": [
+            [
+                "984ba29d19a7117f"
+            ]
+        ]
+    },
+    {
+        "id": "e9745b55be8f18d0",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "Media files that are dynamically inserted into the page (e.g. triggered videos or images) should be placed in the /.node-red/uibuilder/sitename/src folder",
+        "info": "",
+        "x": 630,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "3f83b2dfb6eae6e8",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "They can then be referenced as \"./filename.mp4\" in the uib-update node",
+        "info": "",
+        "x": 880,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "395bcae8a1530d52",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "It is no longer necessary to specify httpStatic in your node-red settings.js",
+        "info": "",
+        "x": 330,
+        "y": 120,
         "wires": []
     },
     {
