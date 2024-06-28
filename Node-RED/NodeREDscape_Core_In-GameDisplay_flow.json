@@ -927,6 +927,36 @@
         "wires": []
     },
     {
+        "id": "ebb4565dfcd5cf24",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "CONFIGURATION\\n Edit the ui-builder node <no url> to specify a URL at which the display will be published\\n Then, click the Files tab and paste content as follows:",
+        "info": "",
+        "x": 1410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3d4f32336e5b31ac",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "index.html (double-click to view)",
+        "info": "<!doctype html>\n<html lang=\"en\"><head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <link rel=\"icon\" href=\"../uibuilder/images/node-blue.ico\">\n    <title>Node-REDscape In-Game Display</title>\n    <meta name=\"description\" content=\"Node-REDscape In-Game Display\">\n\n    <!-- Your own CSS (defaults to loading uibuilders css)-->\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"./index.css\" media=\"all\">\n    <!-- Include Webfont to style text in custom font -->\n    <link href=\"https://fonts.googleapis.com/css?family=Staatliches&display=swap\" rel=\"stylesheet\">\n    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->\n    <script defer src=\"../uibuilder/uibuilder.iife.min.js\"></script>\n    <script defer src=\"./index.js\">/* OPTIONAL: Put your custom code in that */</script>\n    <!-- #endregion -->\n\n</head>\n<body class=\"uib\">\n    <div id=\"app\">\n        <video autoplay muted loop class=\"background\" id=\"backgroundVideo\" src=\"./media/roomdisplay_bg.mp4\" type=\"video/mp4\"></video>\n        <video autoplay muted loop class=\"overlay\" id=\"overlayVideo\" src=\"\" type=\"video/mp4\"></video>\n        <div class=\"timerText\">Time Remaining</div>\n        <div class=\"displayText\"> - </div>\n    </div>\n</body>\n</html>",
+        "x": 1260,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3980b60b4b85fff2",
+        "type": "comment",
+        "z": "7daa0e0f.94fa2",
+        "name": "index.css(double-click to view)",
+        "info": "body {\n    padding: 0;\n    margin: 0;\n    overflow: hidden;\n/* Don't display any scroll bars */\n}\n\n.background,\n.backgroundVideo {\n    position: fixed;\n    right: 0;\n    bottom: 0;\n    min-width: 100%;\n    min-height: 100%;\n    z-index: -10;\n}\n\n.overlay,\n.overlayVideo {\n    position: fixed;\n    left: 200px;\n    top: 100px;\n    width: 1080px;\n    height: 480px;\n    z-index: 10;\n}\n\n#app {\n    position: fixed;\n    text-align: center;\n    margin: auto;\n    font-family: 'Staatliches', cursive;\n    color: #999;\n    right: 0;\n    bottom: 0;\n    min-width: 100%;\n    min-height: 100%;\n}\n\n.timerText {\n    position: fixed;\n    top: 100px;\n    left: 400px;\n    font-size: 100px;\n}\n\n.displayText {\n    position: fixed;\n    top: 200px;\n    left: 400px;\n    font-size: 100px;\n}",
+        "x": 1250,
+        "y": 300,
+        "wires": []
+    },
+    {
         "id": "fb11b34b7ab1c984",
         "type": "ui_group",
         "name": "In-Game Display",
