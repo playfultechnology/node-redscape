@@ -7,9 +7,123 @@
         "info": ""
     },
     {
+        "id": "481b08d378ae84d4",
+        "type": "group",
+        "z": "858e5f8e.138f",
+        "name": "Initialisation",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "b84ed8f2.442b08",
+            "257b3e88.473c22",
+            "747ea446.5a790c",
+            "4845afa5.eb8f88",
+            "a90489fa.2ce22",
+            "7c5da0ce.2cbab"
+        ],
+        "x": 54,
+        "y": 139,
+        "w": 562,
+        "h": 162
+    },
+    {
+        "id": "29bc67c1fd42d0b7",
+        "type": "group",
+        "z": "858e5f8e.138f",
+        "name": "Lighting Effects",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c5a8bfde.4bc3a8",
+            "74b3b11d.ee9978",
+            "ba9c076b.4ecee8",
+            "804d0c6f.009bc",
+            "c6970ad.78d5ff8",
+            "334012d2.343546",
+            "5e938919.95b4a",
+            "fea65c0a.0bc908",
+            "103c19b5.1ca3a6",
+            "2865380a.3f69c8",
+            "6cfc61d6.501c48",
+            "49618ec8.390958",
+            "2e03b65.d267b4a",
+            "514f57d7.86d56",
+            "f86ffa24.4668f8",
+            "bae3f2a7.fa72e8",
+            "17c6a1be.eb1306",
+            "b7588cae.286e68",
+            "c24d3a5f.5fba3",
+            "ac98849b.42228",
+            "ef114f4ed85ef8b0",
+            "4362e0f31f1b39fe",
+            "a83146cad52a4adf",
+            "237bfe15358bd230",
+            "eb6f8cb1e2217aa3",
+            "27a61bcbfa8e3633",
+            "7909600d85cf0515",
+            "41b5f82fcd9af4ba"
+        ],
+        "x": 54,
+        "y": 619,
+        "w": 832,
+        "h": 722
+    },
+    {
+        "id": "ec9d57d027289a98",
+        "type": "group",
+        "z": "858e5f8e.138f",
+        "name": "Ambient Lighting",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "219a34d8.462bbc",
+            "d40b6f2.c14cd9",
+            "1218614b.945e57",
+            "521be2d3.5574f4",
+            "2192e383.059b3c",
+            "290ac2be.83aaa6",
+            "c64c3055.ad57b",
+            "20926df8.d3fca2",
+            "2db8de02.3dde4a",
+            "d3c0b650.f64b6",
+            "df94f6e3.e33cf",
+            "3c771563.4e80f2",
+            "6dbe9168.97a8c8",
+            "9ca45147.da1d58",
+            "4b7f01531d676d1b",
+            "73735dc1e0896756"
+        ],
+        "x": 54,
+        "y": 339,
+        "w": 1142,
+        "h": 242
+    },
+    {
+        "id": "922cc5c768617f9d",
+        "type": "group",
+        "z": "858e5f8e.138f",
+        "name": "DMX Universe",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c3ea7a22.245f98",
+            "7cdc03e311091557",
+            "e0684e8493b06987"
+        ],
+        "x": 1274,
+        "y": 439,
+        "w": 332,
+        "h": 122
+    },
+    {
         "id": "219a34d8.462bbc",
         "type": "ui_colour_picker",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Colour Wheel UI",
         "label": "Colour",
         "group": "d36d4324.1067f8",
@@ -28,8 +142,8 @@
         "height": 0,
         "passthru": true,
         "topic": "",
-        "x": 520,
-        "y": 400,
+        "x": 500,
+        "y": 500,
         "wires": [
             [
                 "20926df8.d3fca2"
@@ -37,28 +151,19 @@
         ]
     },
     {
-        "id": "c3ea7a22.245f98",
-        "type": "serial out",
-        "z": "858e5f8e.138f",
-        "name": "",
-        "serial": "7f6727ec.9d40c8",
-        "x": 1350,
-        "y": 460,
-        "wires": []
-    },
-    {
         "id": "d40b6f2.c14cd9",
         "type": "function",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Assign RGB to DMX channels 2/3/4",
         "func": "msg.payload[\"channels\"] = [\n    {\n    \"channel\" : \"2\",\n    \"value\" : msg.payload.r\n    },\n    {\n    \"channel\" : \"3\",\n    \"value\" : msg.payload.g\n    },\n    {\n    \"channel\" : \"4\",\n    \"value\" : msg.payload.b\n    }\n];\n\n// Update the editor node\nnode.status({fill:\"grey\", shape:\"ring\", text: \"RGB(\" + msg.payload.r + \",\" + msg.payload.g + \",\" + msg.payload.b + \")\"});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1000,
-        "y": 400,
+        "x": 980,
+        "y": 500,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "73735dc1e0896756"
             ]
         ]
     },
@@ -66,6 +171,7 @@
         "id": "1218614b.945e57",
         "type": "ui_slider",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Brightness Slider UI",
         "label": "Brightness",
         "tooltip": "",
@@ -79,8 +185,8 @@
         "min": 0,
         "max": "255",
         "step": 1,
-        "x": 510,
-        "y": 280,
+        "x": 490,
+        "y": 380,
         "wires": [
             [
                 "c64c3055.ad57b"
@@ -91,15 +197,16 @@
         "id": "521be2d3.5574f4",
         "type": "function",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Assign to DMX channel 1",
         "func": "var brightness = msg.payload;\n\nmsg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": brightness\n        }\n    ]\n}\n\n// Update the editor node\nnode.status({fill:\"grey\", shape:\"ring\", text: \"Brightness:\" + brightness});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 970,
-        "y": 280,
+        "x": 950,
+        "y": 380,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "4b7f01531d676d1b"
             ]
         ]
     },
@@ -107,6 +214,7 @@
         "id": "2192e383.059b3c",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Assign initial brightness",
         "rules": [
             {
@@ -122,8 +230,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 270,
-        "y": 280,
+        "x": 250,
+        "y": 380,
         "wires": [
             [
                 "1218614b.945e57"
@@ -134,6 +242,7 @@
         "id": "290ac2be.83aaa6",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Set initial RGB value",
         "rules": [
             {
@@ -149,8 +258,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
-        "y": 400,
+        "x": 240,
+        "y": 500,
         "wires": [
             [
                 "219a34d8.462bbc"
@@ -161,6 +270,7 @@
         "id": "c5a8bfde.4bc3a8",
         "type": "trigger",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "op1": "true",
         "op2": "false",
@@ -172,8 +282,8 @@
         "reset": "",
         "bytopic": "all",
         "outputs": 1,
-        "x": 700,
-        "y": 520,
+        "x": 320,
+        "y": 700,
         "wires": [
             [
                 "804d0c6f.009bc"
@@ -184,6 +294,7 @@
         "id": "74b3b11d.ee9978",
         "type": "ui_button",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "UV Blackout",
         "group": "d36d4324.1067f8",
         "order": 6,
@@ -198,8 +309,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 530,
-        "y": 520,
+        "x": 150,
+        "y": 700,
         "wires": [
             [
                 "c5a8bfde.4bc3a8",
@@ -211,7 +322,20 @@
         "id": "b84ed8f2.442b08",
         "type": "inject",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Delayed Startup",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "str"
+            }
+        ],
         "repeat": "",
         "crontab": "",
         "once": true,
@@ -219,8 +343,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 240,
-        "y": 80,
+        "x": 190,
+        "y": 180,
         "wires": [
             [
                 "a90489fa.2ce22"
@@ -231,6 +355,7 @@
         "id": "c64c3055.ad57b",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "rules": [
             {
@@ -246,8 +371,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 280,
+        "x": 710,
+        "y": 380,
         "wires": [
             [
                 "521be2d3.5574f4"
@@ -258,6 +383,7 @@
         "id": "257b3e88.473c22",
         "type": "ui_button",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Save",
         "group": "d36d4324.1067f8",
         "order": 3,
@@ -272,8 +398,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 270,
-        "y": 120,
+        "x": 220,
+        "y": 220,
         "wires": [
             [
                 "4845afa5.eb8f88"
@@ -284,6 +410,7 @@
         "id": "747ea446.5a790c",
         "type": "ui_button",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Restore",
         "group": "d36d4324.1067f8",
         "order": 4,
@@ -298,8 +425,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 260,
-        "y": 160,
+        "x": 210,
+        "y": 260,
         "wires": [
             [
                 "7c5da0ce.2cbab"
@@ -310,6 +437,7 @@
         "id": "20926df8.d3fca2",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "rules": [
             {
@@ -325,8 +453,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 400,
+        "x": 700,
+        "y": 500,
         "wires": [
             [
                 "d40b6f2.c14cd9"
@@ -337,6 +465,7 @@
         "id": "4845afa5.eb8f88",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Store brightness and RGB values",
         "rules": [
             {
@@ -359,8 +488,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
-        "y": 120,
+        "x": 450,
+        "y": 220,
         "wires": [
             []
         ]
@@ -369,6 +498,7 @@
         "id": "2db8de02.3dde4a",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Restore saved brightness",
         "rules": [
             {
@@ -384,8 +514,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 270,
-        "y": 320,
+        "x": 250,
+        "y": 420,
         "wires": [
             [
                 "1218614b.945e57"
@@ -396,6 +526,7 @@
         "id": "d3c0b650.f64b6",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "Restore saved RGB",
         "rules": [
             {
@@ -411,8 +542,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
-        "y": 440,
+        "x": 240,
+        "y": 540,
         "wires": [
             [
                 "219a34d8.462bbc"
@@ -423,38 +554,41 @@
         "id": "a90489fa.2ce22",
         "type": "link out",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Delayed Start",
         "links": [
             "df94f6e3.e33cf",
             "3c771563.4e80f2"
         ],
-        "x": 375,
-        "y": 80,
+        "x": 325,
+        "y": 180,
         "wires": []
     },
     {
         "id": "7c5da0ce.2cbab",
         "type": "link out",
         "z": "858e5f8e.138f",
+        "g": "481b08d378ae84d4",
         "name": "Restore",
         "links": [
             "6dbe9168.97a8c8",
             "9ca45147.da1d58"
         ],
-        "x": 375,
-        "y": 160,
+        "x": 325,
+        "y": 260,
         "wires": []
     },
     {
         "id": "df94f6e3.e33cf",
         "type": "link in",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "links": [
             "a90489fa.2ce22"
         ],
-        "x": 115,
-        "y": 400,
+        "x": 95,
+        "y": 500,
         "wires": [
             [
                 "290ac2be.83aaa6"
@@ -465,12 +599,13 @@
         "id": "3c771563.4e80f2",
         "type": "link in",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "links": [
             "a90489fa.2ce22"
         ],
-        "x": 115,
-        "y": 280,
+        "x": 95,
+        "y": 380,
         "wires": [
             [
                 "2192e383.059b3c"
@@ -481,12 +616,13 @@
         "id": "6dbe9168.97a8c8",
         "type": "link in",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "links": [
             "7c5da0ce.2cbab"
         ],
-        "x": 115,
-        "y": 320,
+        "x": 95,
+        "y": 420,
         "wires": [
             [
                 "2db8de02.3dde4a"
@@ -497,12 +633,13 @@
         "id": "9ca45147.da1d58",
         "type": "link in",
         "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
         "name": "",
         "links": [
             "7c5da0ce.2cbab"
         ],
-        "x": 115,
-        "y": 440,
+        "x": 95,
+        "y": 540,
         "wires": [
             [
                 "d3c0b650.f64b6"
@@ -513,6 +650,7 @@
         "id": "ba9c076b.4ecee8",
         "type": "ui_button",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Lightning Strike",
         "group": "d36d4324.1067f8",
         "order": 6,
@@ -527,8 +665,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 520,
-        "y": 660,
+        "x": 160,
+        "y": 920,
         "wires": [
             [
                 "5e938919.95b4a",
@@ -540,6 +678,7 @@
         "id": "804d0c6f.009bc",
         "type": "switch",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -558,8 +697,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 850,
-        "y": 520,
+        "x": 470,
+        "y": 700,
         "wires": [
             [
                 "c6970ad.78d5ff8"
@@ -573,6 +712,7 @@
         "id": "c6970ad.78d5ff8",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Turn on UV flood",
         "rules": [
             {
@@ -588,11 +728,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1030,
-        "y": 500,
+        "x": 650,
+        "y": 680,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "eb6f8cb1e2217aa3"
             ]
         ]
     },
@@ -600,15 +740,16 @@
         "id": "334012d2.343546",
         "type": "function",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Restore previous lights",
         "func": "msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": flow.get(\"brightness\")\n        },\n        {\n            \"channel\": 8,\n            \"value\": 0\n        },\n        {\n            \"channel\": 9,\n            \"value\": 0\n        },\n        {\n            \"channel\": 11,\n            \"value\": 0\n        }\n    ]\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1050,
-        "y": 540,
+        "x": 670,
+        "y": 720,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "eb6f8cb1e2217aa3"
             ]
         ]
     },
@@ -616,14 +757,15 @@
         "id": "5e938919.95b4a",
         "type": "file in",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "filename": "C:\\Users\\alast\\Music\\SFX\\Thunder_Clap.wav",
         "format": "",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 810,
-        "y": 700,
+        "x": 380,
+        "y": 980,
         "wires": [
             [
                 "fea65c0a.0bc908"
@@ -634,27 +776,29 @@
         "id": "fea65c0a.0bc908",
         "type": "ui_audio",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "group": "d36d4324.1067f8",
         "voice": "",
         "always": "",
-        "x": 1080,
-        "y": 700,
+        "x": 520,
+        "y": 980,
         "wires": []
     },
     {
         "id": "103c19b5.1ca3a6",
         "type": "function",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Send Lightning Flashes",
         "func": "// Send a series of flashes of varying brightness as follows\nvar lightningIntensities = [32,128,164,128,96,64,128,64,32,0,255,255,192,176,164,148,128,112,96,64,56,32,24,16,8,4,2,0,0,0,0,0,0,0,0,0,0,0];\nfor(var i=0; i<lightningIntensities.length; i++){\n    msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": lightningIntensities[i]\n        },\n        {\n            \"channel\": 2,\n            \"value\": 224\n        },\n        {\n            \"channel\": 3,\n            \"value\": 224\n        },\n        {\n            \"channel\": 4,\n            \"value\": 255\n        }\n    ]};\n  node.send(msg);  \n}\n\n// Now restore the brightess and RGB value\nvar previousColour = flow.get(\"colour\");\nvar previousBrightness = flow.get(\"brightness\");\nmsg.payload = {    \n    \"channels\": [            \n        {            \n            \"channel\": 1,           \n            \"value\": previousBrightness\n        },\n        {            \n            \"channel\": 2,           \n            \"value\": previousColour.r\n        },\n        {            \n            \"channel\": 3,           \n            \"value\": previousColour.g\n        },\n        {            \n            \"channel\": 4,           \n            \"value\": previousColour.b\n        },\n    ]\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1030,
-        "y": 660,
+        "x": 430,
+        "y": 920,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "27a61bcbfa8e3633"
             ]
         ]
     },
@@ -662,6 +806,7 @@
         "id": "2865380a.3f69c8",
         "type": "ui_button",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Police Siren",
         "group": "d36d4324.1067f8",
         "order": 6,
@@ -676,8 +821,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 510,
-        "y": 800,
+        "x": 150,
+        "y": 1100,
         "wires": [
             [
                 "6cfc61d6.501c48",
@@ -689,14 +834,15 @@
         "id": "6cfc61d6.501c48",
         "type": "file in",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "filename": "C:\\Users\\alast\\Music\\SFX\\police_siren.mp3",
         "format": "",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 810,
-        "y": 840,
+        "x": 380,
+        "y": 1160,
         "wires": [
             [
                 "49618ec8.390958"
@@ -707,24 +853,26 @@
         "id": "49618ec8.390958",
         "type": "ui_audio",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "group": "d36d4324.1067f8",
         "voice": "",
         "always": "",
-        "x": 1080,
-        "y": 840,
+        "x": 580,
+        "y": 1160,
         "wires": []
     },
     {
         "id": "2e03b65.d267b4a",
         "type": "function",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Red/Blue Lights",
         "func": "for(var i=0; i<16; i++){\n    msg.payload = {\n    \"channels\": [\n        {\n            \"channel\": 1,\n            \"value\": 255\n        },\n        {\n            \"channel\": 2,\n            \"value\": (i%2 ? 255:0)\n        },\n        {\n            \"channel\": 3,\n            \"value\": 0\n        },\n        {\n            \"channel\": 4,\n            \"value\": (i%2 ? 0:255)\n        }\n    ]};\n  node.send(msg);  \n}\n\n// Now restore the brightess and RGB value\nvar previousColour = flow.get(\"colour\");\nvar previousBrightness = flow.get(\"brightness\");\nmsg.payload = {    \n    \"channels\": [            \n        {            \n            \"channel\": 1,           \n            \"value\": previousBrightness\n        },\n        {            \n            \"channel\": 2,           \n            \"value\": previousColour.r\n        },\n        {            \n            \"channel\": 3,           \n            \"value\": previousColour.g\n        },\n        {            \n            \"channel\": 4,           \n            \"value\": previousColour.b\n        },\n    ]\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 820,
-        "y": 800,
+        "x": 400,
+        "y": 1100,
         "wires": [
             [
                 "514f57d7.86d56"
@@ -735,6 +883,7 @@
         "id": "514f57d7.86d56",
         "type": "delay",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -746,11 +895,12 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 1070,
-        "y": 800,
+        "outputs": 1,
+        "x": 590,
+        "y": 1100,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "7909600d85cf0515"
             ]
         ]
     },
@@ -758,14 +908,16 @@
         "id": "f86ffa24.4668f8",
         "type": "file in",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "filename": "C:\\Users\\alast\\Music\\SFX\\uv_appear.wav",
+        "filenameType": "str",
         "format": "",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 800,
-        "y": 580,
+        "x": 460,
+        "y": 780,
         "wires": [
             [
                 "bae3f2a7.fa72e8"
@@ -776,18 +928,20 @@
         "id": "bae3f2a7.fa72e8",
         "type": "ui_audio",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "group": "d36d4324.1067f8",
         "voice": "",
         "always": "",
-        "x": 1080,
-        "y": 580,
+        "x": 720,
+        "y": 780,
         "wires": []
     },
     {
         "id": "17c6a1be.eb1306",
         "type": "ui_switch",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "Spotlight",
         "label": "Spotlight",
         "tooltip": "",
@@ -807,8 +961,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 520,
-        "y": 960,
+        "x": 140,
+        "y": 1280,
         "wires": [
             [
                 "b7588cae.286e68"
@@ -819,6 +973,7 @@
         "id": "b7588cae.286e68",
         "type": "switch",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -837,8 +992,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 660,
-        "y": 960,
+        "x": 340,
+        "y": 1280,
         "wires": [
             [
                 "c24d3a5f.5fba3"
@@ -852,6 +1007,7 @@
         "id": "c24d3a5f.5fba3",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "rules": [
             {
@@ -867,11 +1023,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 820,
-        "y": 940,
+        "x": 500,
+        "y": 1260,
         "wires": [
             [
-                "c3ea7a22.245f98"
+                "41b5f82fcd9af4ba"
             ]
         ]
     },
@@ -879,6 +1035,7 @@
         "id": "ac98849b.42228",
         "type": "change",
         "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
         "name": "",
         "rules": [
             {
@@ -894,13 +1051,186 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 820,
-        "y": 980,
+        "x": 500,
+        "y": 1300,
+        "wires": [
+            [
+                "41b5f82fcd9af4ba"
+            ]
+        ]
+    },
+    {
+        "id": "53368e5045088ee9",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "name": "Lighting Control",
+        "info": "",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ef114f4ed85ef8b0",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "Momentary UV blackout, then restore previous lighting state",
+        "info": "",
+        "x": 290,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "c3ea7a22.245f98",
+        "type": "serial out",
+        "z": "858e5f8e.138f",
+        "g": "922cc5c768617f9d",
+        "name": "",
+        "serial": "7f6727ec.9d40c8",
+        "x": 1510,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "04609f23986526e2",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "name": "Demonstrates how to control DMX lighting fixtures through Node-REDscape\\n Requires the node-red-node-serialport node type to send message to a DMX controller, which can be installed through the Palette Manager",
+        "info": "",
+        "x": 540,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4362e0f31f1b39fe",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "Sequence of lighting flashes with audio, then restore previous lighting state",
+        "info": "",
+        "x": 340,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "a83146cad52a4adf",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "Rate-limited lighting changes with audio, then restore previous lighting state",
+        "info": "",
+        "x": 340,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "237bfe15358bd230",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "Toggle spotlight on/off",
+        "info": "",
+        "x": 180,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "7cdc03e311091557",
+        "type": "comment",
+        "z": "858e5f8e.138f",
+        "g": "922cc5c768617f9d",
+        "name": "Deliver payload to DMX interface",
+        "info": "",
+        "x": 1440,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e0684e8493b06987",
+        "type": "link in",
+        "z": "858e5f8e.138f",
+        "g": "922cc5c768617f9d",
+        "name": "Send to DMX",
+        "links": [],
+        "x": 1385,
+        "y": 520,
         "wires": [
             [
                 "c3ea7a22.245f98"
             ]
         ]
+    },
+    {
+        "id": "4b7f01531d676d1b",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 1095,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "73735dc1e0896756",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "ec9d57d027289a98",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 1155,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "eb6f8cb1e2217aa3",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 845,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "27a61bcbfa8e3633",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 585,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "7909600d85cf0515",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 695,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "41b5f82fcd9af4ba",
+        "type": "link out",
+        "z": "858e5f8e.138f",
+        "g": "29bc67c1fd42d0b7",
+        "name": "To DMX",
+        "mode": "link",
+        "links": [],
+        "x": 625,
+        "y": 1280,
+        "wires": []
     },
     {
         "id": "d36d4324.1067f8",
