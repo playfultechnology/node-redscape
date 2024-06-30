@@ -53,22 +53,25 @@
             "071e4004aa5720c6",
             "79e70de3055f1be7",
             "a968fe8160c21c32",
-            "7280d7b3983f313f",
             "984ba29d19a7117f",
             "b0dcaa5b50a76803",
             "e7719e3bb7ad01d4",
             "c05cf02d0d3d308d",
             "a710abaab60de1be",
             "5badc7e7b71741ef",
-            "40a3695082bdc952",
             "fc19babf24737e50",
             "e9745b55be8f18d0",
-            "3f83b2dfb6eae6e8",
-            "34f0a3980ec4d988"
+            "34f0a3980ec4d988",
+            "7e5a8c9268e85380",
+            "767b857301c493d4",
+            "f95bedd089a91366",
+            "63262430131e5e73",
+            "8256b1896007606c",
+            "d41b547f7eeaba29"
         ],
         "x": 94,
         "y": 459,
-        "w": 1192,
+        "w": 1172,
         "h": 662
     },
     {
@@ -202,8 +205,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 440,
-        "y": 640,
+        "x": 520,
+        "y": 540,
         "wires": [
             [
                 "5badc7e7b71741ef"
@@ -246,8 +249,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Duration before clearing",
         "info": "",
-        "x": 490,
-        "y": 600,
+        "x": 520,
+        "y": 500,
         "wires": []
     },
     {
@@ -268,8 +271,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Update UI Builder element",
         "info": "",
-        "x": 730,
-        "y": 500,
+        "x": 760,
+        "y": 540,
         "wires": []
     },
     {
@@ -398,18 +401,15 @@
         "type": "link in",
         "z": "7daa0e0f.94fa2",
         "g": "e17fac2177b869a8",
-        "name": "In-Game Text Display",
+        "name": "In-Game Display",
         "links": [
-            "248e8aa4daf653fd",
-            "96a0b122060445a5",
-            "ed5d099e0b8c1424",
-            "7280d7b3983f313f",
             "0a6a3a37e5124120",
+            "248e8aa4daf653fd",
+            "26ffe12265e17ee9",
+            "6e030344ddef1ee5",
+            "7280d7b3983f313f",
             "984ba29d19a7117f",
-            "4586a515dd11f3a4",
-            "cff28163790bb4b6",
-            "d1ddfac3b8f1e655",
-            "6e030344ddef1ee5"
+            "f95bedd089a91366"
         ],
         "x": 565,
         "y": 240,
@@ -424,13 +424,13 @@
         "type": "link out",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "In-Game Text Display Out",
+        "name": "In-Game Display Out",
         "mode": "link",
         "links": [
             "a4a9969470c26952"
         ],
         "x": 855,
-        "y": 540,
+        "y": 580,
         "wires": []
     },
     {
@@ -473,9 +473,7 @@
         "y": 540,
         "wires": [
             [
-                "b782529.f84303",
-                "feba8bf0fef2fc29",
-                "5badc7e7b71741ef"
+                "8256b1896007606c"
             ]
         ]
     },
@@ -510,11 +508,10 @@
         "className": "",
         "topicType": "str",
         "x": 180,
-        "y": 740,
+        "y": 640,
         "wires": [
             [
-                "b782529.f84303",
-                "feba8bf0fef2fc29"
+                "d41b547f7eeaba29"
             ]
         ]
     },
@@ -527,8 +524,8 @@
         "group": "fb11b34b7ab1c984",
         "voice": "",
         "always": true,
-        "x": 1080,
-        "y": 740,
+        "x": 1180,
+        "y": 660,
         "wires": []
     },
     {
@@ -544,8 +541,8 @@
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 690,
-        "y": 740,
+        "x": 770,
+        "y": 660,
         "wires": [
             [
                 "3882bd533d90d4d9"
@@ -560,7 +557,7 @@
         "name": "Free Text",
         "info": "",
         "x": 180,
-        "y": 700,
+        "y": 600,
         "wires": []
     },
     {
@@ -589,7 +586,7 @@
         "wires": [
             [
                 "5b5594959cae269d",
-                "40a3695082bdc952"
+                "7e5a8c9268e85380"
             ]
         ]
     },
@@ -609,24 +606,10 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "Play audible alert for players",
+        "name": "Play audible alert",
         "info": "",
-        "x": 1140,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "7280d7b3983f313f",
-        "type": "link out",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "In-Game Text Display Out",
-        "mode": "link",
-        "links": [
-            "a4a9969470c26952"
-        ],
-        "x": 615,
-        "y": 900,
+        "x": 1160,
+        "y": 620,
         "wires": []
     },
     {
@@ -648,7 +631,7 @@
         "type": "link out",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "In-Game Text Display Out",
+        "name": "In-Game Display Out",
         "mode": "link",
         "links": [
             "a4a9969470c26952"
@@ -662,9 +645,9 @@
         "type": "comment",
         "z": "7daa0e0f.94fa2",
         "g": "b6e8e1a1e254255d",
-        "name": "Assign video file",
+        "name": "Assign video file (should be placed in the /.node-red/uibuilder/sitename/src folder)",
         "info": "",
-        "x": 460,
+        "x": 640,
         "y": 860,
         "wires": []
     },
@@ -737,8 +720,8 @@
         "attribsSource": "",
         "attribsSourceType": "msg",
         "slotPropMarkdown": false,
-        "x": 720,
-        "y": 540,
+        "x": 730,
+        "y": 580,
         "wires": [
             [
                 "248e8aa4daf653fd"
@@ -779,30 +762,6 @@
         "x": 730,
         "y": 340,
         "wires": []
-    },
-    {
-        "id": "40a3695082bdc952",
-        "type": "uib-update",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "",
-        "topic": "",
-        "mode": "update",
-        "modeSourceType": "update",
-        "cssSelector": "#overlayVideo",
-        "cssSelectorType": "str",
-        "slotSourceProp": "",
-        "slotSourcePropType": "str",
-        "attribsSource": "{\"src\":\"./media/Pexels Videos 3853.mp4\"}",
-        "attribsSourceType": "json",
-        "slotPropMarkdown": false,
-        "x": 480,
-        "y": 900,
-        "wires": [
-            [
-                "7280d7b3983f313f"
-            ]
-        ]
     },
     {
         "id": "108f0f2638f4f9fe",
@@ -850,7 +809,7 @@
         "type": "link out",
         "z": "7daa0e0f.94fa2",
         "g": "798c58adc45d859b",
-        "name": "In-Game Text Display Out",
+        "name": "In-Game Display Out",
         "mode": "link",
         "links": [
             "a4a9969470c26952"
@@ -895,17 +854,6 @@
         "wires": []
     },
     {
-        "id": "3f83b2dfb6eae6e8",
-        "type": "comment",
-        "z": "7daa0e0f.94fa2",
-        "g": "b6e8e1a1e254255d",
-        "name": "They can then be referenced as \"./filename.mp4\" in the uib-update node",
-        "info": "",
-        "x": 880,
-        "y": 840,
-        "wires": []
-    },
-    {
         "id": "395bcae8a1530d52",
         "type": "comment",
         "z": "7daa0e0f.94fa2",
@@ -922,8 +870,8 @@
         "g": "b6e8e1a1e254255d",
         "name": "Assign alert SFX",
         "info": "",
-        "x": 460,
-        "y": 700,
+        "x": 540,
+        "y": 620,
         "wires": []
     },
     {
@@ -954,6 +902,120 @@
         "info": "body {\n    padding: 0;\n    margin: 0;\n    overflow: hidden;\n/* Don't display any scroll bars */\n}\n\n.background,\n.backgroundVideo {\n    position: fixed;\n    right: 0;\n    bottom: 0;\n    min-width: 100%;\n    min-height: 100%;\n    z-index: -10;\n}\n\n.overlay,\n.overlayVideo {\n    position: fixed;\n    left: 200px;\n    top: 100px;\n    width: 1080px;\n    height: 480px;\n    z-index: 10;\n}\n\n#app {\n    position: fixed;\n    text-align: center;\n    margin: auto;\n    font-family: 'Staatliches', cursive;\n    color: #999;\n    right: 0;\n    bottom: 0;\n    min-width: 100%;\n    min-height: 100%;\n}\n\n.timerText {\n    position: fixed;\n    top: 100px;\n    left: 400px;\n    font-size: 100px;\n}\n\n.displayText {\n    position: fixed;\n    top: 200px;\n    left: 400px;\n    font-size: 100px;\n}",
         "x": 1250,
         "y": 300,
+        "wires": []
+    },
+    {
+        "id": "767b857301c493d4",
+        "type": "uib-update",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "",
+        "topic": "",
+        "mode": "update",
+        "modeSourceType": "update",
+        "cssSelector": "#overlayVideo",
+        "cssSelectorType": "str",
+        "slotSourceProp": "",
+        "slotSourcePropType": "str",
+        "attribsSource": "{ \"src\": payload }",
+        "attribsSourceType": "jsonata",
+        "slotPropMarkdown": false,
+        "x": 710,
+        "y": 900,
+        "wires": [
+            [
+                "f95bedd089a91366"
+            ]
+        ]
+    },
+    {
+        "id": "7e5a8c9268e85380",
+        "type": "change",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "./media/Pexels Videos 3853.mp4",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 900,
+        "wires": [
+            [
+                "767b857301c493d4"
+            ]
+        ]
+    },
+    {
+        "id": "f95bedd089a91366",
+        "type": "link out",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "In-Game Display Out",
+        "mode": "link",
+        "links": [
+            "a4a9969470c26952"
+        ],
+        "x": 865,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "63262430131e5e73",
+        "type": "link in",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "link in 56",
+        "links": [
+            "8256b1896007606c",
+            "d41b547f7eeaba29"
+        ],
+        "x": 385,
+        "y": 580,
+        "wires": [
+            [
+                "b782529.f84303",
+                "5badc7e7b71741ef",
+                "feba8bf0fef2fc29"
+            ]
+        ]
+    },
+    {
+        "id": "8256b1896007606c",
+        "type": "link out",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "link out 15",
+        "mode": "link",
+        "links": [
+            "63262430131e5e73"
+        ],
+        "x": 285,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "d41b547f7eeaba29",
+        "type": "link out",
+        "z": "7daa0e0f.94fa2",
+        "g": "b6e8e1a1e254255d",
+        "name": "link out 16",
+        "mode": "link",
+        "links": [
+            "63262430131e5e73"
+        ],
+        "x": 275,
+        "y": 640,
         "wires": []
     },
     {
