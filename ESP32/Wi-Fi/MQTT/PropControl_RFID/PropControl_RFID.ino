@@ -228,12 +228,15 @@ void inputLoop() {
     }
     else {
       // If we could previously read a RFID tag
-      if(memcmp(lastUid, currentUid, 8) != 0) { 
+      if(memcmp(lastUid, currentUid, 8) != 0) {
+        // Update (i.e. clear) the stored value
         memcpy(lastUid, currentUid, 8);
+        // Update LCD display
         display.printFixed(0,  16, "No card in range", STYLE_NORMAL);
-
+        // Output to serial monitor
+        Serial.println(F("No card in range"));
+        // Update the state
         deviceState = DeviceState::Running;
-        
         // Send status update to Node-RED
         sendUpdate();
       }
@@ -241,7 +244,6 @@ void inputLoop() {
     lastUpdateTime = millis();
   }
 }
-
 
 /**
  * A robust method that re-establishes connection to Wi-Fi WLAN network and MQTT server,
@@ -272,7 +274,7 @@ void networkLoop() {
     // If the WLAN router connection was started
     case WLAN_STARTING_MQTT_DOWN:
       // Allow 30 seconds since attempting to join the WiFi
-      if (millis() - timeStamp >= 30000) {
+      if (millis() - timeStamp > 30000) {
         // Otherwise, if the WLAN router connection was not established
         Serial.println("Failed to start WiFi. Restarting...");
         // Clear the connection for the next attempt
@@ -285,7 +287,7 @@ void networkLoop() {
     // If the WLAN router connection was established
     case WLAN_UP_MQTT_DOWN:
       // And if no MQTT broker connection was established yet
-      if (!mqttClient.connected()) {
+      if (!mqttClient.connected() && (millis() - timeStamp > 1000)) {
         Serial.print(F("Starting MQTT connection to "));
         Serial.println(remoteMQTTServer);
         timeStamp = millis();
