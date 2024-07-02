@@ -853,7 +853,7 @@
         "z": "ae55456b.f24e88",
         "g": "9ac5dd504c5f50d9",
         "name": "RESET",
-        "group": "8f886ae1479c4797",
+        "group": "31fb9f8c.1b1b7",
         "order": 2,
         "width": "3",
         "height": "1",
@@ -882,7 +882,7 @@
         "z": "ae55456b.f24e88",
         "g": "9ac5dd504c5f50d9",
         "name": "SOLVE",
-        "group": "8f886ae1479c4797",
+        "group": "31fb9f8c.1b1b7",
         "order": 3,
         "width": "3",
         "height": "1",
@@ -1182,17 +1182,6 @@
         "type": "websocket-listener",
         "path": "/ws/input",
         "wholemsg": "false"
-    },
-    {
-        "id": "8f886ae1479c4797",
-        "type": "ui_group",
-        "name": "RFID",
-        "tab": "a38c3d325d960343",
-        "order": 3,
-        "disp": false,
-        "width": "6",
-        "collapse": false,
-        "className": ""
     },
     {
         "id": "31fb9f8c.1b1b7",
