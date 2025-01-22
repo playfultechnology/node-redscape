@@ -1,0 +1,870 @@
+[
+    {
+        "id": "4002af1a.e2087",
+        "type": "tab",
+        "label": "Weight",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9aa99504a483b782",
+        "type": "group",
+        "z": "4002af1a.e2087",
+        "name": "Initial state set on system startup / reset",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "74bec565a5b3cb3d",
+            "bdb8325a52eac504",
+            "d81b5590efcb5563",
+            "e2041b126095ed60",
+            "0d7c9839cdda4a4e"
+        ],
+        "x": 94,
+        "y": 99,
+        "w": 462,
+        "h": 122
+    },
+    {
+        "id": "d1eabd1d194dfe2c",
+        "type": "group",
+        "z": "4002af1a.e2087",
+        "name": "Receive updates from device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e8476d40261732d0",
+            "627a93b9866a4c54",
+            "22eb13a98e048171",
+            "901d37c47fc18d90",
+            "da34b7f42650f27b",
+            "99debbd91d507c8a",
+            "d8358086b6c160b7",
+            "14cf1fde3b1877d4",
+            "d0aa3a6f68b059d0",
+            "1ac733d7062b0b33",
+            "d783578cae88c6f7"
+        ],
+        "x": 84,
+        "y": 259,
+        "w": 972,
+        "h": 282
+    },
+    {
+        "id": "12065fff75add041",
+        "type": "group",
+        "z": "4002af1a.e2087",
+        "name": "Send updates to device",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "718478093ec37c8f",
+            "a2285550a418c50d",
+            "43faadafc38331b5"
+        ],
+        "x": 1104,
+        "y": 279,
+        "w": 402,
+        "h": 82
+    },
+    {
+        "id": "537b6072da9d20e7",
+        "type": "group",
+        "z": "4002af1a.e2087",
+        "name": "Dashboard controls",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "519fc28d2f0db04a",
+            "d92c974e212f58b2",
+            "0a5e90f0ae39c3da",
+            "39c278a9f5153bc0",
+            "cf214c383e471dab",
+            "2bc0f0a306c70d69",
+            "42eeaa73e8d2f6e2",
+            "74a6c599d7185538"
+        ],
+        "x": 94,
+        "y": 579,
+        "w": 542,
+        "h": 202
+    },
+    {
+        "id": "77f71b311a3629b7",
+        "type": "group",
+        "z": "4002af1a.e2087",
+        "name": "Game Events",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "69352c928cc7f525",
+            "d8d85f6e078e8b01",
+            "2f4b310c11962757",
+            "8067d7c9f00a0285"
+        ],
+        "x": 584,
+        "y": 99,
+        "w": 432,
+        "h": 82
+    },
+    {
+        "id": "74bec565a5b3cb3d",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "9aa99504a483b782",
+        "name": "Configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "{\"id\":\"Weight\",\"name\":\"Weight\",\"description\":\"Players must place weights on a load sensor\",\"state\":\"UNSOLVED\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "0d7c9839cdda4a4e"
+            ]
+        ]
+    },
+    {
+        "id": "bdb8325a52eac504",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "9aa99504a483b782",
+        "name": "On Initialisation",
+        "links": [
+            "e0138284e2c09884"
+        ],
+        "x": 135,
+        "y": 140,
+        "wires": [
+            [
+                "74bec565a5b3cb3d"
+            ]
+        ]
+    },
+    {
+        "id": "d81b5590efcb5563",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "9aa99504a483b782",
+        "name": "On Reset",
+        "links": [
+            "9238ddca0e1a3d85"
+        ],
+        "x": 135,
+        "y": 180,
+        "wires": [
+            [
+                "74bec565a5b3cb3d"
+            ]
+        ]
+    },
+    {
+        "id": "e2041b126095ed60",
+        "type": "link out",
+        "z": "4002af1a.e2087",
+        "g": "9aa99504a483b782",
+        "name": "On Config Set",
+        "mode": "link",
+        "links": [
+            "14cf1fde3b1877d4",
+            "80df62030689a0b8",
+            "a0c1bac628768a7b",
+            "7ce026d4e520cc3e",
+            "b727e428bfc92147",
+            "2a3195c6c2b0955b",
+            "0e6a7ea34ed569b3",
+            "74a6c599d7185538"
+        ],
+        "x": 515,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "0d7c9839cdda4a4e",
+        "type": "function",
+        "z": "4002af1a.e2087",
+        "g": "9aa99504a483b782",
+        "name": "Store",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "e2041b126095ed60"
+            ]
+        ]
+    },
+    {
+        "id": "e8476d40261732d0",
+        "type": "mqtt in",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "MQTT FromDevice",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "125f6c81.60151b",
+        "nl": false,
+        "rap": false,
+        "inputs": 1,
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "627a93b9866a4c54",
+        "type": "udp in",
+        "z": "4002af1a.e2087",
+        "d": true,
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "iface": "",
+        "port": "161",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "22eb13a98e048171",
+        "type": "tcp in",
+        "z": "4002af1a.e2087",
+        "d": true,
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "server": "server",
+        "host": "",
+        "port": "80",
+        "datamode": "stream",
+        "datatype": "buffer",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 430,
+        "y": 420,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "901d37c47fc18d90",
+        "type": "serial in",
+        "z": "4002af1a.e2087",
+        "d": true,
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "serial": "5487261c.78129",
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "da34b7f42650f27b",
+        "type": "websocket in",
+        "z": "4002af1a.e2087",
+        "d": true,
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "server": "4e976676.9e1538",
+        "client": "",
+        "x": 410,
+        "y": 460,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "99debbd91d507c8a",
+        "type": "http in",
+        "z": "4002af1a.e2087",
+        "d": true,
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "url": "/FromDevice",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 390,
+        "y": 500,
+        "wires": [
+            [
+                "d0aa3a6f68b059d0"
+            ]
+        ]
+    },
+    {
+        "id": "d8358086b6c160b7",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "Subscribe",
+        "rules": [
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "subscribe",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'FromDevice/' & $$.payload.id",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "e8476d40261732d0"
+            ]
+        ]
+    },
+    {
+        "id": "14cf1fde3b1877d4",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "link in 69",
+        "links": [
+            "e2041b126095ed60"
+        ],
+        "x": 125,
+        "y": 300,
+        "wires": [
+            [
+                "d8358086b6c160b7"
+            ]
+        ]
+    },
+    {
+        "id": "d0aa3a6f68b059d0",
+        "type": "json",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "1ac733d7062b0b33"
+            ]
+        ]
+    },
+    {
+        "id": "1ac733d7062b0b33",
+        "type": "function",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "Parse JSON and update stored state",
+        "func": "// Retrieve the ID of the prop used in this flow\nvar propid = flow.get(\"payload.id\");\n\n// Get the current stored value of this prop,\n// Or create a new entry if we didn't previously know about it\nvar prop = global.get(propid) || {};\n\n// Now loop over the incoming values and update the stored state\nvar count = 0;\nfor (var key in msg.payload) {\n  if (msg.payload.hasOwnProperty(key)) {\n    prop[key] = msg.payload[key];\n    count++;\n  }\n}\n\n// Save the global value again\nglobal.set(propid, prop);\n\n// Pass the updated status through the message flow\nmsg.payload = prop;\n\n// Update the dashboard editor\nnode.status({fill:\"green\", shape:\"dot\", text:count + \" values updated\"});\n\n// Pass the value along the flow\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 380,
+        "wires": [
+            [
+                "d783578cae88c6f7"
+            ]
+        ]
+    },
+    {
+        "id": "d783578cae88c6f7",
+        "type": "link out",
+        "z": "4002af1a.e2087",
+        "g": "d1eabd1d194dfe2c",
+        "name": "link out 20",
+        "mode": "link",
+        "links": [
+            "74a6c599d7185538"
+        ],
+        "x": 1015,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "718478093ec37c8f",
+        "type": "mqtt out",
+        "z": "4002af1a.e2087",
+        "g": "12065fff75add041",
+        "name": "MQTT ToDevice",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "125f6c81.60151b",
+        "x": 1400,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a2285550a418c50d",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "12065fff75add041",
+        "name": "Set Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'ToDevice/' & $flowContext('payload.id')",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 320,
+        "wires": [
+            [
+                "718478093ec37c8f"
+            ]
+        ]
+    },
+    {
+        "id": "43faadafc38331b5",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "12065fff75add041",
+        "name": "link in 73",
+        "links": [
+            "2bc0f0a306c70d69",
+            "8067d7c9f00a0285"
+        ],
+        "x": 1145,
+        "y": 320,
+        "wires": [
+            [
+                "a2285550a418c50d"
+            ]
+        ]
+    },
+    {
+        "id": "519fc28d2f0db04a",
+        "type": "ui_button",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "RESET",
+        "group": "db28e499.24fe08",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-lock",
+        "payload": "{\"command\":\"RESET\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 180,
+        "y": 740,
+        "wires": [
+            [
+                "39c278a9f5153bc0"
+            ]
+        ]
+    },
+    {
+        "id": "d92c974e212f58b2",
+        "type": "ui_button",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "SOLVE",
+        "group": "db28e499.24fe08",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "Solve",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-unlock",
+        "payload": "{\"command\":\"SOLVE\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 190,
+        "y": 680,
+        "wires": [
+            [
+                "0a5e90f0ae39c3da"
+            ]
+        ]
+    },
+    {
+        "id": "0a5e90f0ae39c3da",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.id",
+                "pt": "msg",
+                "to": "payload.id",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "SOLVE",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 680,
+        "wires": [
+            [
+                "cf214c383e471dab"
+            ]
+        ]
+    },
+    {
+        "id": "39c278a9f5153bc0",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.id",
+                "pt": "msg",
+                "to": "payload.id",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "RESET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 740,
+        "wires": [
+            [
+                "cf214c383e471dab"
+            ]
+        ]
+    },
+    {
+        "id": "cf214c383e471dab",
+        "type": "json",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 510,
+        "y": 700,
+        "wires": [
+            [
+                "2bc0f0a306c70d69"
+            ]
+        ]
+    },
+    {
+        "id": "2bc0f0a306c70d69",
+        "type": "link out",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "link out 21",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "43faadafc38331b5",
+            "ebb85158cda72d23",
+            "623f85abfc2e1a5f",
+            "245a46a2d7843bd3",
+            "60b06b5a6966e1b0",
+            "5a9bcfc83cd3b803"
+        ],
+        "x": 595,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "42eeaa73e8d2f6e2",
+        "type": "ui_template",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "group": "db28e499.24fe08",
+        "name": "Dashboard Panel",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<md-card-title>\n    <md-card-title-text>\n        <p class=\"md-headline\">{{msg.payload.name}}</p>\n    </md-card-title-text>\n    <span ng-class=\"msg.payload.state=='SOLVED' ? 'fa fa-unlock fa-2x' : 'fa fa-lock fa-2x'\"></span>\n</md-card-title>\n<md-card-content>\n    <div ng-style=\"{width:'100%',height:'8px','background-color':msg.payload.state=='SOLVED' ? 'green' : 'red'}\"></div>\n    <p>\n        {{msg.payload.description?msg.payload.description:'Unknown'}}\n    </p>\n    <div style=\"text-align:center\">\n        <span style=\"font-size: 2em;\">{{msg.payload.input}}&nbsp;</span>\n    </div>\n    <div style=\"height:60px;\">&nbsp;</div>\n</md-card-content>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 390,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "74a6c599d7185538",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "537b6072da9d20e7",
+        "name": "link in 79",
+        "links": [
+            "e2041b126095ed60",
+            "d783578cae88c6f7"
+        ],
+        "x": 265,
+        "y": 620,
+        "wires": [
+            [
+                "42eeaa73e8d2f6e2"
+            ]
+        ]
+    },
+    {
+        "id": "69352c928cc7f525",
+        "type": "change",
+        "z": "4002af1a.e2087",
+        "g": "77f71b311a3629b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.command",
+                "pt": "msg",
+                "to": "RESET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 140,
+        "wires": [
+            [
+                "2f4b310c11962757"
+            ]
+        ]
+    },
+    {
+        "id": "d8d85f6e078e8b01",
+        "type": "link in",
+        "z": "4002af1a.e2087",
+        "g": "77f71b311a3629b7",
+        "name": "link in 80",
+        "links": [],
+        "x": 625,
+        "y": 140,
+        "wires": [
+            [
+                "69352c928cc7f525"
+            ]
+        ]
+    },
+    {
+        "id": "2f4b310c11962757",
+        "type": "json",
+        "z": "4002af1a.e2087",
+        "g": "77f71b311a3629b7",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "8067d7c9f00a0285"
+            ]
+        ]
+    },
+    {
+        "id": "8067d7c9f00a0285",
+        "type": "link out",
+        "z": "4002af1a.e2087",
+        "g": "77f71b311a3629b7",
+        "name": "link out 22",
+        "mode": "link",
+        "links": [
+            "18404cad9ee52512",
+            "43faadafc38331b5",
+            "ebb85158cda72d23",
+            "623f85abfc2e1a5f",
+            "245a46a2d7843bd3",
+            "60b06b5a6966e1b0",
+            "5a9bcfc83cd3b803"
+        ],
+        "x": 975,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "125f6c81.60151b",
+        "type": "mqtt-broker",
+        "name": "MQTT Server",
+        "broker": "localhost",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "5487261c.78129",
+        "type": "serial-port",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "4e976676.9e1538",
+        "type": "websocket-listener",
+        "path": "/ws/input",
+        "wholemsg": "false"
+    },
+    {
+        "id": "db28e499.24fe08",
+        "type": "ui_group",
+        "name": "Weight",
+        "tab": "a38c3d325d960343",
+        "order": 7,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a38c3d325d960343",
+        "type": "ui_tab",
+        "name": "Main",
+        "icon": "dashboard",
+        "order": 0,
+        "disabled": false,
+        "hidden": false
+    }
+]
