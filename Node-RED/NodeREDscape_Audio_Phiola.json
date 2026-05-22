@@ -1,0 +1,578 @@
+[
+    {
+        "id": "9b1f4c32d872a001",
+        "type": "tab",
+        "label": "Phiola PID Targeted Playback",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c75d2e1f8c99a101",
+        "type": "comment",
+        "z": "9b1f4c32d872a001",
+        "name": "Play requests use: { player, source, args }",
+        "info": "Example payload:\n{\n  \"player\": \"kitchen\",\n  \"source\": \"radio\",\n  \"args\": [\"--dev\", \"wasapi:Speakers\", \"C:\\\\Audio\\\\track1.mp3\"]\n}\n\nThe flow stores PID under key: player:source\nExample: kitchen:radio",
+        "x": 240,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d001a0e7e4a7b201",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "PLAY kitchen / radio",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"kitchen\",\"source\":\"radio\",\"args\":[\"wasapi:Speakers\",\"C:\\\\Users\\\\alast\\\\music\\\\holdmusic.wav\"]}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "e4b8a6d1c2f3a301"
+            ]
+        ]
+    },
+    {
+        "id": "df22db5730c2b202",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "PLAY kitchen / doorbell",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"kitchen\",\"source\":\"doorbell\",\"args\":[\"wasapi:Speakers\",\"C:\\\\users\\\\alast\\\\music\\\\SynthSwellA.wav\"]}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "e4b8a6d1c2f3a301"
+            ]
+        ]
+    },
+    {
+        "id": "a8a54a761a1cb203",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "PLAY bedroom / radio",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"bedroom\",\"source\":\"radio\",\"args\":[\"wasapi:Headphones\",\"C:\\\\users\\\\alast\\\\music\\\\SynthSwellB.wav\"]}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "e4b8a6d1c2f3a301"
+            ]
+        ]
+    },
+    {
+        "id": "e4b8a6d1c2f3a301",
+        "type": "function",
+        "z": "9b1f4c32d872a001",
+        "name": "Prepare Phiola play + pending PID map",
+        "func": "/*\nExpected msg.payload:\n{\n    player: \"kitchen\",\n    source: \"radio\",\n    args: [\"--dev\", \"wasapi:Speakers\", \"C:\\\\Audio\\\\file.mp3\"]\n}\n\nThis stores a pending request before the Exec node starts.\nThe Status node later reports \"pid:1234\" and we match that PID\nback to this pending request in FIFO order.\n*/\n\nconst req = msg.payload || {};\nconst player = String(req.player || \"\").trim();\nconst source = String(req.source || \"\").trim();\nconst args = Array.isArray(req.args) ? req.args : [];\n\nif (!player || !source) {\n    node.error(\"Play request must include payload.player and payload.source\", msg);\n    return null;\n}\n\nif (!args.length) {\n    node.error(\"Play request must include payload.args array\", msg);\n    return null;\n}\n\nconst key = `${player}:${source}`;\n\nfunction quoteWinArg(value) {\n    const s = String(value).replace(/\"/g, '\\\\\"');\n    return `\"${s}\"`;\n}\n\n// Store pending launch so the next Exec status PID can be associated.\nconst pending = flow.get(\"phiolaPendingStarts\") || [];\npending.push({\n    key,\n    player,\n    source,\n    args,\n    requestedAt: Date.now()\n});\nflow.set(\"phiolaPendingStarts\", pending);\n\nmsg.player = player;\nmsg.source = source;\nmsg.phiolaKey = key;\n\n// This becomes the appended argument string for the Phiola Exec node.\nmsg.payload = args.map(quoteWinArg).join(\" \");\n\nnode.status({\n    fill: \"blue\",\n    shape: \"dot\",\n    text: `starting ${key}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "f0c7e9a2d4b5c401"
+            ]
+        ]
+    },
+    {
+        "id": "f0c7e9a2d4b5c401",
+        "type": "exec",
+        "z": "9b1f4c32d872a001",
+        "command": "C:\\phiola-2\\phiola.exe",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": true,
+        "oldrc": false,
+        "name": "Phiola Exec",
+        "x": 730,
+        "y": 160,
+        "wires": [
+            [
+                "c99c04a6e0df6101"
+            ],
+            [
+                "bb4f5f6df1416102"
+            ],
+            [
+                "a2a7ca13fd6d6103"
+            ]
+        ]
+    },
+    {
+        "id": "c99c04a6e0df6101",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Phiola stdout",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "bb4f5f6df1416102",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Phiola stderr",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a2a7ca13fd6d6103",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Phiola return code",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f930a682defa7001",
+        "type": "status",
+        "z": "9b1f4c32d872a001",
+        "name": "Status: Phiola Exec PID",
+        "scope": [
+            "f0c7e9a2d4b5c401"
+        ],
+        "x": 180,
+        "y": 300,
+        "wires": [
+            [
+                "b1b5edfb4ad57002"
+            ]
+        ]
+    },
+    {
+        "id": "b1b5edfb4ad57002",
+        "type": "function",
+        "z": "9b1f4c32d872a001",
+        "name": "Parse status pid → store player:source PID",
+        "func": "const text = String(msg.status?.text || \"\");\nconst match = text.match(/pid\\s*:\\s*(\\d+)/i);\n\nif (!match) {\n    return null;\n}\n\nconst pid = Number(match[1]);\n\nif (!Number.isInteger(pid) || pid <= 0) {\n    node.warn(`Invalid PID parsed from status: ${text}`);\n    return null;\n}\n\nconst pending = flow.get(\"phiolaPendingStarts\") || [];\n\nif (!pending.length) {\n    node.warn(`Got Phiola PID ${pid}, but there is no pending play request to associate it with`);\n    return null;\n}\n\n// Associate this PID with the oldest pending play request.\nconst req = pending.shift();\nflow.set(\"phiolaPendingStarts\", pending);\n\nconst players = flow.get(\"phiolaPlayers\") || {};\n\nplayers[req.key] = {\n    pid,\n    player: req.player,\n    source: req.source,\n    args: req.args,\n    startedAt: Date.now(),\n    statusText: text\n};\n\nflow.set(\"phiolaPlayers\", players);\n\nmsg.payload = {\n    event: \"started\",\n    key: req.key,\n    player: req.player,\n    source: req.source,\n    pid\n};\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${req.key} pid:${pid}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 300,
+        "wires": [
+            [
+                "da2ee6b10f897003"
+            ]
+        ]
+    },
+    {
+        "id": "da2ee6b10f897003",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Stored PID event",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a631da875acc8001",
+        "type": "comment",
+        "z": "9b1f4c32d872a001",
+        "name": "Stop requests use: { player, source }",
+        "info": "Example stop payload:\n{\n  \"player\": \"kitchen\",\n  \"source\": \"radio\"\n}\n\nThe flow looks up flow.phiolaPlayers[\"kitchen:radio\"] and sends taskkill /PID <pid> /T /F.",
+        "x": 210,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c18b49d473c98002",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "STOP kitchen / radio",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"kitchen\",\"source\":\"radio\"}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 440,
+        "wires": [
+            [
+                "f6074c42e2998004"
+            ]
+        ]
+    },
+    {
+        "id": "e948fd359e578003",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "STOP kitchen / doorbell",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"kitchen\",\"source\":\"doorbell\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 480,
+        "wires": [
+            [
+                "f6074c42e2998004"
+            ]
+        ]
+    },
+    {
+        "id": "ee80c78ad3a98004",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "STOP bedroom / radio",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"player\":\"bedroom\",\"source\":\"radio\"}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "f6074c42e2998004"
+            ]
+        ]
+    },
+    {
+        "id": "f6074c42e2998004",
+        "type": "function",
+        "z": "9b1f4c32d872a001",
+        "name": "Build targeted taskkill command",
+        "func": "/*\nExpected msg.payload:\n{\n    player: \"kitchen\",\n    source: \"radio\"\n}\n*/\n\nconst req = msg.payload || {};\nconst player = String(req.player || \"\").trim();\nconst source = String(req.source || \"\").trim();\n\nif (!player || !source) {\n    node.error(\"Stop request must include payload.player and payload.source\", msg);\n    return null;\n}\n\nconst key = `${player}:${source}`;\nconst players = flow.get(\"phiolaPlayers\") || {};\nconst entry = players[key];\n\nif (!entry || !entry.pid) {\n    node.warn(`No running Phiola PID found for ${key}`);\n    return null;\n}\n\nconst pid = Number(entry.pid);\n\nif (!Number.isInteger(pid) || pid <= 0) {\n    node.error(`Invalid PID stored for ${key}: ${entry.pid}`, msg);\n    return null;\n}\n\n// /T = also terminate child processes\n// /F = force termination\nmsg.payload = `/PID ${pid} /T /F`;\nmsg.phiolaKey = key;\nmsg.player = player;\nmsg.source = source;\nmsg.pid = pid;\n\n// Remove immediately so repeated stop clicks do not keep re-killing same PID.\ndelete players[key];\nflow.set(\"phiolaPlayers\", players);\n\nnode.status({\n    fill: \"yellow\",\n    shape: \"dot\",\n    text: `stopping ${key} pid:${pid}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 480,
+        "wires": [
+            [
+                "d5b9e8ef83cb8005",
+                "a07fb20822c28006"
+            ]
+        ]
+    },
+    {
+        "id": "d5b9e8ef83cb8005",
+        "type": "exec",
+        "z": "9b1f4c32d872a001",
+        "command": "taskkill",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": true,
+        "oldrc": false,
+        "name": "Taskkill targeted PID",
+        "x": 740,
+        "y": 480,
+        "wires": [
+            [
+                "aee4a8bf79e88007"
+            ],
+            [
+                "cfc22f1e51788008"
+            ],
+            [
+                "efdb194b96e88009"
+            ]
+        ]
+    },
+    {
+        "id": "a07fb20822c28006",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Taskkill command payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "aee4a8bf79e88007",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "taskkill stdout",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "cfc22f1e51788008",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "taskkill stderr",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "efdb194b96e88009",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "taskkill return code",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "fe176d6685f99001",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "LIST stored Phiola PIDs",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 620,
+        "wires": [
+            [
+                "dd6d934b01bc9002"
+            ]
+        ]
+    },
+    {
+        "id": "dd6d934b01bc9002",
+        "type": "function",
+        "z": "9b1f4c32d872a001",
+        "name": "Read flow.phiolaPlayers",
+        "func": "msg.payload = flow.get(\"phiolaPlayers\") || {};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 620,
+        "wires": [
+            [
+                "ab185d55bb1d9003"
+            ]
+        ]
+    },
+    {
+        "id": "ab185d55bb1d9003",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Stored Phiola processes",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "c0485ebea31d9004",
+        "type": "inject",
+        "z": "9b1f4c32d872a001",
+        "name": "CLEAR stored PID map",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "ab72ab90cacf9005"
+            ]
+        ]
+    },
+    {
+        "id": "ab72ab90cacf9005",
+        "type": "function",
+        "z": "9b1f4c32d872a001",
+        "name": "Clear maps",
+        "func": "flow.set(\"phiolaPlayers\", {});\nflow.set(\"phiolaPendingStarts\", []);\nmsg.payload = \"Cleared phiolaPlayers and phiolaPendingStarts\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "bc3443c1bb4d9006"
+            ]
+        ]
+    },
+    {
+        "id": "bc3443c1bb4d9006",
+        "type": "debug",
+        "z": "9b1f4c32d872a001",
+        "name": "Clear result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "707369a7b8e031c3",
+        "type": "comment",
+        "z": "9b1f4c32d872a001",
+        "name": "C:\\phiola\\phiola.exe device list",
+        "info": "",
+        "x": 560,
+        "y": 60,
+        "wires": []
+    }
+]
