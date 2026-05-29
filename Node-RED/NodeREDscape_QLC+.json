@@ -1,116 +1,195 @@
 [
     {
-        "id": "d2f2a154d089b8bd",
+        "id": "d19cdd983f224b46",
         "type": "tab",
         "label": "QLC+ Lighting",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "167e2f529cbe95a3",
+        "id": "a5aa6dd9d3072111",
         "type": "group",
-        "z": "d2f2a154d089b8bd",
-        "name": "Simple Desk",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "af1d3cf50a15cd60",
-            "da1608e3672b3577",
-            "7b28b8a808c9533b",
-            "4713ea87508e05f4"
-        ],
-        "x": 54,
-        "y": 459,
-        "w": 302,
-        "h": 162
-    },
-    {
-        "id": "4bf02602b7106afd",
-        "type": "group",
-        "z": "d2f2a154d089b8bd",
-        "name": "Virtual Console (must be in operate mode)",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "0b9cb6e99a53414b",
-            "7a50786c9d53308c",
-            "1649afff65b1c454",
-            "5aa2789559847931",
-            "ff9474ee715449f6",
-            "affbbc337b9ca493",
-            "b618b316aee513c9",
-            "ac990e0f15073ea3"
-        ],
-        "x": 44,
-        "y": 679,
-        "w": 392,
-        "h": 302
-    },
-    {
-        "id": "628506fbda38f6a9",
-        "type": "group",
-        "z": "d2f2a154d089b8bd",
-        "name": "Functions",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "782da52ed82a483d",
-            "4d36b8a3c2093eda",
-            "889d55aed70c46d3",
-            "7a63162b839eef20",
-            "9a82b096b4352ef5",
-            "54303e116eb73b0e",
-            "a7f514e059b6fd1f",
-            "816c2bc1a466c77a",
-            "27ecaf774744f13d",
-            "e8e7eabb115fa665"
-        ],
-        "x": 54,
-        "y": 99,
-        "w": 392,
-        "h": 322
-    },
-    {
-        "id": "2387c1919400eb9b",
-        "type": "group",
-        "z": "d2f2a154d089b8bd",
+        "z": "d19cdd983f224b46",
         "name": "Websocket connection to QLC+",
         "style": {
             "label": true
         },
         "nodes": [
-            "5021f7ac6aa42159",
-            "6b973a95151ee056",
-            "e2f6e5806b8c47ae",
-            "b4aabf648c3e597a",
-            "d3932585afd846a0",
-            "0bc754bc536e2a46"
+            "0f38506ea6e50191",
+            "2e0805aa1031fd2b",
+            "3b8947145ce711d8",
+            "fd28d2f489baade5",
+            "3c408ab80156cae1",
+            "f35e118f583f1fcc"
         ],
-        "x": 524,
-        "y": 99,
-        "w": 412,
+        "x": 574,
+        "y": 359,
+        "w": 392,
         "h": 222
     },
     {
-        "id": "5021f7ac6aa42159",
-        "type": "websocket out",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "",
-        "server": "",
-        "client": "6c2adeceee520028",
-        "x": 760,
-        "y": 280,
-        "wires": []
+        "id": "668ac98aaecf641f",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "name": "Process response received from QLC+",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "54e5bf0ec14615f1",
+            "270405e10d5b7f90",
+            "ba504e62bfcd2f0d",
+            "d2b2059fc0edcb18",
+            "f03da4b2dbf855f3",
+            "096490b5c164363c"
+        ],
+        "x": 454,
+        "y": 799,
+        "w": 832,
+        "h": 202
     },
     {
-        "id": "af1d3cf50a15cd60",
+        "id": "78d51c260c737647",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "name": "MQTT In",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "0e9e6dc6c509bdfb",
+            "b66e770caec10a54"
+        ],
+        "x": 574,
+        "y": 119,
+        "w": 292,
+        "h": 82
+    },
+    {
+        "id": "cd20139b154b708f",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "name": "Exampe QLC+ API calls",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "085a674414e25b84",
+            "6321a9331d7bb599",
+            "143f70faf140561d"
+        ],
+        "x": 28,
+        "y": 93,
+        "w": 484,
+        "h": 674
+    },
+    {
+        "id": "2d07361f8f0ae9b4",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "name": "Serial In",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c675178fddb70b3f",
+            "8b9c6ce7b2086532",
+            "c3a6c07708b6cf41"
+        ],
+        "x": 574,
+        "y": 239,
+        "w": 452,
+        "h": 82
+    },
+    {
+        "id": "3c530793d582cfcc",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "name": "Helper Functions",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "7442c020ba7ffbe8",
+            "b0c12e0a68a01ec0",
+            "ddb1f9761b86d007",
+            "927e927559e18a4c",
+            "ea41d56b06049dee",
+            "604e87ad7501c060"
+        ],
+        "x": 34,
+        "y": 799,
+        "w": 392,
+        "h": 202
+    },
+    {
+        "id": "085a674414e25b84",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "g": "cd20139b154b708f",
+        "name": "Simple Desk",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "6231da585151dc35",
+            "981ad31fa371805a",
+            "60ad716990c7022a",
+            "60aa338cb4e67c56"
+        ],
+        "x": 54,
+        "y": 119,
+        "w": 302,
+        "h": 162
+    },
+    {
+        "id": "6321a9331d7bb599",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "g": "cd20139b154b708f",
+        "name": "Activate Virtual Console Widgets",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "0e37d865d76b2ca6",
+            "06d5a53eab5c332a",
+            "10e160bbbbab234d",
+            "0f088cb867488874",
+            "517d959931b687c5",
+            "09bc5af1df5fcdf7",
+            "48366ffb4bb321a3",
+            "72e51d77620981a6"
+        ],
+        "x": 54,
+        "y": 439,
+        "w": 432,
+        "h": 302
+    },
+    {
+        "id": "143f70faf140561d",
+        "type": "group",
+        "z": "d19cdd983f224b46",
+        "g": "cd20139b154b708f",
+        "name": "Activate Functions",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "6a26adfd4f344ee0",
+            "c30789d7135a5016",
+            "7994039579387843"
+        ],
+        "x": 54,
+        "y": 299,
+        "w": 392,
+        "h": 122
+    },
+    {
+        "id": "6231da585151dc35",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "167e2f529cbe95a3",
+        "z": "d19cdd983f224b46",
+        "g": "085a674414e25b84",
         "name": "",
         "props": [
             {
@@ -129,18 +208,18 @@
         "payload": "CH|1|255",
         "payloadType": "str",
         "x": 200,
-        "y": 540,
+        "y": 200,
         "wires": [
             [
-                "4713ea87508e05f4"
+                "60aa338cb4e67c56"
             ]
         ]
     },
     {
-        "id": "da1608e3672b3577",
+        "id": "981ad31fa371805a",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "167e2f529cbe95a3",
+        "z": "d19cdd983f224b46",
+        "g": "085a674414e25b84",
         "name": "",
         "props": [
             {
@@ -159,109 +238,53 @@
         "payload": "CH|1|0",
         "payloadType": "str",
         "x": 190,
-        "y": 580,
+        "y": 240,
         "wires": [
             [
-                "4713ea87508e05f4"
+                "60aa338cb4e67c56"
             ]
         ]
     },
     {
-        "id": "6b973a95151ee056",
-        "type": "websocket in",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "",
-        "server": "",
-        "client": "6c2adeceee520028",
-        "x": 700,
-        "y": 180,
-        "wires": [
-            [
-                "b4aabf648c3e597a"
-            ]
-        ]
-    },
-    {
-        "id": "782da52ed82a483d",
-        "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "QLC+API|getFunctionsNumber",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "QLC+API|getFunctionsNumber",
-        "payloadType": "str",
-        "x": 230,
-        "y": 260,
-        "wires": [
-            [
-                "e8e7eabb115fa665"
-            ]
-        ]
-    },
-    {
-        "id": "1b9db6f289772872",
+        "id": "54e5bf0ec14615f1",
         "type": "function",
-        "z": "d2f2a154d089b8bd",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
         "name": "Process QLC+ Response",
-        "func": "\nvar output = msg.payload.split('|');\n\nmsg.output = output;\n\nif(output[0] == \"QLC+API\"){\n    if(output[1] == \"getFunctionsNumber\"){\n        msg.response = output[2] + \" functions.\";\n        return [msg, null, null];\n    }\n    else if (output[1] == \"getFunctionsList\"){\n        msg.options = new Array();\n        for(var i=0; i<(output.length-2)/2; i++){\n            var label = output[(i * 2) + 3];\n            var value = output[(i * 2) + 2];\n            //msg.options[i] = { label:value } ;\n            msg.options.push({ [label]: value });\n        }\n        return [null, msg];\n    }\n    else if (output[1] == \"getWidgetsList\") {\n        msg.response = new Array();\n        for (var i = 2; i < output.length; i += 2) {\n            msg.response[i - 2] = output[i] + \":\" + output[i + 1];\n        }\n    }\n    else if (output[1] == \"getChannelsValues\") {\n        msg.response = new Array();\n        for (var i = 2; i < output.length; i += 2) {\n            msg.response[i - 2] = output[i] + \":\" + output[i + 1];\n        }\n    }\n}\n\nreturn [null, null];",
+        "func": "\nvar parts = msg.payload.split('|');\n\nmsg.output = parts;\n\n// Basic validation\nif(parts[0] == \"QLC+API\"){\n    if (parts[1] == \"getFunctionsList\"){\n        // Remove the first two fields: QLC+API and getFunctionsList\n        const data = parts.slice(2);\n        const rows = [];\n        for (let i = 0; i < data.length; i += 2) {\n            rows.push({\n                id: Number(data[i]),\n                name: data[i + 1]\n            });\n        }\n        msg.payload = rows;\n        return [msg, null];\n    }\n    else if (parts[1] == \"getWidgetsList\"){\n        // Remove the first two fields: QLC+API and getFunctionsList\n        const data = parts.slice(2);\n        const rows = [];\n        for (let i = 0; i < data.length; i += 2) {\n            rows.push({\n                id: Number(data[i]),\n                name: data[i + 1]\n            });\n        }\n        msg.payload = rows;\n        return [null, msg];\n    }\n\n\n}\nreturn [null, null];",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 700,
-        "y": 580,
+        "x": 650,
+        "y": 920,
         "wires": [
             [
-                "38c3025d5aacba84"
+                "ba504e62bfcd2f0d"
             ],
             [
-                "b797c978c7bbddb3"
+                "d2b2059fc0edcb18"
             ]
         ]
     },
     {
-        "id": "7b28b8a808c9533b",
+        "id": "60ad716990c7022a",
         "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "167e2f529cbe95a3",
+        "z": "d19cdd983f224b46",
+        "g": "085a674414e25b84",
         "name": "Set Simple Desk Channel",
         "info": "",
         "x": 190,
-        "y": 500,
+        "y": 160,
         "wires": []
     },
     {
-        "id": "4d36b8a3c2093eda",
-        "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "Get Functions Number",
-        "info": "",
-        "x": 200,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "889d55aed70c46d3",
+        "id": "7442c020ba7ffbe8",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
         "name": "QLC+API|getFunctionsList",
         "props": [
             {
@@ -279,30 +302,30 @@
         "topic": "",
         "payload": "QLC+API|getFunctionsList",
         "payloadType": "str",
-        "x": 220,
-        "y": 180,
+        "x": 200,
+        "y": 880,
         "wires": [
             [
-                "816c2bc1a466c77a"
+                "ddb1f9761b86d007"
             ]
         ]
     },
     {
-        "id": "7a63162b839eef20",
+        "id": "b0c12e0a68a01ec0",
         "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
         "name": "Retrieve QLC+ functions list",
         "info": "",
-        "x": 220,
-        "y": 140,
+        "x": 200,
+        "y": 840,
         "wires": []
     },
     {
-        "id": "0b9cb6e99a53414b",
+        "id": "0e37d865d76b2ca6",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
         "name": "",
         "props": [
             {
@@ -321,18 +344,18 @@
         "payload": "0|255",
         "payloadType": "str",
         "x": 190,
-        "y": 760,
+        "y": 520,
         "wires": [
             [
-                "5aa2789559847931"
+                "0f088cb867488874"
             ]
         ]
     },
     {
-        "id": "7a50786c9d53308c",
+        "id": "06d5a53eab5c332a",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
         "name": "",
         "props": [
             {
@@ -351,41 +374,364 @@
         "payload": "0|0",
         "payloadType": "str",
         "x": 190,
-        "y": 800,
+        "y": 560,
         "wires": [
             [
-                "5aa2789559847931"
+                "0f088cb867488874"
             ]
         ]
     },
     {
-        "id": "1649afff65b1c454",
+        "id": "10e160bbbbab234d",
         "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "Press Button (ensure function is attached)",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "Press Button ID|Value (ensure function is attached)",
         "info": "",
-        "x": 240,
-        "y": 720,
+        "x": 270,
+        "y": 480,
         "wires": []
     },
     {
-        "id": "9a82b096b4352ef5",
+        "id": "270405e10d5b7f90",
         "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "Set Function Status",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
+        "name": "Populate appropriate list at http://127.0.0.1:1880/dashboard/page1",
+        "info": "",
+        "x": 1020,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "ddb1f9761b86d007",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
+        "name": "link out 16",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 385,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "9a3e4ef9e9bb24eb",
+        "type": "comment",
+        "z": "d19cdd983f224b46",
+        "name": "Launch QLC+ and start Web Server  (Actions >> Network >> Server Setup)",
+        "info": "",
+        "x": 300,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "60aa338cb4e67c56",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "085a674414e25b84",
+        "name": "link out 23",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 315,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "0f088cb867488874",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "link out 24",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 295,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "517d959931b687c5",
+        "type": "inject",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "9|128",
+        "payloadType": "str",
+        "x": 190,
+        "y": 660,
+        "wires": [
+            [
+                "48366ffb4bb321a3"
+            ]
+        ]
+    },
+    {
+        "id": "09bc5af1df5fcdf7",
+        "type": "inject",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "9|0",
+        "payloadType": "str",
+        "x": 190,
+        "y": 700,
+        "wires": [
+            [
+                "48366ffb4bb321a3"
+            ]
+        ]
+    },
+    {
+        "id": "48366ffb4bb321a3",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "link out 28",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 295,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "72e51d77620981a6",
+        "type": "comment",
+        "z": "d19cdd983f224b46",
+        "g": "6321a9331d7bb599",
+        "name": "Set Slider ID|Value",
+        "info": "",
+        "x": 170,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "0e9e6dc6c509bdfb",
+        "type": "mqtt in",
+        "z": "d19cdd983f224b46",
+        "g": "78d51c260c737647",
+        "name": "",
+        "topic": "QLC/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c3c11c9056ec207f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "b66e770caec10a54"
+            ]
+        ]
+    },
+    {
+        "id": "0f38506ea6e50191",
+        "type": "websocket out",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "",
+        "server": "",
+        "client": "6c2adeceee520028",
+        "x": 800,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3c408ab80156cae1",
+        "type": "websocket in",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "",
+        "server": "",
+        "client": "6c2adeceee520028",
+        "x": 740,
+        "y": 540,
+        "wires": [
+            [
+                "f35e118f583f1fcc"
+            ]
+        ]
+    },
+    {
+        "id": "2e0805aa1031fd2b",
+        "type": "link in",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "link in 1",
+        "links": [
+            "ddb1f9761b86d007",
+            "ea41d56b06049dee",
+            "60aa338cb4e67c56",
+            "7994039579387843",
+            "0f088cb867488874",
+            "48366ffb4bb321a3",
+            "b66e770caec10a54",
+            "c675178fddb70b3f"
+        ],
+        "x": 615,
+        "y": 440,
+        "wires": [
+            [
+                "0f38506ea6e50191"
+            ]
+        ]
+    },
+    {
+        "id": "fd28d2f489baade5",
+        "type": "comment",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "WebSocket In from QLC+",
+        "info": "",
+        "x": 710,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "ba504e62bfcd2f0d",
+        "type": "ui-table",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
+        "group": "312e80dfb5468ee1",
+        "name": "QLC+ Function List",
+        "label": "Function List",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "selectionType": "none",
+        "columns": [],
+        "x": 950,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "927e927559e18a4c",
+        "type": "inject",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
+        "name": "QLC+API|getWidgetsList",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "QLC+API|getWidgetsList",
+        "payloadType": "str",
+        "x": 190,
+        "y": 960,
+        "wires": [
+            [
+                "ea41d56b06049dee"
+            ]
+        ]
+    },
+    {
+        "id": "ea41d56b06049dee",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 385,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "d2b2059fc0edcb18",
+        "type": "ui-table",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
+        "group": "312e80dfb5468ee1",
+        "name": "QLC+ Widget List",
+        "label": "Widget List",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "selectionType": "none",
+        "columns": [],
+        "x": 950,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "604e87ad7501c060",
+        "type": "comment",
+        "z": "d19cdd983f224b46",
+        "g": "3c530793d582cfcc",
+        "name": "Retrieve QLC+ widgets list",
         "info": "",
         "x": 190,
-        "y": 300,
+        "y": 920,
         "wires": []
     },
     {
-        "id": "54303e116eb73b0e",
+        "id": "6a26adfd4f344ee0",
         "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "QLC+API|setFunctionStatus|1|1",
+        "z": "d19cdd983f224b46",
+        "g": "143f70faf140561d",
+        "name": "QLC+API|setFunctionStatus|0|0",
         "props": [
             {
                 "p": "payload"
@@ -400,389 +746,207 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "QLC+API|setFunctionStatus|1|1",
-        "payloadType": "str",
-        "x": 230,
-        "y": 340,
-        "wires": [
-            [
-                "27ecaf774744f13d"
-            ]
-        ]
-    },
-    {
-        "id": "a7f514e059b6fd1f",
-        "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "QLC+API|setFunctionStatus|1|0",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "QLC+API|setFunctionStatus|1|0",
+        "payload": "QLC+API|setFunctionStatus|0|0",
         "payloadType": "str",
         "x": 230,
         "y": 380,
         "wires": [
             [
-                "27ecaf774744f13d"
+                "7994039579387843"
             ]
         ]
     },
     {
-        "id": "b797c978c7bbddb3",
-        "type": "ui_dropdown",
-        "z": "d2f2a154d089b8bd",
-        "name": "",
-        "label": "",
-        "tooltip": "",
-        "place": "Select option",
-        "group": "d36d4324.1067f8",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "multiple": false,
-        "options": [
+        "id": "c30789d7135a5016",
+        "type": "inject",
+        "z": "d19cdd983f224b46",
+        "g": "143f70faf140561d",
+        "name": "QLC+API|setFunctionStatus|0|1",
+        "props": [
             {
-                "label": "",
-                "value": "Look Under the Table",
-                "type": "str"
+                "p": "payload"
             },
             {
-                "label": "",
-                "value": "Did you Hear a Noise?",
-                "type": "str"
-            },
-            {
-                "label": "",
-                "value": "Check your coat pockets",
-                "type": "str"
+                "p": "topic",
+                "vt": "str"
             }
         ],
-        "payload": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
         "topic": "",
-        "topicType": "str",
-        "className": "",
-        "x": 940,
-        "y": 580,
+        "payload": "QLC+API|setFunctionStatus|0|1",
+        "payloadType": "str",
+        "x": 230,
+        "y": 340,
         "wires": [
             [
-                "bc7edd9870722558"
+                "7994039579387843"
             ]
         ]
     },
     {
-        "id": "bc7edd9870722558",
-        "type": "function",
-        "z": "d2f2a154d089b8bd",
-        "name": "setFunctionStatus",
-        "func": "\nmsg.payload=\"QLC+API|setFunctionStatus|\"+ msg.payload +\"|1\";\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1130,
-        "y": 580,
-        "wires": [
-            [
-                "9ed5cb93b7907e47"
-            ]
-        ]
-    },
-    {
-        "id": "e2f6e5806b8c47ae",
-        "type": "link in",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "link in 58",
-        "links": [
-            "9ed5cb93b7907e47",
-            "816c2bc1a466c77a",
-            "4713ea87508e05f4",
-            "5aa2789559847931",
-            "455d8ce84798140d",
-            "27ecaf774744f13d",
-            "7820dcf66b122603",
-            "b618b316aee513c9",
-            "e8e7eabb115fa665"
-        ],
-        "x": 565,
-        "y": 280,
-        "wires": [
-            [
-                "5021f7ac6aa42159"
-            ]
-        ]
-    },
-    {
-        "id": "9ed5cb93b7907e47",
+        "id": "7994039579387843",
         "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "name": "link out 15",
-        "mode": "link",
-        "links": [
-            "e2f6e5806b8c47ae"
-        ],
-        "x": 1265,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "e6ce19d32b963005",
-        "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "name": "Populate dropdown with function list returned from QLC+",
-        "info": "",
-        "x": 1070,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "816c2bc1a466c77a",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "link out 16",
-        "mode": "link",
-        "links": [
-            "e2f6e5806b8c47ae"
-        ],
-        "x": 405,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "f0076c0c3493f5ef",
-        "type": "link in",
-        "z": "d2f2a154d089b8bd",
-        "name": "link in 59",
-        "links": [
-            "b4aabf648c3e597a"
-        ],
-        "x": 545,
-        "y": 580,
-        "wires": [
-            [
-                "1b9db6f289772872"
-            ]
-        ]
-    },
-    {
-        "id": "b4aabf648c3e597a",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "link out 17",
-        "mode": "link",
-        "links": [
-            "f0076c0c3493f5ef"
-        ],
-        "x": 885,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "d3932585afd846a0",
-        "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "WebSocket Out to QLC+",
-        "info": "",
-        "x": 700,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "0bc754bc536e2a46",
-        "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "2387c1919400eb9b",
-        "name": "WebSocket In from QLC+",
-        "info": "",
-        "x": 710,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "818f4a8f8cbcd3cd",
-        "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "name": "Launch QLC+ with the -w option to start the web interface. See https://www.qlcplus.org/docs/html_en_EN/webinterface.html",
-        "info": "",
-        "x": 450,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "4713ea87508e05f4",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "167e2f529cbe95a3",
-        "name": "link out 23",
-        "mode": "link",
-        "links": [
-            "e2f6e5806b8c47ae"
-        ],
-        "x": 315,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "5aa2789559847931",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "link out 24",
-        "mode": "link",
-        "links": [
-            "e2f6e5806b8c47ae"
-        ],
-        "x": 295,
-        "y": 780,
-        "wires": []
-    },
-    {
-        "id": "27ecaf774744f13d",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
+        "z": "d19cdd983f224b46",
+        "g": "143f70faf140561d",
         "name": "link out 26",
         "mode": "link",
         "links": [
-            "e2f6e5806b8c47ae"
+            "2e0805aa1031fd2b"
         ],
         "x": 405,
         "y": 360,
         "wires": []
     },
     {
-        "id": "ff9474ee715449f6",
-        "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "2|255",
-        "payloadType": "str",
-        "x": 190,
-        "y": 900,
-        "wires": [
-            [
-                "b618b316aee513c9"
-            ]
-        ]
-    },
-    {
-        "id": "affbbc337b9ca493",
-        "type": "inject",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "2|0",
-        "payloadType": "str",
-        "x": 190,
-        "y": 940,
-        "wires": [
-            [
-                "b618b316aee513c9"
-            ]
-        ]
-    },
-    {
-        "id": "b618b316aee513c9",
-        "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "link out 28",
-        "mode": "link",
-        "links": [
-            "e2f6e5806b8c47ae"
-        ],
-        "x": 295,
-        "y": 920,
-        "wires": []
-    },
-    {
-        "id": "ac990e0f15073ea3",
+        "id": "f03da4b2dbf855f3",
         "type": "comment",
-        "z": "d2f2a154d089b8bd",
-        "g": "4bf02602b7106afd",
-        "name": "Set Slider",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
+        "name": "Process data received",
         "info": "",
-        "x": 140,
-        "y": 860,
+        "x": 640,
+        "y": 880,
         "wires": []
     },
     {
-        "id": "38c3025d5aacba84",
-        "type": "debug",
-        "z": "d2f2a154d089b8bd",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 940,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "e8e7eabb115fa665",
+        "id": "b66e770caec10a54",
         "type": "link out",
-        "z": "d2f2a154d089b8bd",
-        "g": "628506fbda38f6a9",
-        "name": "link out 29",
+        "z": "d19cdd983f224b46",
+        "g": "78d51c260c737647",
+        "name": "link out 2",
         "mode": "link",
         "links": [
-            "e2f6e5806b8c47ae"
+            "2e0805aa1031fd2b"
         ],
-        "x": 405,
-        "y": 260,
+        "x": 825,
+        "y": 160,
         "wires": []
+    },
+    {
+        "id": "c675178fddb70b3f",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "2d07361f8f0ae9b4",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "2e0805aa1031fd2b"
+        ],
+        "x": 985,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8b9c6ce7b2086532",
+        "type": "serial in",
+        "z": "d19cdd983f224b46",
+        "g": "2d07361f8f0ae9b4",
+        "name": "",
+        "serial": "75bdf99b8da9fba8",
+        "x": 650,
+        "y": 280,
+        "wires": [
+            [
+                "c3a6c07708b6cf41"
+            ]
+        ]
+    },
+    {
+        "id": "c3a6c07708b6cf41",
+        "type": "function",
+        "z": "d19cdd983f224b46",
+        "g": "2d07361f8f0ae9b4",
+        "name": "Process Serial Data",
+        "func": "var parts = msg.payload.trim().split(':');\nmsg.output = parts;\n\nmsg.payload = parts[0];\n\n// Basic validation\nif(parts[0] == \"RFID\"){\n    node.status({ fill: \"green\", shape: \"ring\", text: parts[1] });\n    msg.payload = parts[1];\n    if (parts[1] == \"144B8E7B\"){\n        if(parts[2] == \"detected\")\n            msg.payload = \"QLC+API|setFunctionStatus|0|1\";\n        else if(parts[2] == \"removed\")\n            msg.payload = \"QLC+API|setFunctionStatus|0|0\";\n        node.status({ fill: \"red\", shape: \"ring\", text: parts[1] });\n        return msg;\n    }\n    else if (parts[1] == \"7461FA9E\"){\n        if(parts[2] == \"detected\")\n            msg.payload = \"QLC+API|setFunctionStatus|1|1\";\n        else if(parts[2] == \"removed\")\n            msg.payload = \"QLC+API|setFunctionStatus|1|0\";\n        node.status({ fill: \"red\", shape: \"ring\", text: parts[1] });\n        return msg;\n    }\n    else if (parts[1] == \"A4D0F09E\"){\n        if(parts[2] == \"detected\")\n            msg.payload = \"QLC+API|setFunctionStatus|2|1\";\n        else if(parts[2] == \"removed\")\n            msg.payload = \"QLC+API|setFunctionStatus|2|0\";\n        node.status({ fill: \"red\", shape: \"ring\", text: parts[1] });\n        return msg;\n    }\n}\nelse {\n        node.status({ fill: \"red\", shape: \"ring\" });\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 280,
+        "wires": [
+            [
+                "c675178fddb70b3f"
+            ]
+        ]
+    },
+    {
+        "id": "3b8947145ce711d8",
+        "type": "comment",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "WebSocket Out to QLC+",
+        "info": "",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f35e118f583f1fcc",
+        "type": "link out",
+        "z": "d19cdd983f224b46",
+        "g": "a5aa6dd9d3072111",
+        "name": "link out 30",
+        "mode": "link",
+        "links": [
+            "096490b5c164363c"
+        ],
+        "x": 925,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "096490b5c164363c",
+        "type": "link in",
+        "z": "d19cdd983f224b46",
+        "g": "668ac98aaecf641f",
+        "name": "link in 81",
+        "links": [
+            "f35e118f583f1fcc"
+        ],
+        "x": 495,
+        "y": 920,
+        "wires": [
+            [
+                "54e5bf0ec14615f1"
+            ]
+        ]
+    },
+    {
+        "id": "c3c11c9056ec207f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
     },
     {
         "id": "6c2adeceee520028",
@@ -794,22 +958,83 @@
         "subprotocol": ""
     },
     {
-        "id": "d36d4324.1067f8",
-        "type": "ui_group",
-        "name": "Sound and Lighting",
-        "tab": "3926ef5e.187228",
-        "order": 4,
-        "disp": true,
-        "width": "6",
-        "collapse": false
+        "id": "312e80dfb5468ee1",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "17e8794217a58d67",
+        "width": "4",
+        "height": 1,
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
     },
     {
-        "id": "3926ef5e.187228",
-        "type": "ui_tab",
-        "name": "Lighting",
-        "icon": "dashboard",
-        "order": 5,
-        "disabled": false,
-        "hidden": false
+        "id": "75bdf99b8da9fba8",
+        "type": "serial-port",
+        "name": "COM4",
+        "serialport": "COM6",
+        "serialbaud": "115200",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "17e8794217a58d67",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "752fb298770d1be9",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "dfc77eec74faaccc",
+        "order": 1,
+        "className": "",
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "752fb298770d1be9",
+        "type": "ui-base",
+        "name": "QLC+ Dashboard",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "navigationStyle": "default",
+        "titleBarStyle": "default"
+    },
+    {
+        "id": "dfc77eec74faaccc",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
     }
 ]
